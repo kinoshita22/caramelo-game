@@ -3,22 +3,22 @@
 	"schema_version": 1,
 	"layers": [
 		{"name": "island", "asset": "environment.floating_island_base", "pivot": [1040, 245], "position": [0, 0], "scale": 0.74, "z": -10},
-		{"name": "tree", "asset": "environment.large_shade_tree", "pivot": "bottom_center", "position": [-500, -25], "scale": 0.6, "z": 0},
-		{"name": "swing", "asset": "environment.wooden_rope_swing", "pivot": "top_center", "position": [-262, -438], "scale": 0.3, "z": 1},
-		{"name": "dumbbell_rack", "asset": "environment.dumbbell_rack", "pivot": "bottom_center", "position": [215, -50], "scale": 0.3, "z": 2},
-		{"name": "chair", "asset": "environment.yellow_plastic_chair", "pivot": "bottom_center", "position": [480, -40], "scale": 0.24, "z": 3},
-		{"name": "side_table", "asset": "environment.boteco_side_table", "pivot": "bottom_center", "position": [635, -30], "scale": 0.24, "z": 4},
-		{"name": "sleeping_mat", "asset": "environment.sleeping_mat", "pivot": "bottom_center", "position": [420, 70], "scale": 0.28, "z": 5},
-		{"name": "food_station", "asset": "environment.food_station", "pivot": "bottom_center", "position": [-330, 65], "scale": 0.25, "z": 6},
+		{"name": "tree", "asset": "environment.large_shade_tree", "pivot": "bottom_center", "position": [-500, -25], "scale": 0.42, "z": 0},
+		{"name": "swing", "asset": "environment.wooden_rope_swing", "pivot": "top_center", "position": [-333, -314], "scale": 0.21, "z": 1},
+		{"name": "dumbbell_rack", "asset": "environment.dumbbell_rack", "pivot": "bottom_center", "position": [215, -50], "scale": 0.25, "z": 2},
+		{"name": "chair", "asset": "environment.yellow_plastic_chair", "pivot": "bottom_center", "position": [480, -40], "scale": 0.192, "z": 3},
+		{"name": "side_table", "asset": "environment.boteco_side_table", "pivot": "bottom_center", "position": [635, -30], "scale": 0.192, "z": 4},
+		{"name": "sleeping_mat", "asset": "environment.sleeping_mat", "pivot": "bottom_center", "position": [420, 70], "scale": 0.179, "z": 5},
+		{"name": "food_station", "asset": "environment.food_station", "pivot": "bottom_center", "position": [-330, 65], "scale": 0.2, "z": 6},
 		{"name": "foreground_decor", "asset": "environment.foreground_decor", "pivot": "bottom_center", "position": [-600, 110], "scale": 0.3, "z": 20}
 	],
 	"character": {
 		"_comment": "One scale for every form; bigger forms simply look bigger. The preview frame is a static stand-in until the Phase 4 animator.",
-		"scale": 0.28,
+		"scale": 0.224,
 		"z": 10,
 		"preview_asset": "character.f01.s03",
 		"preview_anchor": "idle",
-		"shadow": {"asset": "environment.character_shadow", "pivot": "center", "scale": 0.3, "z": 9}
+		"shadow": {"asset": "environment.character_shadow", "pivot": "center", "scale": 0.24, "z": 9}
 	},
 	"anchors": {
 		"idle": {"position": [-40, 25]},

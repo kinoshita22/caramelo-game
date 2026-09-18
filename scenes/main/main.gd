@@ -52,8 +52,8 @@ func _apply_mode() -> void:
 	var o: Dictionary = settings["overlay"]
 	var screen := PlatformService.resolve_screen(int(o["screen"]))
 	if settings["mode"] == "overlay" and PlatformService.transparency_available():
-		var size := Vector2i((stage.bounds.size * float(o["scale"])).ceil())
 		var usable := DisplayServer.screen_get_usable_rect(screen)
+		var size := DisplayLayout.overlay_size(stage.bounds.size, float(o["scale"]), usable.size, int(o["margin_px"]))
 		var pos := PlatformServiceScript.corner_position(usable, size, o["corner"], int(o["margin_px"]))
 		PlatformService.enter_overlay(Rect2i(pos, size), bool(o["always_on_top"]))
 		return

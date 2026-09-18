@@ -4,6 +4,7 @@ extends RefCounted
 
 const PlatformServiceScript := preload("res://scripts/autoload/platform_service.gd")
 const MODES := ["overlay", "windowed"]
+const DEFAULT_OVERLAY_SCALE := 0.7
 
 
 ## Scale and position that fit `bounds` inside `into`, centred, leaving
@@ -16,12 +17,22 @@ static func fit(bounds: Rect2, into: Rect2, margin: float) -> Dictionary:
 	return {"scale": s, "position": into.get_center() - bounds.get_center() * s}
 
 
+## Overlay window size: stage bounds at `scale`, shrunk (keeping the aspect
+## ratio) so it fits inside the usable screen area minus `margin` per side.
+static func overlay_size(bounds_size: Vector2, scale: float, usable: Vector2i, margin: int) -> Vector2i:
+	var size := bounds_size * scale
+	var room := Vector2(usable - Vector2i(2 * margin, 2 * margin))
+	if size.x > room.x or size.y > room.y:
+		size *= minf(room.x / size.x, room.y / size.y)
+	return Vector2i(size.floor())
+
+
 ## Display defaults from data, then command-line overrides. Invalid values
 ## fall back to built-in defaults with a warning.
 static func load_settings(defaults: Variant, argv: PackedStringArray) -> Dictionary:
 	var s := {
 		"mode": "overlay",
-		"overlay": {"corner": "bottom_right", "margin_px": 24, "scale": 0.5, "screen": -1, "always_on_top": false},
+		"overlay": {"corner": "bottom_right", "margin_px": 24, "scale": DEFAULT_OVERLAY_SCALE, "screen": -1, "always_on_top": false},
 		"windowed": {"size": [1280, 720], "background": "#8ec5e8"},
 		"fit_margin": 0.04,
 		"debug_overlay": false,
@@ -57,7 +68,7 @@ static func load_settings(defaults: Variant, argv: PackedStringArray) -> Diction
 		push_warning("Unknown corner '%s'; using bottom_right." % s["overlay"]["corner"])
 		s["overlay"]["corner"] = "bottom_right"
 	if not float(s["overlay"]["scale"]) > 0.0:
-		s["overlay"]["scale"] = 0.5
+		s["overlay"]["scale"] = DEFAULT_OVERLAY_SCALE
 	var size: Variant = s["windowed"]["size"]
 	if typeof(size) != TYPE_ARRAY or size.size() != 2 or int(size[0]) < 320 or int(size[1]) < 240:
 		s["windowed"]["size"] = [1280, 720]

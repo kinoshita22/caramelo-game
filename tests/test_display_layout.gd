@@ -27,6 +27,14 @@ func test_fit_handles_1280x720_and_1920x1080_the_same_way() -> void:
 		check(window.encloses(r), "stage %s fits inside %s" % [r, window])
 
 
+func test_overlay_size_scales_and_fits_screen() -> void:
+	var b := Vector2(1630, 1068)
+	check_eq(DisplayLayout.overlay_size(b, 0.7, Vector2i(1920, 1014), 24), Vector2i(1141, 747), "fits at full scale")
+	var small := DisplayLayout.overlay_size(b, 0.7, Vector2i(1366, 728), 24)
+	check(small.y <= 728 - 48 and small.x <= 1366 - 48, "shrunk to fit a 1366x768 screen: %s" % small)
+	check(absf(float(small.x) / small.y - b.x / b.y) < 0.01, "aspect ratio kept")
+
+
 func test_corner_positions() -> void:
 	var usable := Rect2i(0, 30, 1920, 1000)
 	var size := Vector2i(800, 500)
@@ -52,4 +60,4 @@ func test_invalid_settings_fall_back() -> void:
 	check_eq(s["mode"], "overlay", "unknown mode")
 	check_eq(s["overlay"]["corner"], "bottom_right", "unknown corner")
 	check_eq(s["windowed"]["size"], [1280, 720], "too-small window")
-	check_eq(s["overlay"]["scale"], 0.5, "non-positive scale")
+	check_eq(s["overlay"]["scale"], DisplayLayout.DEFAULT_OVERLAY_SCALE, "non-positive scale")

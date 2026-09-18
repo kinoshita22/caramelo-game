@@ -5,7 +5,7 @@
 	"overlay": {
 		"corner": "bottom_right",
 		"margin_px": 24,
-		"scale": 0.5,
+		"scale": 0.7,
 		"screen": -1,
 		"always_on_top": false
 	},
