@@ -1,0 +1,627 @@
+{
+	"generated_by": "tools/build_catalog.gd",
+	"issues": [
+		{
+			"details": [
+				{
+					"folder_form": 7,
+					"manifest_values": [
+						"6"
+					],
+					"pack": "Caramelo_Form_07_Levels_60-69",
+					"rows": 33
+				},
+				{
+					"folder_form": 8,
+					"manifest_values": [
+						"6"
+					],
+					"pack": "Caramelo_Form_08_Levels_70-79",
+					"rows": 33
+				},
+				{
+					"folder_form": 9,
+					"manifest_values": [
+						"6"
+					],
+					"pack": "Caramelo_Form_09_Levels_80-89",
+					"rows": 33
+				},
+				{
+					"folder_form": 10,
+					"manifest_values": [
+						"6"
+					],
+					"pack": "Caramelo_Form_10_Levels_90-99",
+					"rows": 33
+				},
+				{
+					"folder_form": 11,
+					"manifest_values": [
+						"6"
+					],
+					"pack": "Caramelo_Form_11_Level_100",
+					"rows": 33
+				}
+			],
+			"id": "manifest_form_column_wrong",
+			"resolution": "Ignored. Form identity comes from the folder name and filename prefix.",
+			"severity": "warning",
+			"summary": "Manifest 'form' column disagrees with the folder name."
+		},
+		{
+			"details": [
+				{
+					"canonical_category": "eating",
+					"canonical_state": "eating_open_mouth_tail_a",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"manifest": "eating/open_bite_tail_a",
+					"slot": 14
+				},
+				{
+					"canonical_category": "eating",
+					"canonical_state": "eating_open_mouth_tail_a",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"manifest": "eating/open_mouth_tail_left",
+					"slot": 14
+				},
+				{
+					"canonical_category": "eating",
+					"canonical_state": "eating_open_mouth_tail_b",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"manifest": "eating/open_bite_tail_b",
+					"slot": 15
+				},
+				{
+					"canonical_category": "eating",
+					"canonical_state": "eating_open_mouth_tail_b",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"manifest": "eating/open_mouth_tail_right",
+					"slot": 15
+				},
+				{
+					"canonical_category": "wake",
+					"canonical_state": "wake_head_lift",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"manifest": "sleep/wake_head_lift",
+					"slot": 26
+				},
+				{
+					"canonical_category": "wake",
+					"canonical_state": "wake_head_lift",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"manifest": "sleep/waking_head_lift",
+					"slot": 26
+				},
+				{
+					"canonical_category": "wake",
+					"canonical_state": "wake_seated_stretch",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"manifest": "sleep/seated_stretch",
+					"slot": 27
+				},
+				{
+					"canonical_category": "wake",
+					"canonical_state": "wake_seated_stretch",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"manifest": "sleep/wake_seated_stretch",
+					"slot": 27
+				}
+			],
+			"id": "manifest_names_differ_from_canonical",
+			"resolution": "Ignored. Slot number is authoritative; names come from animation_slots.json.",
+			"severity": "info",
+			"summary": "Manifest category/state for some slots differs from the canonical slot table."
+		},
+		{
+			"details": [
+				{
+					"canonical_state": "eating_open_mouth_tail_a",
+					"filename_suffix": "eating_open_bite_tail_a",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"slot": 14
+				},
+				{
+					"canonical_state": "eating_open_mouth_tail_a",
+					"filename_suffix": "eating_open_mouth_tail_left",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"slot": 14
+				},
+				{
+					"canonical_state": "eating_open_mouth_tail_b",
+					"filename_suffix": "eating_open_bite_tail_b",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"slot": 15
+				},
+				{
+					"canonical_state": "eating_open_mouth_tail_b",
+					"filename_suffix": "eating_open_mouth_tail_right",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"slot": 15
+				},
+				{
+					"canonical_state": "wake_head_lift",
+					"filename_suffix": "sleep_waking_head_lift",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"slot": 26
+				},
+				{
+					"canonical_state": "wake_seated_stretch",
+					"filename_suffix": "sleep_seated_stretch",
+					"forms": [
+						1,
+						2,
+						3
+					],
+					"slot": 27
+				},
+				{
+					"canonical_state": "reward_bone_discovery",
+					"filename_suffix": "bone_reward_discovery",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"slot": 30
+				},
+				{
+					"canonical_state": "reward_bone_happy_hold",
+					"filename_suffix": "bone_reward_happy_hold",
+					"forms": [
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"slot": 31
+				}
+			],
+			"id": "filename_suffix_differs_from_canonical",
+			"resolution": "Ignored. Suffixes are advisory; slot number is authoritative.",
+			"severity": "info",
+			"summary": "Descriptive filename suffixes differ from canonical state names (two naming schemes)."
+		},
+		{
+			"details": [
+				{
+					"files": [
+						"Caramelo_Button_State_Pack/01_button_normal.png",
+						"Caramelo_UI_and_Currency_Pack/16_button_primary_blank.png"
+					],
+					"sha256": "783b40fd406949389e7543ac758d01e87b9d4b4208fe53a1daf2f0a9664b8464"
+				}
+			],
+			"id": "duplicate_content",
+			"resolution": "Both copies kept with separate IDs. The button-state/UI-pack pair is expected.",
+			"severity": "info",
+			"summary": "Some files are byte-identical."
+		},
+		{
+			"details": [
+				{
+					"form": 1,
+					"image_sizes": {
+						"1122x1402": 19,
+						"1123x1401": 1,
+						"1230x1278": 9,
+						"1231x1278": 3,
+						"1402x1122": 1
+					}
+				},
+				{
+					"form": 2,
+					"image_sizes": {
+						"1230x1278": 30,
+						"1231x1278": 3
+					}
+				},
+				{
+					"form": 3,
+					"image_sizes": {
+						"1230x1278": 25,
+						"1231x1278": 2,
+						"1274x1235": 1,
+						"1278x1230": 3,
+						"1279x1230": 1,
+						"1305x1205": 1
+					}
+				},
+				{
+					"form": 4,
+					"image_sizes": {
+						"1230x1278": 9,
+						"1254x1254": 24
+					}
+				},
+				{
+					"form": 5,
+					"image_sizes": {
+						"1230x1278": 4,
+						"1254x1254": 26,
+						"1536x1024": 3
+					}
+				},
+				{
+					"form": 6,
+					"image_sizes": {
+						"1024x1536": 1,
+						"1246x1263": 1,
+						"1254x1254": 27,
+						"1536x1024": 4
+					}
+				},
+				{
+					"form": 7,
+					"image_sizes": {
+						"1024x1536": 1,
+						"1246x1263": 1,
+						"1254x1254": 27,
+						"1536x1024": 4
+					}
+				},
+				{
+					"form": 8,
+					"image_sizes": {
+						"1024x1536": 1,
+						"1228x1281": 1,
+						"1254x1254": 27,
+						"1536x1024": 4
+					}
+				},
+				{
+					"form": 9,
+					"image_sizes": {
+						"1024x1536": 1,
+						"1228x1281": 1,
+						"1254x1254": 27,
+						"1536x1024": 4
+					}
+				},
+				{
+					"form": 10,
+					"image_sizes": {
+						"1024x1536": 1,
+						"1228x1281": 1,
+						"1254x1254": 27,
+						"1536x1024": 4
+					}
+				},
+				{
+					"form": 11,
+					"image_sizes": {
+						"1024x1536": 1,
+						"1228x1281": 1,
+						"1254x1254": 27,
+						"1536x1024": 4
+					}
+				}
+			],
+			"id": "variable_frame_dimensions",
+			"resolution": "Images unchanged. frame_geometry.json anchors align frames.",
+			"severity": "info",
+			"summary": "Frame image sizes vary within a form."
+		},
+		{
+			"details": [
+				{
+					"count": 11,
+					"flag": "airborne",
+					"frames": [
+						"character.f01.s29",
+						"character.f02.s29",
+						"character.f03.s29",
+						"character.f04.s29",
+						"character.f05.s29",
+						"character.f06.s29",
+						"character.f07.s29",
+						"character.f08.s29",
+						"character.f09.s29",
+						"character.f10.s29",
+						"character.f11.s29"
+					],
+					"meaning": "Character is off the ground; a bottom anchor would pull him down to the floor."
+				},
+				{
+					"count": 22,
+					"flag": "effect_heavy",
+					"frames": [
+						"character.f01.s32",
+						"character.f01.s33",
+						"character.f02.s32",
+						"character.f02.s33",
+						"character.f03.s32",
+						"character.f03.s33",
+						"character.f04.s32",
+						"character.f04.s33",
+						"character.f05.s32",
+						"character.f05.s33",
+						"character.f06.s32",
+						"character.f06.s33",
+						"character.f07.s32",
+						"character.f07.s33",
+						"character.f08.s32",
+						"character.f08.s33",
+						"character.f09.s32",
+						"character.f09.s33",
+						"character.f10.s32",
+						"character.f10.s33",
+						"character.f11.s32",
+						"character.f11.s33"
+					],
+					"meaning": "Energy effects extend the visible bounds beyond the body."
+				},
+				{
+					"count": 2,
+					"flag": "faint_fringe",
+					"frames": [
+						"character.f04.s32",
+						"character.f09.s30"
+					],
+					"meaning": "Faint but visible pixels (alpha 8 up to the threshold) extend noticeably beyond the bounds: glow, shadow or haze."
+				},
+				{
+					"count": 33,
+					"flag": "horizontal_sleep",
+					"frames": [
+						"character.f01.s23",
+						"character.f01.s24",
+						"character.f01.s25",
+						"character.f02.s23",
+						"character.f02.s24",
+						"character.f02.s25",
+						"character.f03.s23",
+						"character.f03.s24",
+						"character.f03.s25",
+						"character.f04.s23",
+						"character.f04.s24",
+						"character.f04.s25",
+						"character.f05.s23",
+						"character.f05.s24",
+						"character.f05.s25",
+						"character.f06.s23",
+						"character.f06.s24",
+						"character.f06.s25",
+						"character.f07.s23",
+						"character.f07.s24",
+						"character.f07.s25",
+						"character.f08.s23",
+						"character.f08.s24",
+						"character.f08.s25",
+						"character.f09.s23",
+						"character.f09.s24",
+						"character.f09.s25",
+						"character.f10.s23",
+						"character.f10.s24",
+						"character.f10.s25",
+						"character.f11.s23",
+						"character.f11.s24",
+						"character.f11.s25"
+					],
+					"meaning": "Lying pose; must align to the sleeping mat, not the standing ground line."
+				},
+				{
+					"count": 76,
+					"flag": "landscape_bounds",
+					"frames": [
+						"character.f01.s23",
+						"character.f01.s24",
+						"character.f01.s25",
+						"character.f01.s26",
+						"character.f02.s23",
+						"character.f02.s24",
+						"character.f02.s25",
+						"character.f02.s26",
+						"character.f03.s23",
+						"character.f03.s24",
+						"character.f03.s25",
+						"character.f03.s26",
+						"character.f04.s13",
+						"character.f04.s14",
+						"character.f04.s15",
+						"character.f04.s23",
+						"character.f04.s24",
+						"character.f04.s25",
+						"character.f04.s26",
+						"character.f05.s13",
+						"character.f05.s14",
+						"character.f05.s15",
+						"character.f05.s23",
+						"character.f05.s24",
+						"character.f05.s25",
+						"character.f05.s26",
+						"character.f06.s13",
+						"character.f06.s14",
+						"character.f06.s15",
+						"character.f06.s23",
+						"character.f06.s24",
+						"character.f06.s25",
+						"character.f06.s26",
+						"character.f07.s13",
+						"character.f07.s14",
+						"character.f07.s23",
+						"character.f07.s24",
+						"character.f07.s25",
+						"character.f07.s26",
+						"character.f07.s27",
+						"character.f07.s32",
+						"character.f08.s13",
+						"character.f08.s14",
+						"character.f08.s15",
+						"character.f08.s23",
+						"character.f08.s24",
+						"character.f08.s25",
+						"character.f08.s26",
+						"character.f08.s27",
+						"character.f08.s32",
+						"character.f09.s13",
+						"character.f09.s14",
+						"character.f09.s15",
+						"character.f09.s23",
+						"character.f09.s24",
+						"character.f09.s25",
+						"character.f09.s26",
+						"character.f09.s27",
+						"character.f10.s13",
+						"character.f10.s14",
+						"character.f10.s15",
+						"character.f10.s23",
+						"character.f10.s24",
+						"character.f10.s25",
+						"character.f10.s26",
+						"character.f10.s27",
+						"character.f10.s32",
+						"character.f11.s13",
+						"character.f11.s14",
+						"character.f11.s15",
+						"character.f11.s23",
+						"character.f11.s24",
+						"character.f11.s25",
+						"character.f11.s26",
+						"character.f11.s27",
+						"character.f11.s33"
+					],
+					"meaning": "Visible content is wider than tall."
+				},
+				{
+					"count": 6,
+					"flag": "touches_edge",
+					"frames": [
+						"character.f09.s25",
+						"character.f09.s33",
+						"character.f10.s25",
+						"character.f10.s33",
+						"character.f11.s25",
+						"character.f11.s33"
+					],
+					"meaning": "Visible content reaches the image edge; art may be cropped."
+				},
+				{
+					"count": 22,
+					"flag": "wardrobe",
+					"frames": [
+						"character.f01.s01",
+						"character.f01.s02",
+						"character.f02.s01",
+						"character.f02.s02",
+						"character.f03.s01",
+						"character.f03.s02",
+						"character.f04.s01",
+						"character.f04.s02",
+						"character.f05.s01",
+						"character.f05.s02",
+						"character.f06.s01",
+						"character.f06.s02",
+						"character.f07.s01",
+						"character.f07.s02",
+						"character.f08.s01",
+						"character.f08.s02",
+						"character.f09.s01",
+						"character.f09.s02",
+						"character.f10.s01",
+						"character.f10.s02",
+						"character.f11.s01",
+						"character.f11.s02"
+					],
+					"meaning": "Wardrobe pose; framing may differ from gameplay frames."
+				}
+			],
+			"id": "frames_flagged_for_review",
+			"resolution": "Review before Phase 4 animation work; record manual anchor overrides in data, never edit the images.",
+			"severity": "warning",
+			"summary": "Frames whose automatic anchor needs manual review."
+		}
+	],
+	"schema_version": 1
+}

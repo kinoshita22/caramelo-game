@@ -1,5 +1,12 @@
 extends SceneTree
-## Byte-for-byte mirror of the original asset packs into the project.
+## Byte-for-byte mirror of the original asset packs into the project, plus
+## runtime copies of the selected form and the shared packs.
+##
+## Phase 1 mirrors every source file into --destination (git-ignored,
+## .gdignore). Phase 2 copies PNGs of the --runtime-form character pack and
+## every shared pack from data/catalog/runtime_layout.json into the runtime
+## tree, writing a .import sidecar with the pack's import profile first.
+## Rerun with another --runtime-form to add more forms; nothing is removed.
 ##
 ## Safe to rerun:
 ## - Files already present with a matching SHA-256 are skipped.
@@ -12,7 +19,7 @@ extends SceneTree
 ## Usage (paths are relative to the project root):
 ##   godot --headless --path caramelo-game --script res://tools/ingest_assets.gd -- \
 ##       [--source ../00] [--destination assets/source] [--runtime-form 01] \
-##       [--report docs/ingestion_report.json]
+##       [--report docs/ingestion_report.json] [--layout data/catalog/runtime_layout.json]
 ##
 ## Exit code 0 = all files mirrored and verified, 1 = any failure or conflict,
 ## 2 = bad arguments.
@@ -22,7 +29,9 @@ const DEFAULTS := {
 	"destination": "assets/source",
 	"runtime-form": "01",
 	"report": "docs/ingestion_report.json",
+	"layout": "data/catalog/runtime_layout.json",
 }
+const AssetIO := preload("res://scripts/tools/asset_io.gd")
 const TEMP_SUFFIX := ".ingest-tmp"
 ## Files this tool owns inside the destination; never treated as extras.
 const DESTINATION_OWN_FILES := [".gdignore"]
@@ -52,6 +61,14 @@ func _init() -> void:
 	var runtime_form := _resolve_runtime_form(source, args["runtime-form"])
 	if runtime_form.has("error"):
 		_fail_args(runtime_form["error"])
+		return
+	var layout: Variant = AssetIO.read_json(_absolute(args["layout"]))
+	if typeof(layout) != TYPE_DICTIONARY or not layout.has("runtime_root"):
+		_fail_args("runtime layout missing or invalid: %s" % args["layout"])
+		return
+	var runtime_root := _absolute(layout["runtime_root"])
+	if _is_within(runtime_root, source) or _is_within(runtime_root, destination) or _is_within(destination, runtime_root):
+		_fail_args("runtime root must be separate from source and destination")
 		return
 
 	# .gdignore goes in first so an editor scan can never import the mirror.
@@ -86,7 +103,13 @@ func _init() -> void:
 		elif not rel in source_files:
 			extras.append(rel)
 
-	var ok: bool = counts["conflict"] == 0 and counts["failed"] == 0 and source_changed.is_empty()
+	var runtime := _stage_runtime(source, runtime_root, layout, runtime_form["pack"])
+	for e in runtime["files"]:
+		if FileAccess.get_sha256(source.path_join(e["source_path"])) != e["source_sha256"]:
+			source_changed.append(e["source_path"])
+
+	var ok: bool = counts["conflict"] == 0 and counts["failed"] == 0 and source_changed.is_empty() \
+			and runtime["totals"]["conflict"] == 0 and runtime["totals"]["failed"] == 0
 	var report := {
 		"tool": "tools/ingest_assets.gd",
 		"godot": Engine.get_version_info()["string"],
@@ -108,14 +131,18 @@ func _init() -> void:
 		"destination_extra_files": extras,
 		"destination_leftover_temp_files": leftover_temps,
 		"files": entries,
+		"runtime": runtime,
 	}
 	DirAccess.make_dir_recursive_absolute(report_path.get_base_dir())
 	_write_text(report_path, JSON.stringify(report, "\t", false))
 
 	print("Source files: %d  copied: %d  skipped (identical): %d  conflicts: %d  failed: %d" % [
 		source_files.size(), counts["copied"], counts["skipped_identical"], counts["conflict"], counts["failed"]])
+	var rt: Dictionary = runtime["totals"]
+	print("Runtime files: %d  copied: %d  skipped (identical): %d  conflicts: %d  failed: %d  import sidecars written: %d" % [
+		rt["files"], rt["copied"], rt["skipped_identical"], rt["conflict"], rt["failed"], rt["import_sidecars_written"]])
 	print("Runtime form: %s (%s)" % [runtime_form["form"], runtime_form["pack"]])
-	for e in entries:
+	for e in entries + runtime["files"]:
 		if e["status"] in ["conflict", "failed"]:
 			printerr("  %s: %s — %s" % [e["status"].to_upper(), e["path"], e["detail"]])
 	for p in source_changed:
@@ -124,9 +151,68 @@ func _init() -> void:
 		print("  NOTE: destination file not in source (left untouched): ", p)
 	for p in leftover_temps:
 		print("  NOTE: leftover temp file (left untouched): ", p)
+	for p in runtime["extra_files"]:
+		print("  NOTE: runtime file not in source (left untouched): ", p)
+	for p in runtime["unmapped_packs"]:
+		print("  NOTE: pack has no runtime mapping, not staged: ", p)
 	print("Report: ", report_path)
 	print("RESULT: ", "OK" if ok else "FAILED")
 	quit(0 if ok else 1)
+
+
+## Copies the selected character pack and all shared packs into the runtime
+## tree. PNGs only: manifests stay in the source mirror (Godot would import
+## CSV files as translations).
+func _stage_runtime(source: String, runtime_root: String, layout: Dictionary, form_pack: String) -> Dictionary:
+	var files: Array = []
+	var totals := {"files": 0, "copied": 0, "skipped_identical": 0, "conflict": 0, "failed": 0, "import_sidecars_written": 0}
+	var staged_packs: Array = []
+	var unmapped: Array = []
+	var extras: Array = []
+	for pack in AssetIO.list_dirs(source):
+		var entry := AssetIO.layout_for_pack(layout, pack)
+		if entry.is_empty():
+			unmapped.append(pack)
+			continue
+		if entry["kind"] == "character" and pack != form_pack:
+			continue
+		var profile: Dictionary = layout["import_profiles"].get(entry["import_profile"], {})
+		var pack_dir := runtime_root.path_join(entry["runtime_category"]).path_join(pack)
+		DirAccess.make_dir_recursive_absolute(pack_dir)
+		staged_packs.append({"pack": pack, "runtime_dir": pack_dir, "import_profile": entry["import_profile"]})
+		var pngs: Array = AssetIO.list_files(source.path_join(pack)).filter(
+				func(f: String) -> bool: return f.get_extension().to_lower() == "png")
+		for f in pngs:
+			var dst := pack_dir.path_join(f)
+			var sidecar := dst + ".import"
+			var sidecar_written := false
+			# Sidecar first, so an editor scan never imports with the wrong settings.
+			if not FileAccess.file_exists(sidecar) and not FileAccess.file_exists(dst):
+				_write_text(sidecar, AssetIO.import_sidecar(profile.get("params", {})))
+				sidecar_written = true
+				totals["import_sidecars_written"] += 1
+			var rel := "%s/%s/%s" % [entry["runtime_category"], pack, f]
+			var e := _ingest_file(source.path_join(pack).path_join(f), dst, rel)
+			e["source_path"] = "%s/%s" % [pack, f]
+			e["import_profile"] = entry["import_profile"]
+			e["import_sidecar_written"] = sidecar_written
+			totals["files"] += 1
+			totals[e["status"]] += 1
+			files.append(e)
+		for f in AssetIO.list_files(pack_dir):
+			if f.ends_with(".import") or f.ends_with(TEMP_SUFFIX):
+				continue
+			if not f in pngs:
+				extras.append("%s/%s/%s" % [entry["runtime_category"], pack, f])
+	return {
+		"root": runtime_root,
+		"form_pack": form_pack,
+		"staged_packs": staged_packs,
+		"unmapped_packs": unmapped,
+		"extra_files": extras,
+		"totals": totals,
+		"files": files,
+	}
 
 
 func _ingest_file(src: String, dst: String, rel: String) -> Dictionary:

@@ -1,0 +1,185 @@
+{
+	"categories": [
+		"wardrobe",
+		"idle",
+		"workout",
+		"eating",
+		"hunger",
+		"recovery",
+		"sleep",
+		"wake",
+		"celebration",
+		"reward",
+		"pre_evolution"
+	],
+	"generated_by": "tools/build_catalog.gd",
+	"schema_version": 1,
+	"slot_count": 33,
+	"slots": [
+		{
+			"category": "wardrobe",
+			"slot": 1,
+			"state": "wardrobe_base"
+		},
+		{
+			"category": "wardrobe",
+			"slot": 2,
+			"state": "wardrobe_dressed_preview"
+		},
+		{
+			"category": "idle",
+			"slot": 3,
+			"state": "idle_neutral"
+		},
+		{
+			"category": "idle",
+			"slot": 4,
+			"state": "idle_breath"
+		},
+		{
+			"category": "idle",
+			"slot": 5,
+			"state": "idle_blink"
+		},
+		{
+			"category": "idle",
+			"slot": 6,
+			"state": "idle_tail_high"
+		},
+		{
+			"category": "idle",
+			"slot": 7,
+			"state": "idle_tail_low"
+		},
+		{
+			"category": "idle",
+			"slot": 8,
+			"state": "idle_relaxed_reset"
+		},
+		{
+			"category": "workout",
+			"slot": 9,
+			"state": "workout_dumbbells_lowered"
+		},
+		{
+			"category": "workout",
+			"slot": 10,
+			"state": "workout_dumbbells_low_intermediate"
+		},
+		{
+			"category": "workout",
+			"slot": 11,
+			"state": "workout_dumbbells_upper_intermediate"
+		},
+		{
+			"category": "workout",
+			"slot": 12,
+			"state": "workout_dumbbells_raised"
+		},
+		{
+			"category": "eating",
+			"slot": 13,
+			"state": "eating_closed_mouth_chew"
+		},
+		{
+			"category": "eating",
+			"slot": 14,
+			"state": "eating_open_mouth_tail_a"
+		},
+		{
+			"category": "eating",
+			"slot": 15,
+			"state": "eating_open_mouth_tail_b"
+		},
+		{
+			"category": "eating",
+			"slot": 16,
+			"state": "eating_swallow"
+		},
+		{
+			"category": "eating",
+			"slot": 17,
+			"state": "eating_lip_lick"
+		},
+		{
+			"category": "hunger",
+			"slot": 18,
+			"state": "hunger_stomach_rumble"
+		},
+		{
+			"category": "hunger",
+			"slot": 19,
+			"state": "hunger_weak_shiver"
+		},
+		{
+			"category": "recovery",
+			"slot": 20,
+			"state": "recovery_fatigued_sweat"
+		},
+		{
+			"category": "recovery",
+			"slot": 21,
+			"state": "recovery_heavy_pant"
+		},
+		{
+			"category": "sleep",
+			"slot": 22,
+			"state": "sleep_yawn"
+		},
+		{
+			"category": "sleep",
+			"slot": 23,
+			"state": "sleep_lowering"
+		},
+		{
+			"category": "sleep",
+			"slot": 24,
+			"state": "sleep_exhale"
+		},
+		{
+			"category": "sleep",
+			"slot": 25,
+			"state": "sleep_inhale"
+		},
+		{
+			"category": "wake",
+			"slot": 26,
+			"state": "wake_head_lift"
+		},
+		{
+			"category": "wake",
+			"slot": 27,
+			"state": "wake_seated_stretch"
+		},
+		{
+			"category": "celebration",
+			"slot": 28,
+			"state": "celebration_proud_recovery"
+		},
+		{
+			"category": "celebration",
+			"slot": 29,
+			"state": "celebration_victory_jump"
+		},
+		{
+			"category": "reward",
+			"slot": 30,
+			"state": "reward_bone_discovery"
+		},
+		{
+			"category": "reward",
+			"slot": 31,
+			"state": "reward_bone_happy_hold"
+		},
+		{
+			"category": "pre_evolution",
+			"slot": 32,
+			"state": "pre_evolution_confident_charge"
+		},
+		{
+			"category": "pre_evolution",
+			"slot": 33,
+			"state": "pre_evolution_power_surge"
+		}
+	]
+}
