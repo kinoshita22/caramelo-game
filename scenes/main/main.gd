@@ -3,16 +3,19 @@ extends Node2D
 ## windowed mode, keeps the stage fitted to the window and keeps the
 ## click-through region in sync.
 ##
-## Keys: F3 toggles the debug overlay.
+## Keys: F3 toggles the debug overlay; [ and ] cycle animation groups;
+## - and = cycle forms (preview only until progression exists).
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
-## --window-size WxH, --debug-overlay, --screenshot path.png [--screenshot-frames N].
+## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
+## --screenshot path.png [--screenshot-frames N].
 
 const DebugOverlay := preload("res://scripts/components/stage_debug_overlay.gd")
 const PlatformServiceScript := preload("res://scripts/autoload/platform_service.gd")
 const DisplayLayout := preload("res://scripts/components/display_layout.gd")
 const LAYOUT_PATH := "res://data/environment/island_layout.json"
 const SETTINGS_PATH := "res://data/settings/display_defaults.json"
+const ANIMATIONS_PATH := "res://data/animations/animation_groups.json"
 
 @onready var stage: Node2D = $Stage
 
@@ -27,8 +30,19 @@ func _ready() -> void:
 	var content: RefCounted = ContentCatalog.data
 	settings = DisplayLayout.load_settings(content.read_json(SETTINGS_PATH), OS.get_cmdline_user_args())
 	var layout: Variant = content.read_json(LAYOUT_PATH)
-	var errors: Array[String] = ["island_layout.json missing or invalid"] if typeof(layout) != TYPE_DICTIONARY \
-			else stage.build(layout, content)
+	var animations: Variant = content.read_json(ANIMATIONS_PATH)
+	var errors: Array[String] = []
+	if typeof(layout) != TYPE_DICTIONARY or typeof(animations) != TYPE_DICTIONARY:
+		errors.append("island_layout.json or animation_groups.json missing or invalid")
+	else:
+		errors = stage.build(layout, content, animations)
+		if errors.is_empty():
+			if settings.has("form"):
+				stage.animator.set_form(int(settings["form"]))
+			if settings.has("animation"):
+				stage.animator.play(settings["animation"], true)
+			if settings.has("animation_frame"):
+				stage.animator.freeze_at(int(settings["animation_frame"]))
 	if not content.is_valid():
 		errors.append_array(content.errors)
 	if not errors.is_empty():
@@ -75,9 +89,32 @@ func _refit() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F3:
-		_debug.visible = not _debug.visible
-		_debug.queue_redraw()
+	if not (event is InputEventKey and event.pressed and not event.echo):
+		return
+	match event.keycode:
+		KEY_F3:
+			_debug.visible = not _debug.visible
+			_debug.queue_redraw()
+		KEY_BRACKETLEFT, KEY_BRACKETRIGHT:
+			_cycle_group(1 if event.keycode == KEY_BRACKETRIGHT else -1)
+		KEY_MINUS, KEY_EQUAL:
+			_cycle_form(1 if event.keycode == KEY_EQUAL else -1)
+
+
+func _cycle_group(step: int) -> void:
+	if stage.animator == null:
+		return
+	var names: Array = stage.animator.groups.keys()
+	var i := names.find(stage.animator.group)
+	stage.animator.play(names[posmod(i + step, names.size())], true)
+
+
+func _cycle_form(step: int) -> void:
+	if stage.animator == null:
+		return
+	var forms: Array[int] = ContentCatalog.data.form_numbers()
+	var i := forms.find(stage.animator.form)
+	stage.animator.set_form(forms[posmod(i + step, forms.size())])
 
 
 func _process(_delta: float) -> void:

@@ -50,6 +50,32 @@ func texture(id: String) -> Texture2D:
 	return tex
 
 
+## Drops cached textures so the engine can free them (e.g. after evolving
+## to a new form).
+func release_textures(ids: Array) -> void:
+	for id in ids:
+		_textures.erase(id)
+
+
+## Geometry record for one character frame, or {} if unknown.
+func frame_geometry(form: int, slot: int) -> Dictionary:
+	for f in docs.get("geometry", {}).get("forms", []):
+		if int(f["form"]) == form:
+			for fr in f["frames"]:
+				if int(fr["slot"]) == slot:
+					return fr
+	return {}
+
+
+## Form numbers present in the catalog, ascending.
+func form_numbers() -> Array[int]:
+	var out: Array[int] = []
+	for f in docs.get("forms", {}).get("forms", []):
+		out.append(int(f["form"]))
+	out.sort()
+	return out
+
+
 ## Largest per-form canvas across every form, in source pixels.
 func max_character_canvas() -> Vector2:
 	var size := Vector2.ZERO

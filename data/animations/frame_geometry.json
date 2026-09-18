@@ -12,6 +12,7 @@
 			"form": 1,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 559.0,
 						"y": 1315
@@ -24,6 +25,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 559.0,
+						"y": 1315
+					},
 					"visible": {
 						"height": 1122,
 						"width": 1060,
@@ -32,6 +37,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 561.5,
 						"y": 1312
@@ -44,6 +50,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 561.5,
+						"y": 1312
+					},
 					"visible": {
 						"height": 1202,
 						"width": 1065,
@@ -52,6 +62,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 568.0,
 						"y": 1306
@@ -62,6 +73,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 568.0,
+						"y": 1306
+					},
 					"visible": {
 						"height": 1162,
 						"width": 844,
@@ -70,6 +85,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.995,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 567.5,
 						"y": 1307
@@ -80,6 +99,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 567.5,
+						"y": 1307
+					},
 					"visible": {
 						"height": 1164,
 						"width": 845,
@@ -88,6 +111,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.993,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 568.0,
 						"y": 1307
@@ -98,6 +125,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 568.0,
+						"y": 1307
+					},
 					"visible": {
 						"height": 1165,
 						"width": 846,
@@ -106,6 +137,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.956,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 530.0,
 						"y": 1307
@@ -116,6 +151,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 566.0,
+						"y": 1307
+					},
 					"visible": {
 						"height": 1163,
 						"width": 920,
@@ -124,6 +163,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.974,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 529.0,
 						"y": 1308
@@ -134,6 +177,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 569.0,
+						"y": 1308
+					},
 					"visible": {
 						"height": 1164,
 						"width": 922,
@@ -142,6 +189,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.939,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 564.0,
 						"y": 1306
@@ -152,6 +203,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 564.0,
+						"y": 1306
+					},
 					"visible": {
 						"height": 1138,
 						"width": 830,
@@ -160,6 +215,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.738,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 642.5,
 						"y": 1147
@@ -170,6 +229,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 602.5,
+						"y": 1147
+					},
 					"visible": {
 						"height": 1056,
 						"width": 1011,
@@ -178,6 +241,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.967,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 651.5,
 						"y": 1150
@@ -188,6 +255,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 603.5,
+						"y": 1150
+					},
 					"visible": {
 						"height": 1053,
 						"width": 949,
@@ -196,6 +267,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.881,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 632.5,
 						"y": 1150
@@ -206,6 +281,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 604.5,
+						"y": 1150
+					},
 					"visible": {
 						"height": 1061,
 						"width": 901,
@@ -214,6 +293,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.832,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 622.5,
 						"y": 1147
@@ -224,6 +307,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 602.5,
+						"y": 1147
+					},
 					"visible": {
 						"height": 1055,
 						"width": 925,
@@ -232,6 +319,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.785,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 582.5,
 						"y": 1147
@@ -242,6 +333,10 @@
 					},
 					"review_flags": [],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 610.5,
+						"y": 1147
+					},
 					"visible": {
 						"height": 1056,
 						"width": 809,
@@ -250,6 +345,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.982,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 558.0,
 						"y": 1147
@@ -260,6 +359,10 @@
 					},
 					"review_flags": [],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 610.0,
+						"y": 1147
+					},
 					"visible": {
 						"height": 1053,
 						"width": 860,
@@ -268,6 +371,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.971,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 532.5,
 						"y": 1147
@@ -278,6 +385,10 @@
 					},
 					"review_flags": [],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 612.5,
+						"y": 1147
+					},
 					"visible": {
 						"height": 1053,
 						"width": 911,
@@ -286,6 +397,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.977,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 582.5,
 						"y": 1149
@@ -296,6 +411,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 610.5,
+						"y": 1149
+					},
 					"visible": {
 						"height": 1061,
 						"width": 811,
@@ -304,6 +423,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.977,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 581.5,
 						"y": 1149
@@ -314,6 +437,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 613.5,
+						"y": 1149
+					},
 					"visible": {
 						"height": 1060,
 						"width": 811,
@@ -322,6 +449,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.901,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 568.5,
 						"y": 1306
@@ -332,6 +463,10 @@
 					},
 					"review_flags": [],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 572.5,
+						"y": 1306
+					},
 					"visible": {
 						"height": 1167,
 						"width": 843,
@@ -340,6 +475,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.908,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 540.5,
 						"y": 1306
@@ -350,6 +489,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 568.5,
+						"y": 1306
+					},
 					"visible": {
 						"height": 1151,
 						"width": 783,
@@ -358,6 +501,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.804,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 556.0,
 						"y": 1267
@@ -368,6 +515,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 580.0,
+						"y": 1267
+					},
 					"visible": {
 						"height": 1100,
 						"width": 788,
@@ -376,6 +527,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.803,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 576.5,
 						"y": 1267
@@ -386,6 +541,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 580.5,
+						"y": 1267
+					},
 					"visible": {
 						"height": 1033,
 						"width": 819,
@@ -394,6 +553,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 541.5,
 						"y": 1307
@@ -404,6 +564,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 541.5,
+						"y": 1307
+					},
 					"visible": {
 						"height": 1182,
 						"width": 791,
@@ -412,6 +576,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 702.0,
 						"y": 906
@@ -425,6 +590,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 702.0,
+						"y": 906
+					},
 					"visible": {
 						"height": 598,
 						"width": 1150,
@@ -433,6 +602,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.5,
 						"y": 896
@@ -446,6 +616,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 615.5,
+						"y": 896
+					},
 					"visible": {
 						"height": 516,
 						"width": 1181,
@@ -454,6 +628,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 614.5,
 						"y": 897
@@ -467,6 +642,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 614.5,
+						"y": 897
+					},
 					"visible": {
 						"height": 525,
 						"width": 1185,
@@ -475,6 +654,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 617.0,
 						"y": 896
@@ -487,6 +667,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 617.0,
+						"y": 896
+					},
 					"visible": {
 						"height": 566,
 						"width": 1178,
@@ -495,6 +679,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 571.5,
 						"y": 1279
@@ -505,6 +690,10 @@
 					},
 					"review_flags": [],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 571.5,
+						"y": 1279
+					},
 					"visible": {
 						"height": 1147,
 						"width": 1043,
@@ -513,6 +702,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.805,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 575.0,
 						"y": 1308
@@ -523,6 +716,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 583.0,
+						"y": 1308
+					},
 					"visible": {
 						"height": 1235,
 						"width": 880,
@@ -531,6 +728,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.728,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 590.5,
 						"y": 1320
@@ -543,6 +744,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 582.5,
+						"y": 1320
+					},
 					"visible": {
 						"height": 1271,
 						"width": 927,
@@ -551,6 +756,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.838,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 558.5,
 						"y": 1307
@@ -561,6 +770,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 570.5,
+						"y": 1307
+					},
 					"visible": {
 						"height": 1216,
 						"width": 801,
@@ -569,6 +782,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.959,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 532.5,
 						"y": 1308
@@ -579,6 +796,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 572.5,
+						"y": 1308
+					},
 					"visible": {
 						"height": 1217,
 						"width": 805,
@@ -587,6 +808,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.782,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 569.5,
 						"y": 1289
@@ -599,6 +824,10 @@
 						"effect_heavy"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 569.5,
+						"y": 1289
+					},
 					"visible": {
 						"height": 1213,
 						"width": 947,
@@ -607,6 +836,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.819,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 567.5,
 						"y": 1291
@@ -619,6 +852,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 563.5,
+						"y": 1291
+					},
 					"visible": {
 						"height": 1217,
 						"width": 955,
@@ -640,6 +877,7 @@
 			"form": 2,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 616.0,
 						"y": 1202
@@ -652,6 +890,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 616.0,
+						"y": 1202
+					},
 					"visible": {
 						"height": 1060,
 						"width": 904,
@@ -660,6 +902,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.0,
 						"y": 1232
@@ -672,6 +915,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 615.0,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1097,
 						"width": 994,
@@ -680,6 +927,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 609.5,
 						"y": 1201
@@ -690,6 +938,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 609.5,
+						"y": 1201
+					},
 					"visible": {
 						"height": 1052,
 						"width": 769,
@@ -698,6 +950,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.909,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 609.5,
 						"y": 1211
@@ -708,6 +964,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 605.5,
+						"y": 1211
+					},
 					"visible": {
 						"height": 1077,
 						"width": 767,
@@ -716,6 +976,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.905,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 615.5,
 						"y": 1196
@@ -726,6 +990,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 611.5,
+						"y": 1196
+					},
 					"visible": {
 						"height": 1028,
 						"width": 749,
@@ -734,6 +1002,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.899,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 588.5,
 						"y": 1202
@@ -744,6 +1016,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 616.5,
+						"y": 1202
+					},
 					"visible": {
 						"height": 1059,
 						"width": 833,
@@ -752,6 +1028,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.915,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 587.5,
 						"y": 1191
@@ -762,6 +1042,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 607.5,
+						"y": 1191
+					},
 					"visible": {
 						"height": 1071,
 						"width": 849,
@@ -770,6 +1054,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.916,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 610.0,
 						"y": 1201
@@ -780,6 +1068,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 606.0,
+						"y": 1201
+					},
 					"visible": {
 						"height": 1088,
 						"width": 758,
@@ -788,6 +1080,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.777,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 636.0,
 						"y": 1181
@@ -798,6 +1094,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 604.0,
+						"y": 1181
+					},
 					"visible": {
 						"height": 1098,
 						"width": 1018,
@@ -806,6 +1106,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.902,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 648.0,
 						"y": 1161
@@ -816,6 +1120,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 600.0,
+						"y": 1161
+					},
 					"visible": {
 						"height": 1068,
 						"width": 936,
@@ -824,6 +1132,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.811,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 636.5,
 						"y": 1180
@@ -834,6 +1146,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 600.5,
+						"y": 1180
+					},
 					"visible": {
 						"height": 1092,
 						"width": 893,
@@ -842,6 +1158,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.757,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 617.5,
 						"y": 1182
@@ -852,6 +1172,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 605.5,
+						"y": 1182
+					},
 					"visible": {
 						"height": 1100,
 						"width": 965,
@@ -860,6 +1184,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.798,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 612.0,
 						"y": 1186
@@ -870,6 +1198,10 @@
 					},
 					"review_flags": [],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 616.0,
+						"y": 1186
+					},
 					"visible": {
 						"height": 1096,
 						"width": 724,
@@ -878,6 +1210,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.967,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 594.5,
 						"y": 1185
@@ -888,6 +1224,10 @@
 					},
 					"review_flags": [],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 614.5,
+						"y": 1185
+					},
 					"visible": {
 						"height": 1098,
 						"width": 759,
@@ -896,6 +1236,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.937,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 546.5,
 						"y": 1184
@@ -906,6 +1250,10 @@
 					},
 					"review_flags": [],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 618.5,
+						"y": 1184
+					},
 					"visible": {
 						"height": 1097,
 						"width": 877,
@@ -914,6 +1262,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.942,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 614.0,
 						"y": 1185
@@ -924,6 +1276,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 614.0,
+						"y": 1185
+					},
 					"visible": {
 						"height": 1109,
 						"width": 734,
@@ -932,6 +1288,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.947,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 612.0,
 						"y": 1186
@@ -942,6 +1302,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 616.0,
+						"y": 1186
+					},
 					"visible": {
 						"height": 1098,
 						"width": 714,
@@ -950,6 +1314,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.866,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 619.0,
 						"y": 1186
@@ -960,6 +1328,10 @@
 					},
 					"review_flags": [],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 611.0,
+						"y": 1186
+					},
 					"visible": {
 						"height": 1073,
 						"width": 746,
@@ -968,6 +1340,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.822,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 606.5,
 						"y": 1189
@@ -978,6 +1354,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 594.5,
+						"y": 1189
+					},
 					"visible": {
 						"height": 1027,
 						"width": 699,
@@ -986,6 +1366,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.818,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 630.5,
 						"y": 1200
@@ -996,6 +1380,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 614.5,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1076,
 						"width": 783,
@@ -1004,6 +1392,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.843,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 631.5,
 						"y": 1189
@@ -1014,6 +1406,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 611.5,
+						"y": 1189
+					},
 					"visible": {
 						"height": 1040,
 						"width": 833,
@@ -1022,6 +1418,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 614.0,
 						"y": 1191
@@ -1032,6 +1429,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 614.0,
+						"y": 1191
+					},
 					"visible": {
 						"height": 1080,
 						"width": 712,
@@ -1040,6 +1441,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 619.5,
 						"y": 966
@@ -1053,6 +1455,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 619.5,
+						"y": 966
+					},
 					"visible": {
 						"height": 649,
 						"width": 1117,
@@ -1061,6 +1467,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.5,
 						"y": 888
@@ -1074,6 +1481,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 615.5,
+						"y": 888
+					},
 					"visible": {
 						"height": 509,
 						"width": 1171,
@@ -1082,6 +1493,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.5,
 						"y": 887
@@ -1095,6 +1507,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 615.5,
+						"y": 887
+					},
 					"visible": {
 						"height": 519,
 						"width": 1181,
@@ -1103,6 +1519,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 620.5,
 						"y": 969
@@ -1115,6 +1532,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 620.5,
+						"y": 969
+					},
 					"visible": {
 						"height": 637,
 						"width": 1173,
@@ -1123,6 +1544,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 613.0,
 						"y": 1194
@@ -1133,6 +1555,10 @@
 					},
 					"review_flags": [],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 613.0,
+						"y": 1194
+					},
 					"visible": {
 						"height": 1077,
 						"width": 1068,
@@ -1141,6 +1567,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.799,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 636.5,
 						"y": 1215
@@ -1151,6 +1581,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 628.5,
+						"y": 1215
+					},
 					"visible": {
 						"height": 1125,
 						"width": 773,
@@ -1159,6 +1593,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.698,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 640.0,
 						"y": 1192
@@ -1171,6 +1609,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 600.0,
+						"y": 1192
+					},
 					"visible": {
 						"height": 1121,
 						"width": 878,
@@ -1179,6 +1621,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.818,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 600.0,
 						"y": 1202
@@ -1189,6 +1635,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 616.0,
+						"y": 1202
+					},
 					"visible": {
 						"height": 1092,
 						"width": 730,
@@ -1197,6 +1647,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.865,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 578.0,
 						"y": 1222
@@ -1207,6 +1661,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 606.0,
+						"y": 1222
+					},
 					"visible": {
 						"height": 1136,
 						"width": 770,
@@ -1215,6 +1673,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.762,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 615.5,
 						"y": 1225
@@ -1227,6 +1689,10 @@
 						"effect_heavy"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 631.5,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1186,
 						"width": 925,
@@ -1235,6 +1701,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.782,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 621.0,
 						"y": 1218
@@ -1247,6 +1717,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 625.0,
+						"y": 1218
+					},
 					"visible": {
 						"height": 1191,
 						"width": 910,
@@ -1268,6 +1742,7 @@
 			"form": 3,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 616.5,
 						"y": 1196
@@ -1280,6 +1755,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 616.5,
+						"y": 1196
+					},
 					"visible": {
 						"height": 1105,
 						"width": 911,
@@ -1288,6 +1767,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 614.5,
 						"y": 1231
@@ -1300,6 +1780,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 614.5,
+						"y": 1231
+					},
 					"visible": {
 						"height": 1170,
 						"width": 1075,
@@ -1308,6 +1792,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.5,
 						"y": 1192
@@ -1318,6 +1803,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 615.5,
+						"y": 1192
+					},
 					"visible": {
 						"height": 1085,
 						"width": 763,
@@ -1326,6 +1815,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.903,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 609.0,
 						"y": 1182
@@ -1336,6 +1829,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 613.0,
+						"y": 1182
+					},
 					"visible": {
 						"height": 1090,
 						"width": 754,
@@ -1344,6 +1841,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.916,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 615.5,
 						"y": 1171
@@ -1354,6 +1855,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 619.5,
+						"y": 1171
+					},
 					"visible": {
 						"height": 1071,
 						"width": 727,
@@ -1362,6 +1867,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.888,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 591.0,
 						"y": 1184
@@ -1372,6 +1881,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 623.0,
+						"y": 1184
+					},
 					"visible": {
 						"height": 1086,
 						"width": 804,
@@ -1380,6 +1893,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.911,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 603.0,
 						"y": 1186
@@ -1390,6 +1907,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 611.0,
+						"y": 1186
+					},
 					"visible": {
 						"height": 1092,
 						"width": 822,
@@ -1398,6 +1919,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.885,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 616.5,
 						"y": 1202
@@ -1408,6 +1933,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 612.5,
+						"y": 1202
+					},
 					"visible": {
 						"height": 1120,
 						"width": 767,
@@ -1416,6 +1945,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.851,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 641.0,
 						"y": 1162
@@ -1426,6 +1959,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 621.0,
+						"y": 1162
+					},
 					"visible": {
 						"height": 1081,
 						"width": 1002,
@@ -1434,6 +1971,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.859,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 665.5,
 						"y": 1179
@@ -1444,6 +1985,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 629.5,
+						"y": 1179
+					},
 					"visible": {
 						"height": 1105,
 						"width": 935,
@@ -1452,6 +1997,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.755,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 659.0,
 						"y": 1176
@@ -1462,6 +2011,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 623.0,
+						"y": 1176
+					},
 					"visible": {
 						"height": 1104,
 						"width": 964,
@@ -1470,6 +2023,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.684,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 619.0,
 						"y": 1184
@@ -1480,6 +2037,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 607.0,
+						"y": 1184
+					},
 					"visible": {
 						"height": 1104,
 						"width": 982,
@@ -1488,6 +2049,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.814,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 611.5,
 						"y": 1187
@@ -1498,6 +2063,10 @@
 					},
 					"review_flags": [],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 615.5,
+						"y": 1187
+					},
 					"visible": {
 						"height": 1096,
 						"width": 709,
@@ -1506,6 +2075,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.902,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 621.0,
 						"y": 1155
@@ -1516,6 +2089,10 @@
 					},
 					"review_flags": [],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 641.0,
+						"y": 1155
+					},
 					"visible": {
 						"height": 1080,
 						"width": 740,
@@ -1524,6 +2101,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.901,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 590.5,
 						"y": 1162
@@ -1534,6 +2115,10 @@
 					},
 					"review_flags": [],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 638.5,
+						"y": 1162
+					},
 					"visible": {
 						"height": 1080,
 						"width": 821,
@@ -1542,6 +2127,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.922,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 638.0,
 						"y": 1156
@@ -1552,6 +2141,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 646.0,
+						"y": 1156
+					},
 					"visible": {
 						"height": 1104,
 						"width": 752,
@@ -1560,6 +2153,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.943,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 611.5,
 						"y": 1183
@@ -1570,6 +2167,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 619.5,
+						"y": 1183
+					},
 					"visible": {
 						"height": 1107,
 						"width": 709,
@@ -1578,6 +2179,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.853,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 616.5,
 						"y": 1188
@@ -1588,6 +2193,10 @@
 					},
 					"review_flags": [],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 616.5,
+						"y": 1188
+					},
 					"visible": {
 						"height": 1094,
 						"width": 745,
@@ -1596,6 +2205,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.879,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 626.5,
 						"y": 1195
@@ -1606,6 +2219,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 606.5,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1097,
 						"width": 721,
@@ -1614,6 +2231,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.795,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 636.0,
 						"y": 1197
@@ -1624,6 +2245,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 608.0,
+						"y": 1197
+					},
 					"visible": {
 						"height": 1115,
 						"width": 768,
@@ -1632,6 +2257,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.845,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 645.0,
 						"y": 1196
@@ -1642,6 +2271,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 601.0,
+						"y": 1196
+					},
 					"visible": {
 						"height": 1112,
 						"width": 866,
@@ -1650,6 +2283,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 612.5,
 						"y": 1185
@@ -1660,6 +2294,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 612.5,
+						"y": 1185
+					},
 					"visible": {
 						"height": 1099,
 						"width": 705,
@@ -1668,6 +2306,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 635.0,
 						"y": 1045
@@ -1681,6 +2320,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 635.0,
+						"y": 1045
+					},
 					"visible": {
 						"height": 796,
 						"width": 1050,
@@ -1689,6 +2332,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 611.5,
 						"y": 906
@@ -1702,6 +2346,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 611.5,
+						"y": 906
+					},
 					"visible": {
 						"height": 519,
 						"width": 1181,
@@ -1710,6 +2358,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 614.0,
 						"y": 891
@@ -1723,6 +2372,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 614.0,
+						"y": 891
+					},
 					"visible": {
 						"height": 527,
 						"width": 1188,
@@ -1731,6 +2384,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 623.5,
 						"y": 1015
@@ -1743,6 +2397,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 623.5,
+						"y": 1015
+					},
 					"visible": {
 						"height": 733,
 						"width": 1189,
@@ -1751,6 +2409,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 622.0,
 						"y": 1195
@@ -1761,6 +2420,10 @@
 					},
 					"review_flags": [],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 622.0,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1099,
 						"width": 1040,
@@ -1769,6 +2432,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.772,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 633.0,
 						"y": 1208
@@ -1779,6 +2446,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 633.0,
+						"y": 1208
+					},
 					"visible": {
 						"height": 1149,
 						"width": 780,
@@ -1787,6 +2458,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.648,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 649.0,
 						"y": 1207
@@ -1799,6 +2474,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 621.0,
+						"y": 1207
+					},
 					"visible": {
 						"height": 1164,
 						"width": 896,
@@ -1807,6 +2486,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.806,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 594.5,
 						"y": 1206
@@ -1817,6 +2500,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 618.5,
+						"y": 1206
+					},
 					"visible": {
 						"height": 1135,
 						"width": 753,
@@ -1825,6 +2512,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.912,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 576.0,
 						"y": 1197
@@ -1835,6 +2526,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 612.0,
+						"y": 1197
+					},
 					"visible": {
 						"height": 1139,
 						"width": 792,
@@ -1843,6 +2538,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.77,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 621.0,
 						"y": 1210
@@ -1855,6 +2554,10 @@
 						"effect_heavy"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 633.0,
+						"y": 1210
+					},
 					"visible": {
 						"height": 1172,
 						"width": 902,
@@ -1863,6 +2566,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.792,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 631.5,
 						"y": 1197
@@ -1875,6 +2582,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 623.5,
+						"y": 1197
+					},
 					"visible": {
 						"height": 1179,
 						"width": 825,
@@ -1896,6 +2607,7 @@
 			"form": 4,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.0,
 						"y": 1195
@@ -1908,6 +2620,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 615.0,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1114,
 						"width": 946,
@@ -1916,6 +2632,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.0,
 						"y": 1234
@@ -1928,6 +2645,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 615.0,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1207,
 						"width": 1110,
@@ -1936,6 +2657,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 616.0,
 						"y": 1204
@@ -1946,6 +2668,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 616.0,
+						"y": 1204
+					},
 					"visible": {
 						"height": 1129,
 						"width": 800,
@@ -1954,6 +2680,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.872,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 617.5,
 						"y": 1196
@@ -1964,6 +2694,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 629.5,
+						"y": 1196
+					},
 					"visible": {
 						"height": 1108,
 						"width": 771,
@@ -1972,6 +2706,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.908,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 615.5,
 						"y": 1199
@@ -1982,6 +2720,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 623.5,
+						"y": 1199
+					},
 					"visible": {
 						"height": 1128,
 						"width": 751,
@@ -1990,6 +2732,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.858,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 607.0,
 						"y": 1206
@@ -2000,6 +2746,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 635.0,
+						"y": 1206
+					},
 					"visible": {
 						"height": 1122,
 						"width": 816,
@@ -2008,6 +2758,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.944,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 626.0,
 						"y": 1202
@@ -2018,6 +2772,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 618.0,
+						"y": 1202
+					},
 					"visible": {
 						"height": 1128,
 						"width": 810,
@@ -2026,6 +2784,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.954,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 626.0,
 						"y": 1204
@@ -2036,6 +2798,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 618.0,
+						"y": 1204
+					},
 					"visible": {
 						"height": 1125,
 						"width": 764,
@@ -2044,6 +2810,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.851,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1176
@@ -2054,6 +2824,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 611.0,
+						"y": 1176
+					},
 					"visible": {
 						"height": 1107,
 						"width": 974,
@@ -2062,6 +2836,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.844,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 637.0,
 						"y": 1176
@@ -2072,6 +2850,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 609.0,
+						"y": 1176
+					},
 					"visible": {
 						"height": 1107,
 						"width": 886,
@@ -2080,6 +2862,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.796,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 647.5,
 						"y": 1178
@@ -2090,6 +2876,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 619.5,
+						"y": 1178
+					},
 					"visible": {
 						"height": 1105,
 						"width": 955,
@@ -2098,6 +2888,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.688,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 623.0,
 						"y": 1199
@@ -2108,6 +2902,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 615.0,
+						"y": 1199
+					},
 					"visible": {
 						"height": 1130,
 						"width": 1008,
@@ -2116,6 +2914,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.543,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 620.5,
 						"y": 1112
@@ -2125,9 +2927,14 @@
 						"width": 1254
 					},
 					"review_flags": [
+						"weak_alignment",
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 612.5,
+						"y": 1112
+					},
 					"visible": {
 						"height": 844,
 						"width": 921,
@@ -2136,6 +2943,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.833,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 619.0,
 						"y": 1113
@@ -2148,6 +2959,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 643.0,
+						"y": 1113
+					},
 					"visible": {
 						"height": 898,
 						"width": 974,
@@ -2156,6 +2971,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.794,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 687.5,
 						"y": 1063
@@ -2168,6 +2987,10 @@
 						"landscape_bounds"
 					],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 583.5,
+						"y": 1063
+					},
 					"visible": {
 						"height": 822,
 						"width": 907,
@@ -2176,6 +2999,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.671,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 635.0,
 						"y": 1142
@@ -2186,6 +3013,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 615.0,
+						"y": 1142
+					},
 					"visible": {
 						"height": 1057,
 						"width": 790,
@@ -2194,6 +3025,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.699,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 614.5,
 						"y": 1166
@@ -2204,6 +3039,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 622.5,
+						"y": 1166
+					},
 					"visible": {
 						"height": 1078,
 						"width": 883,
@@ -2212,6 +3051,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.811,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 614.0,
 						"y": 1182
@@ -2222,6 +3065,10 @@
 					},
 					"review_flags": [],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 622.0,
+						"y": 1182
+					},
 					"visible": {
 						"height": 1109,
 						"width": 700,
@@ -2230,6 +3077,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.871,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 636.5,
 						"y": 1186
@@ -2240,6 +3091,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 612.5,
+						"y": 1186
+					},
 					"visible": {
 						"height": 1120,
 						"width": 725,
@@ -2248,6 +3103,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.749,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 662.0,
 						"y": 1194
@@ -2258,6 +3117,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 638.0,
+						"y": 1194
+					},
 					"visible": {
 						"height": 1115,
 						"width": 834,
@@ -2266,6 +3129,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.888,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 653.0,
 						"y": 1188
@@ -2276,6 +3143,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 633.0,
+						"y": 1188
+					},
 					"visible": {
 						"height": 1103,
 						"width": 834,
@@ -2284,6 +3155,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 639.0,
 						"y": 1154
@@ -2294,6 +3166,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 639.0,
+						"y": 1154
+					},
 					"visible": {
 						"height": 1050,
 						"width": 772,
@@ -2302,6 +3178,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 645.5,
 						"y": 949
@@ -2315,6 +3192,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 645.5,
+						"y": 949
+					},
 					"visible": {
 						"height": 508,
 						"width": 1127,
@@ -2323,6 +3204,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 629.0,
 						"y": 939
@@ -2336,6 +3218,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 629.0,
+						"y": 939
+					},
 					"visible": {
 						"height": 557,
 						"width": 1212,
@@ -2344,6 +3230,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 628.5,
 						"y": 935
@@ -2357,6 +3244,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 628.5,
+						"y": 935
+					},
 					"visible": {
 						"height": 553,
 						"width": 1225,
@@ -2365,6 +3256,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 647.0,
 						"y": 1022
@@ -2377,6 +3269,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 647.0,
+						"y": 1022
+					},
 					"visible": {
 						"height": 850,
 						"width": 1132,
@@ -2385,6 +3281,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 626.0,
 						"y": 1152
@@ -2395,6 +3292,10 @@
 					},
 					"review_flags": [],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 626.0,
+						"y": 1152
+					},
 					"visible": {
 						"height": 1051,
 						"width": 966,
@@ -2403,6 +3304,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.84,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 620.5,
 						"y": 1191
@@ -2413,6 +3318,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 644.5,
+						"y": 1191
+					},
 					"visible": {
 						"height": 1127,
 						"width": 859,
@@ -2421,6 +3330,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.61,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 643.0,
 						"y": 1172
@@ -2433,6 +3346,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 631.0,
+						"y": 1172
+					},
 					"visible": {
 						"height": 1093,
 						"width": 934,
@@ -2441,6 +3358,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.796,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 621.0,
 						"y": 1180
@@ -2451,6 +3372,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 617.0,
+						"y": 1180
+					},
 					"visible": {
 						"height": 1104,
 						"width": 712,
@@ -2459,6 +3384,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.851,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 597.5,
 						"y": 1184
@@ -2469,6 +3398,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 633.5,
+						"y": 1184
+					},
 					"visible": {
 						"height": 1120,
 						"width": 763,
@@ -2477,6 +3410,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.614,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1207
@@ -2490,6 +3427,10 @@
 						"faint_fringe"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 635.0,
+						"y": 1207
+					},
 					"visible": {
 						"height": 1159,
 						"width": 1062,
@@ -2498,6 +3439,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.653,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 621.0,
 						"y": 1199
@@ -2510,6 +3455,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 637.0,
+						"y": 1199
+					},
 					"visible": {
 						"height": 1185,
 						"width": 952,
@@ -2531,6 +3480,7 @@
 			"form": 5,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.5,
 						"y": 1216
@@ -2543,6 +3493,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 615.5,
+						"y": 1216
+					},
 					"visible": {
 						"height": 1160,
 						"width": 1113,
@@ -2551,6 +3505,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1221
@@ -2563,6 +3518,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1221
+					},
 					"visible": {
 						"height": 1201,
 						"width": 1137,
@@ -2571,6 +3530,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 617.5,
 						"y": 1195
@@ -2581,6 +3541,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 617.5,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1154,
 						"width": 805,
@@ -2589,6 +3553,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.868,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 628.0,
 						"y": 1187
@@ -2599,6 +3567,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 628.0,
+						"y": 1187
+					},
 					"visible": {
 						"height": 1135,
 						"width": 838,
@@ -2607,6 +3579,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.825,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 626.5,
 						"y": 1188
@@ -2617,6 +3593,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 622.5,
+						"y": 1188
+					},
 					"visible": {
 						"height": 1127,
 						"width": 767,
@@ -2625,6 +3605,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.778,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 623.0,
 						"y": 1183
@@ -2635,6 +3619,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 643.0,
+						"y": 1183
+					},
 					"visible": {
 						"height": 1104,
 						"width": 850,
@@ -2643,6 +3631,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.857,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 637.0,
 						"y": 1205
@@ -2653,6 +3645,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 625.0,
+						"y": 1205
+					},
 					"visible": {
 						"height": 1129,
 						"width": 792,
@@ -2661,6 +3657,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.926,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 622.0,
 						"y": 1212
@@ -2671,6 +3671,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 614.0,
+						"y": 1212
+					},
 					"visible": {
 						"height": 1152,
 						"width": 818,
@@ -2679,6 +3683,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.837,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1191
@@ -2689,6 +3697,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 611.0,
+						"y": 1191
+					},
 					"visible": {
 						"height": 1135,
 						"width": 956,
@@ -2697,6 +3709,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.882,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 636.0,
 						"y": 1187
@@ -2707,6 +3723,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 604.0,
+						"y": 1187
+					},
 					"visible": {
 						"height": 1128,
 						"width": 880,
@@ -2715,6 +3735,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.807,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1189
@@ -2725,6 +3749,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 603.0,
+						"y": 1189
+					},
 					"visible": {
 						"height": 1133,
 						"width": 1008,
@@ -2733,6 +3761,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.713,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 614.0,
 						"y": 1210
@@ -2743,6 +3775,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 614.0,
+						"y": 1210
+					},
 					"visible": {
 						"height": 1151,
 						"width": 1020,
@@ -2751,6 +3787,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.605,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 624.5,
 						"y": 1129
@@ -2763,6 +3803,10 @@
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 628.5,
+						"y": 1129
+					},
 					"visible": {
 						"height": 944,
 						"width": 1001,
@@ -2771,6 +3815,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.862,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 602.5,
 						"y": 1136
@@ -2783,6 +3831,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 662.5,
+						"y": 1136
+					},
 					"visible": {
 						"height": 963,
 						"width": 1011,
@@ -2791,6 +3843,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.81,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 697.5,
 						"y": 1137
@@ -2803,6 +3859,10 @@
 						"landscape_bounds"
 					],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 605.5,
+						"y": 1137
+					},
 					"visible": {
 						"height": 960,
 						"width": 1043,
@@ -2811,6 +3871,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.726,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 639.5,
 						"y": 1179
@@ -2821,6 +3885,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 623.5,
+						"y": 1179
+					},
 					"visible": {
 						"height": 1121,
 						"width": 839,
@@ -2829,6 +3897,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.736,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 613.0,
 						"y": 1184
@@ -2839,6 +3911,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 613.0,
+						"y": 1184
+					},
 					"visible": {
 						"height": 1124,
 						"width": 868,
@@ -2847,6 +3923,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.833,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 622.5,
 						"y": 1192
@@ -2857,6 +3937,10 @@
 					},
 					"review_flags": [],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 626.5,
+						"y": 1192
+					},
 					"visible": {
 						"height": 1144,
 						"width": 735,
@@ -2865,6 +3949,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.818,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 645.0,
 						"y": 1185
@@ -2875,6 +3963,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 625.0,
+						"y": 1185
+					},
 					"visible": {
 						"height": 1110,
 						"width": 732,
@@ -2883,6 +3975,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.769,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 657.0,
 						"y": 1208
@@ -2893,6 +3989,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 661.0,
+						"y": 1208
+					},
 					"visible": {
 						"height": 1140,
 						"width": 852,
@@ -2901,6 +4001,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.876,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 660.0,
 						"y": 1190
@@ -2911,6 +4015,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 652.0,
+						"y": 1190
+					},
 					"visible": {
 						"height": 1109,
 						"width": 858,
@@ -2919,6 +4027,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 639.5,
 						"y": 1176
@@ -2929,6 +4038,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 639.5,
+						"y": 1176
+					},
 					"visible": {
 						"height": 1102,
 						"width": 781,
@@ -2937,6 +4050,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 775.5,
 						"y": 836
@@ -2950,6 +4064,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 775.5,
+						"y": 836
+					},
 					"visible": {
 						"height": 607,
 						"width": 1303,
@@ -2958,6 +4076,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 785.0,
 						"y": 850
@@ -2971,6 +4090,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 785.0,
+						"y": 850
+					},
 					"visible": {
 						"height": 631,
 						"width": 1450,
@@ -2979,6 +4102,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 770.5,
 						"y": 890
@@ -2992,6 +4116,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 770.5,
+						"y": 890
+					},
 					"visible": {
 						"height": 623,
 						"width": 1475,
@@ -3000,6 +4128,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 659.0,
 						"y": 1081
@@ -3012,6 +4141,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 659.0,
+						"y": 1081
+					},
 					"visible": {
 						"height": 935,
 						"width": 1138,
@@ -3020,6 +4153,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 625.0,
 						"y": 1187
@@ -3030,6 +4164,10 @@
 					},
 					"review_flags": [],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 625.0,
+						"y": 1187
+					},
 					"visible": {
 						"height": 1114,
 						"width": 1086,
@@ -3038,6 +4176,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.807,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 619.5,
 						"y": 1197
@@ -3048,6 +4190,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 647.5,
+						"y": 1197
+					},
 					"visible": {
 						"height": 1137,
 						"width": 891,
@@ -3056,6 +4202,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.624,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 676.5,
 						"y": 1200
@@ -3068,6 +4218,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 660.5,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1142,
 						"width": 997,
@@ -3076,6 +4230,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.827,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 625.5,
 						"y": 1201
@@ -3086,6 +4244,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 637.5,
+						"y": 1201
+					},
 					"visible": {
 						"height": 1160,
 						"width": 741,
@@ -3094,6 +4256,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.9,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 613.0,
 						"y": 1204
@@ -3104,6 +4270,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 653.0,
+						"y": 1204
+					},
 					"visible": {
 						"height": 1164,
 						"width": 802,
@@ -3112,6 +4282,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.611,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 642.5,
 						"y": 1206
@@ -3124,6 +4298,10 @@
 						"effect_heavy"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 618.5,
+						"y": 1206
+					},
 					"visible": {
 						"height": 1166,
 						"width": 1101,
@@ -3132,6 +4310,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.663,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 636.0,
 						"y": 1205
@@ -3144,6 +4326,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 624.0,
+						"y": 1205
+					},
 					"visible": {
 						"height": 1177,
 						"width": 984,
@@ -3165,6 +4351,7 @@
 			"form": 6,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1224
@@ -3177,6 +4364,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1224
+					},
 					"visible": {
 						"height": 1194,
 						"width": 1149,
@@ -3185,6 +4376,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 628.5,
 						"y": 1232
@@ -3197,6 +4389,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 628.5,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1214,
 						"width": 1151,
@@ -3205,6 +4401,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 617.5,
 						"y": 1225
@@ -3215,6 +4412,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 617.5,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1197,
 						"width": 815,
@@ -3223,6 +4424,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.898,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 628.0,
 						"y": 1228
@@ -3233,6 +4438,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 628.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1202,
 						"width": 846,
@@ -3241,6 +4450,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.827,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.5,
 						"y": 1224
@@ -3251,6 +4464,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 615.5,
+						"y": 1224
+					},
 					"visible": {
 						"height": 1195,
 						"width": 1149,
@@ -3259,6 +4476,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.836,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 599.5,
 						"y": 1219
@@ -3269,6 +4490,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 651.5,
+						"y": 1219
+					},
 					"visible": {
 						"height": 1179,
 						"width": 943,
@@ -3277,6 +4502,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.916,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 632.5,
 						"y": 1225
@@ -3287,6 +4516,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 636.5,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1197,
 						"width": 825,
@@ -3295,6 +4528,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.932,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 643.0,
 						"y": 1223
@@ -3305,6 +4542,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 643.0,
+						"y": 1223
+					},
 					"visible": {
 						"height": 1188,
 						"width": 814,
@@ -3313,6 +4554,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.871,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1229
@@ -3323,6 +4568,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 619.0,
+						"y": 1229
+					},
 					"visible": {
 						"height": 1213,
 						"width": 972,
@@ -3331,6 +4580,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.793,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 641.5,
 						"y": 1223
@@ -3341,6 +4594,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 621.5,
+						"y": 1223
+					},
 					"visible": {
 						"height": 1185,
 						"width": 1019,
@@ -3349,6 +4606,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.69,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1221
@@ -3359,6 +4620,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 623.0,
+						"y": 1221
+					},
 					"visible": {
 						"height": 1184,
 						"width": 1094,
@@ -3367,6 +4632,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.692,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 626.0,
 						"y": 1220
@@ -3377,6 +4646,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 618.0,
+						"y": 1220
+					},
 					"visible": {
 						"height": 1177,
 						"width": 1078,
@@ -3385,6 +4658,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.628,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 625.5,
 						"y": 1192
@@ -3397,6 +4674,10 @@
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 673.5,
+						"y": 1192
+					},
 					"visible": {
 						"height": 1115,
 						"width": 1129,
@@ -3405,6 +4686,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.795,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 607.5,
 						"y": 1152
@@ -3417,6 +4702,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 695.5,
+						"y": 1152
+					},
 					"visible": {
 						"height": 1023,
 						"width": 1103,
@@ -3425,6 +4714,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.779,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 690.5,
 						"y": 1151
@@ -3437,6 +4730,10 @@
 						"landscape_bounds"
 					],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 642.5,
+						"y": 1151
+					},
 					"visible": {
 						"height": 1051,
 						"width": 1061,
@@ -3445,6 +4742,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.775,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 641.5,
 						"y": 1201
@@ -3455,6 +4756,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 629.5,
+						"y": 1201
+					},
 					"visible": {
 						"height": 1157,
 						"width": 887,
@@ -3463,6 +4768,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.784,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 611.0,
 						"y": 1204
@@ -3473,6 +4782,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 623.0,
+						"y": 1204
+					},
 					"visible": {
 						"height": 1162,
 						"width": 904,
@@ -3481,6 +4794,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.645,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 517.5,
 						"y": 1481
@@ -3491,6 +4808,10 @@
 					},
 					"review_flags": [],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 549.5,
+						"y": 1481
+					},
 					"visible": {
 						"height": 1410,
 						"width": 841,
@@ -3499,6 +4820,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.674,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 650.5,
 						"y": 1232
@@ -3509,6 +4834,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 650.5,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1173,
 						"width": 759,
@@ -3517,6 +4846,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.694,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 656.5,
 						"y": 1207
@@ -3527,6 +4860,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 644.5,
+						"y": 1207
+					},
 					"visible": {
 						"height": 1131,
 						"width": 941,
@@ -3535,6 +4872,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.864,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 670.0,
 						"y": 1208
@@ -3545,6 +4886,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 658.0,
+						"y": 1208
+					},
 					"visible": {
 						"height": 1158,
 						"width": 910,
@@ -3553,6 +4898,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 632.0,
 						"y": 1217
@@ -3563,6 +4909,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 632.0,
+						"y": 1217
+					},
 					"visible": {
 						"height": 1180,
 						"width": 860,
@@ -3571,6 +4921,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 775.0,
 						"y": 851
@@ -3584,6 +4935,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 775.0,
+						"y": 851
+					},
 					"visible": {
 						"height": 689,
 						"width": 1490,
@@ -3592,6 +4947,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 768.0,
 						"y": 873
@@ -3605,6 +4961,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 768.0,
+						"y": 873
+					},
 					"visible": {
 						"height": 672,
 						"width": 1512,
@@ -3613,6 +4973,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 769.0,
 						"y": 872
@@ -3626,6 +4987,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 769.0,
+						"y": 872
+					},
 					"visible": {
 						"height": 696,
 						"width": 1516,
@@ -3634,6 +4999,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 803.5,
 						"y": 1005
@@ -3646,6 +5012,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 803.5,
+						"y": 1005
+					},
 					"visible": {
 						"height": 981,
 						"width": 1263,
@@ -3654,6 +5024,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 631.0,
 						"y": 1207
@@ -3664,6 +5035,10 @@
 					},
 					"review_flags": [],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 631.0,
+						"y": 1207
+					},
 					"visible": {
 						"height": 1180,
 						"width": 1176,
@@ -3672,6 +5047,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.752,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 618.5,
 						"y": 1200
@@ -3682,6 +5061,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 654.5,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1142,
 						"width": 911,
@@ -3690,6 +5073,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.603,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 652.5,
 						"y": 1233
@@ -3702,6 +5089,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 656.5,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1192,
 						"width": 1099,
@@ -3710,6 +5101,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.824,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 618.0,
 						"y": 1220
@@ -3720,6 +5115,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 638.0,
+						"y": 1220
+					},
 					"visible": {
 						"height": 1203,
 						"width": 762,
@@ -3728,6 +5127,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.853,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 614.0,
 						"y": 1205
@@ -3738,6 +5141,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 658.0,
+						"y": 1205
+					},
 					"visible": {
 						"height": 1169,
 						"width": 804,
@@ -3746,6 +5153,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.622,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 629.5,
 						"y": 1207
@@ -3758,6 +5169,10 @@
 						"effect_heavy"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 665.5,
+						"y": 1207
+					},
 					"visible": {
 						"height": 1159,
 						"width": 1135,
@@ -3766,6 +5181,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.684,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 640.5,
 						"y": 1216
@@ -3778,6 +5197,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 652.5,
+						"y": 1216
+					},
 					"visible": {
 						"height": 1199,
 						"width": 1047,
@@ -3799,6 +5222,7 @@
 			"form": 7,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1225
@@ -3811,6 +5235,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1196,
 						"width": 1149,
@@ -3819,6 +5247,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 628.0,
 						"y": 1234
@@ -3831,6 +5260,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 628.0,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1222,
 						"width": 1152,
@@ -3839,6 +5272,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 615.0,
 						"y": 1226
@@ -3849,6 +5283,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 615.0,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1201,
 						"width": 892,
@@ -3857,6 +5295,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.919,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 623.0,
 						"y": 1229
@@ -3867,6 +5309,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 627.0,
+						"y": 1229
+					},
 					"visible": {
 						"height": 1204,
 						"width": 890,
@@ -3875,6 +5321,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.841,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 628.5,
 						"y": 1223
@@ -3885,6 +5335,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 620.5,
+						"y": 1223
+					},
 					"visible": {
 						"height": 1194,
 						"width": 1169,
@@ -3893,6 +5347,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.841,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 605.0,
 						"y": 1219
@@ -3903,6 +5361,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 653.0,
+						"y": 1219
+					},
 					"visible": {
 						"height": 1179,
 						"width": 956,
@@ -3911,6 +5373,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.892,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 634.0,
 						"y": 1225
@@ -3921,6 +5387,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 630.0,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1197,
 						"width": 848,
@@ -3929,6 +5399,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.916,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 635.0,
 						"y": 1226
@@ -3939,6 +5413,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 643.0,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1192,
 						"width": 856,
@@ -3947,6 +5425,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.879,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.5,
 						"y": 1231
@@ -3957,6 +5439,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 623.5,
+						"y": 1231
+					},
 					"visible": {
 						"height": 1216,
 						"width": 1007,
@@ -3965,6 +5451,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.823,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 634.0,
 						"y": 1225
@@ -3975,6 +5465,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 622.0,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1201,
 						"width": 1078,
@@ -3983,6 +5477,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.729,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1226
@@ -3993,6 +5491,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 619.0,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1203,
 						"width": 1096,
@@ -4001,6 +5503,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.712,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 626.5,
 						"y": 1223
@@ -4011,6 +5517,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 622.5,
+						"y": 1223
+					},
 					"visible": {
 						"height": 1191,
 						"width": 1125,
@@ -4019,6 +5529,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.647,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 625.5,
 						"y": 1191
@@ -4031,6 +5545,10 @@
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 685.5,
+						"y": 1191
+					},
 					"visible": {
 						"height": 1113,
 						"width": 1141,
@@ -4039,6 +5557,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.856,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 622.5,
 						"y": 1173
@@ -4051,6 +5573,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 714.5,
+						"y": 1173
+					},
 					"visible": {
 						"height": 1078,
 						"width": 1139,
@@ -4059,6 +5585,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.856,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 667.0,
 						"y": 1201
@@ -4069,6 +5599,10 @@
 					},
 					"review_flags": [],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 643.0,
+						"y": 1201
+					},
 					"visible": {
 						"height": 1158,
 						"width": 1148,
@@ -4077,6 +5611,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.797,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 638.0,
 						"y": 1200
@@ -4087,6 +5625,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 642.0,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1161,
 						"width": 940,
@@ -4095,6 +5637,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.806,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 614.5,
 						"y": 1203
@@ -4105,6 +5651,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 634.5,
+						"y": 1203
+					},
 					"visible": {
 						"height": 1161,
 						"width": 967,
@@ -4113,6 +5663,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.601,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 528.5,
 						"y": 1499
@@ -4123,6 +5677,10 @@
 					},
 					"review_flags": [],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 548.5,
+						"y": 1499
+					},
 					"visible": {
 						"height": 1486,
 						"width": 879,
@@ -4131,6 +5689,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.673,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 649.5,
 						"y": 1237
@@ -4141,6 +5703,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 649.5,
+						"y": 1237
+					},
 					"visible": {
 						"height": 1226,
 						"width": 767,
@@ -4149,6 +5715,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.71,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 656.5,
 						"y": 1205
@@ -4159,6 +5729,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 652.5,
+						"y": 1205
+					},
 					"visible": {
 						"height": 1135,
 						"width": 947,
@@ -4167,6 +5741,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.854,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 665.0,
 						"y": 1220
@@ -4177,6 +5755,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 673.0,
+						"y": 1220
+					},
 					"visible": {
 						"height": 1176,
 						"width": 922,
@@ -4185,6 +5767,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 651.0,
 						"y": 1219
@@ -4195,6 +5778,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 651.0,
+						"y": 1219
+					},
 					"visible": {
 						"height": 1190,
 						"width": 960,
@@ -4203,6 +5790,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 766.5,
 						"y": 853
@@ -4216,6 +5804,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 766.5,
+						"y": 853
+					},
 					"visible": {
 						"height": 717,
 						"width": 1485,
@@ -4224,6 +5816,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 770.5,
 						"y": 878
@@ -4237,6 +5830,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 770.5,
+						"y": 878
+					},
 					"visible": {
 						"height": 709,
 						"width": 1517,
@@ -4245,6 +5842,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 769.5,
 						"y": 880
@@ -4258,6 +5856,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 769.5,
+						"y": 880
+					},
 					"visible": {
 						"height": 713,
 						"width": 1519,
@@ -4266,6 +5868,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 789.0,
 						"y": 1010
@@ -4278,6 +5881,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 789.0,
+						"y": 1010
+					},
 					"visible": {
 						"height": 999,
 						"width": 1422,
@@ -4286,6 +5893,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 637.0,
 						"y": 1216
@@ -4298,6 +5906,10 @@
 						"landscape_bounds"
 					],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 637.0,
+						"y": 1216
+					},
 					"visible": {
 						"height": 1190,
 						"width": 1202,
@@ -4306,6 +5918,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.794,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 631.5,
 						"y": 1214
@@ -4316,6 +5932,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 659.5,
+						"y": 1214
+					},
 					"visible": {
 						"height": 1155,
 						"width": 937,
@@ -4324,6 +5944,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.624,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 653.0,
 						"y": 1239
@@ -4336,6 +5960,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 685.0,
+						"y": 1239
+					},
 					"visible": {
 						"height": 1204,
 						"width": 1102,
@@ -4344,6 +5972,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.823,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 649.0,
 						"y": 1233
@@ -4354,6 +5986,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 645.0,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1218,
 						"width": 772,
@@ -4362,6 +5998,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.869,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 630.0,
 						"y": 1231
@@ -4372,6 +6012,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 662.0,
+						"y": 1231
+					},
 					"visible": {
 						"height": 1209,
 						"width": 872,
@@ -4380,6 +6024,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.589,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 635.5,
 						"y": 1234
@@ -4390,9 +6038,14 @@
 					},
 					"review_flags": [
 						"effect_heavy",
+						"weak_alignment",
 						"landscape_bounds"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 659.5,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1205,
 						"width": 1219,
@@ -4401,6 +6054,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.679,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 635.5,
 						"y": 1240
@@ -4413,6 +6070,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 667.5,
+						"y": 1240
+					},
 					"visible": {
 						"height": 1234,
 						"width": 1151,
@@ -4434,6 +6095,7 @@
 			"form": 8,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1230
@@ -4446,6 +6108,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1230
+					},
 					"visible": {
 						"height": 1211,
 						"width": 1197,
@@ -4454,6 +6120,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 628.0,
 						"y": 1241
@@ -4466,6 +6133,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 628.0,
+						"y": 1241
+					},
 					"visible": {
 						"height": 1234,
 						"width": 1218,
@@ -4474,6 +6145,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 621.0,
 						"y": 1228
@@ -4484,6 +6156,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 621.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1203,
 						"width": 950,
@@ -4492,6 +6168,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.876,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 628.0,
 						"y": 1234
@@ -4502,6 +6182,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 636.0,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1209,
 						"width": 998,
@@ -4510,6 +6194,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.816,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 628.0,
 						"y": 1225
@@ -4520,6 +6208,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 628.0,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1213,
 						"width": 1206,
@@ -4528,6 +6220,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.852,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 616.5,
 						"y": 1222
@@ -4538,6 +6234,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 656.5,
+						"y": 1222
+					},
 					"visible": {
 						"height": 1183,
 						"width": 1013,
@@ -4546,6 +6246,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.902,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 632.5,
 						"y": 1226
@@ -4556,6 +6260,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 636.5,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1199,
 						"width": 927,
@@ -4564,6 +6272,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.94,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 641.0,
 						"y": 1228
@@ -4574,6 +6286,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 645.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1198,
 						"width": 938,
@@ -4582,6 +6298,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.87,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 629.5,
 						"y": 1237
@@ -4592,6 +6312,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 629.5,
+						"y": 1237
+					},
 					"visible": {
 						"height": 1228,
 						"width": 1059,
@@ -4600,6 +6324,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.833,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 638.5,
 						"y": 1226
@@ -4610,6 +6338,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 626.5,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1202,
 						"width": 1131,
@@ -4618,6 +6350,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.761,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1227
@@ -4628,6 +6364,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 627.0,
+						"y": 1227
+					},
 					"visible": {
 						"height": 1205,
 						"width": 1098,
@@ -4636,6 +6376,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.725,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1238
@@ -4646,6 +6390,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 631.0,
+						"y": 1238
+					},
 					"visible": {
 						"height": 1222,
 						"width": 1148,
@@ -4654,6 +6402,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.667,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1195
@@ -4666,6 +6418,10 @@
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 691.0,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1134,
 						"width": 1196,
@@ -4674,6 +6430,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.866,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 632.0,
 						"y": 1180
@@ -4686,6 +6446,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 712.0,
+						"y": 1180
+					},
 					"visible": {
 						"height": 1093,
 						"width": 1166,
@@ -4694,6 +6458,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.874,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 651.0,
 						"y": 1200
@@ -4706,6 +6474,10 @@
 						"landscape_bounds"
 					],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 639.0,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1165,
 						"width": 1198,
@@ -4714,6 +6486,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.833,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 638.5,
 						"y": 1200
@@ -4724,6 +6500,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 650.5,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1165,
 						"width": 1021,
@@ -4732,6 +6512,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.849,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 619.0,
 						"y": 1216
@@ -4742,6 +6526,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 651.0,
+						"y": 1216
+					},
 					"visible": {
 						"height": 1176,
 						"width": 1082,
@@ -4750,6 +6538,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.593,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 518.0,
 						"y": 1504
@@ -4758,8 +6550,14 @@
 						"height": 1536,
 						"width": 1024
 					},
-					"review_flags": [],
+					"review_flags": [
+						"weak_alignment"
+					],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 546.0,
+						"y": 1504
+					},
 					"visible": {
 						"height": 1494,
 						"width": 978,
@@ -4768,6 +6566,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.688,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 626.5,
 						"y": 1266
@@ -4778,6 +6580,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 638.5,
+						"y": 1266
+					},
 					"visible": {
 						"height": 1258,
 						"width": 769,
@@ -4786,6 +6592,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.738,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 654.5,
 						"y": 1228
@@ -4796,6 +6606,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 666.5,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1205,
 						"width": 965,
@@ -4804,6 +6618,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.885,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 629.0,
 						"y": 1232
@@ -4814,6 +6632,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 657.0,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1201,
 						"width": 928,
@@ -4822,6 +6644,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 653.0,
 						"y": 1223
@@ -4832,6 +6655,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 653.0,
+						"y": 1223
+					},
 					"visible": {
 						"height": 1193,
 						"width": 1004,
@@ -4840,6 +6667,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 762.5,
 						"y": 855
@@ -4853,6 +6681,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 762.5,
+						"y": 855
+					},
 					"visible": {
 						"height": 710,
 						"width": 1497,
@@ -4861,6 +6693,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 771.0,
 						"y": 904
@@ -4874,6 +6707,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 771.0,
+						"y": 904
+					},
 					"visible": {
 						"height": 767,
 						"width": 1526,
@@ -4882,6 +6719,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 770.5,
 						"y": 923
@@ -4895,6 +6733,10 @@
 						"landscape_bounds"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 770.5,
+						"y": 923
+					},
 					"visible": {
 						"height": 776,
 						"width": 1529,
@@ -4903,6 +6745,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 784.5,
 						"y": 1013
@@ -4915,6 +6758,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 784.5,
+						"y": 1013
+					},
 					"visible": {
 						"height": 1002,
 						"width": 1475,
@@ -4923,6 +6770,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 630.5,
 						"y": 1216
@@ -4935,6 +6783,10 @@
 						"landscape_bounds"
 					],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 630.5,
+						"y": 1216
+					},
 					"visible": {
 						"height": 1187,
 						"width": 1231,
@@ -4943,6 +6795,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.857,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 633.5,
 						"y": 1225
@@ -4953,6 +6809,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 661.5,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1203,
 						"width": 1045,
@@ -4961,6 +6821,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.646,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 653.5,
 						"y": 1235
@@ -4973,6 +6837,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 693.5,
+						"y": 1235
+					},
 					"visible": {
 						"height": 1202,
 						"width": 1103,
@@ -4981,6 +6849,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.831,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 641.0,
 						"y": 1233
@@ -4991,6 +6863,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 649.0,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1218,
 						"width": 842,
@@ -4999,6 +6875,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.89,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 637.5,
 						"y": 1234
@@ -5009,6 +6889,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 661.5,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1219,
 						"width": 915,
@@ -5017,6 +6901,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.603,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 636.5,
 						"y": 1233
@@ -5030,6 +6918,10 @@
 						"landscape_bounds"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 656.5,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1209,
 						"width": 1221,
@@ -5038,6 +6930,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.704,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 641.5,
 						"y": 1245
@@ -5050,6 +6946,10 @@
 						"effect_heavy"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 629.5,
+						"y": 1245
+					},
 					"visible": {
 						"height": 1240,
 						"width": 1175,
@@ -5071,6 +6971,7 @@
 			"form": 9,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.0,
 						"y": 1232
@@ -5083,6 +6984,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 627.0,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1214,
 						"width": 1198,
@@ -5091,6 +6996,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1242
@@ -5103,6 +7009,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1242
+					},
 					"visible": {
 						"height": 1235,
 						"width": 1219,
@@ -5111,6 +7021,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 624.0,
 						"y": 1227
@@ -5121,6 +7032,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 624.0,
+						"y": 1227
+					},
 					"visible": {
 						"height": 1203,
 						"width": 956,
@@ -5129,6 +7044,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.879,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1235
@@ -5139,6 +7058,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 639.0,
+						"y": 1235
+					},
 					"visible": {
 						"height": 1211,
 						"width": 998,
@@ -5147,6 +7070,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.818,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 626.5,
 						"y": 1224
@@ -5157,6 +7084,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 630.5,
+						"y": 1224
+					},
 					"visible": {
 						"height": 1211,
 						"width": 1207,
@@ -5165,6 +7096,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.838,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 618.0,
 						"y": 1221
@@ -5175,6 +7110,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 658.0,
+						"y": 1221
+					},
 					"visible": {
 						"height": 1184,
 						"width": 1016,
@@ -5183,6 +7122,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.898,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 633.0,
 						"y": 1228
@@ -5193,6 +7136,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 645.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1201,
 						"width": 932,
@@ -5201,6 +7148,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.932,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 639.0,
 						"y": 1228
@@ -5211,6 +7162,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 643.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1199,
 						"width": 960,
@@ -5219,6 +7174,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.863,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 629.5,
 						"y": 1238
@@ -5229,6 +7188,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 633.5,
+						"y": 1238
+					},
 					"visible": {
 						"height": 1230,
 						"width": 1059,
@@ -5237,6 +7200,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.825,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 638.5,
 						"y": 1226
@@ -5247,6 +7214,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 630.5,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1203,
 						"width": 1131,
@@ -5255,6 +7226,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.76,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1226
@@ -5265,6 +7240,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 631.0,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1202,
 						"width": 1096,
@@ -5273,6 +7252,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.729,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.5,
 						"y": 1239
@@ -5283,6 +7266,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 635.5,
+						"y": 1239
+					},
 					"visible": {
 						"height": 1223,
 						"width": 1143,
@@ -5291,6 +7278,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.673,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1195
@@ -5303,6 +7294,10 @@
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 695.0,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1134,
 						"width": 1196,
@@ -5311,6 +7306,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.865,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 636.5,
 						"y": 1180
@@ -5323,6 +7322,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 716.5,
+						"y": 1180
+					},
 					"visible": {
 						"height": 1093,
 						"width": 1175,
@@ -5331,6 +7334,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.875,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 651.0,
 						"y": 1200
@@ -5343,6 +7350,10 @@
 						"landscape_bounds"
 					],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 651.0,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1166,
 						"width": 1198,
@@ -5351,6 +7362,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.837,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 637.5,
 						"y": 1199
@@ -5361,6 +7376,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 657.5,
+						"y": 1199
+					},
 					"visible": {
 						"height": 1164,
 						"width": 1023,
@@ -5369,6 +7388,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.848,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 619.0,
 						"y": 1216
@@ -5379,6 +7402,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 655.0,
+						"y": 1216
+					},
 					"visible": {
 						"height": 1176,
 						"width": 1082,
@@ -5387,6 +7414,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.598,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 519.5,
 						"y": 1503
@@ -5395,8 +7426,14 @@
 						"height": 1536,
 						"width": 1024
 					},
-					"review_flags": [],
+					"review_flags": [
+						"weak_alignment"
+					],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 551.5,
+						"y": 1503
+					},
 					"visible": {
 						"height": 1493,
 						"width": 973,
@@ -5405,6 +7442,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.685,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1264
@@ -5415,6 +7456,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 647.0,
+						"y": 1264
+					},
 					"visible": {
 						"height": 1257,
 						"width": 772,
@@ -5423,6 +7468,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.745,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 655.0,
 						"y": 1229
@@ -5433,6 +7482,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 667.0,
+						"y": 1229
+					},
 					"visible": {
 						"height": 1211,
 						"width": 966,
@@ -5441,6 +7494,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.882,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 628.0,
 						"y": 1232
@@ -5451,6 +7508,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 656.0,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1202,
 						"width": 928,
@@ -5459,6 +7520,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 652.0,
 						"y": 1223
@@ -5469,6 +7531,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 652.0,
+						"y": 1223
+					},
 					"visible": {
 						"height": 1192,
 						"width": 1002,
@@ -5477,6 +7543,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 762.5,
 						"y": 856
@@ -5490,6 +7557,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 762.5,
+						"y": 856
+					},
 					"visible": {
 						"height": 715,
 						"width": 1499,
@@ -5498,6 +7569,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 771.0,
 						"y": 905
@@ -5511,6 +7583,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 771.0,
+						"y": 905
+					},
 					"visible": {
 						"height": 780,
 						"width": 1524,
@@ -5519,6 +7595,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 771.0,
 						"y": 924
@@ -5533,6 +7610,10 @@
 						"touches_edge"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 771.0,
+						"y": 924
+					},
 					"visible": {
 						"height": 778,
 						"width": 1530,
@@ -5541,6 +7622,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 784.5,
 						"y": 1012
@@ -5553,6 +7635,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 784.5,
+						"y": 1012
+					},
 					"visible": {
 						"height": 1000,
 						"width": 1473,
@@ -5561,6 +7647,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 630.5,
 						"y": 1215
@@ -5573,6 +7660,10 @@
 						"landscape_bounds"
 					],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 630.5,
+						"y": 1215
+					},
 					"visible": {
 						"height": 1186,
 						"width": 1229,
@@ -5581,6 +7672,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.842,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 635.0,
 						"y": 1228
@@ -5591,6 +7686,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 663.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1213,
 						"width": 1050,
@@ -5599,6 +7698,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.684,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 653.5,
 						"y": 1235
@@ -5611,6 +7714,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 697.5,
+						"y": 1235
+					},
 					"visible": {
 						"height": 1204,
 						"width": 1103,
@@ -5619,6 +7726,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.849,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 644.0,
 						"y": 1234
@@ -5631,6 +7742,10 @@
 						"faint_fringe"
 					],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 652.0,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1224,
 						"width": 922,
@@ -5639,6 +7754,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.887,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 647.5,
 						"y": 1232
@@ -5649,6 +7768,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 663.5,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1217,
 						"width": 933,
@@ -5657,6 +7780,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.597,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 626.5,
 						"y": 1239
@@ -5666,9 +7793,14 @@
 						"width": 1254
 					},
 					"review_flags": [
-						"effect_heavy"
+						"effect_heavy",
+						"weak_alignment"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 670.5,
+						"y": 1239
+					},
 					"visible": {
 						"height": 1228,
 						"width": 1227,
@@ -5677,6 +7809,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.696,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 634.5,
 						"y": 1250
@@ -5690,6 +7826,10 @@
 						"touches_edge"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 662.5,
+						"y": 1250
+					},
 					"visible": {
 						"height": 1250,
 						"width": 1211,
@@ -5711,6 +7851,7 @@
 			"form": 10,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1232
@@ -5723,6 +7864,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1214,
 						"width": 1201,
@@ -5731,6 +7876,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1241
@@ -5743,6 +7889,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1241
+					},
 					"visible": {
 						"height": 1234,
 						"width": 1219,
@@ -5751,6 +7901,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 628.0,
 						"y": 1227
@@ -5761,6 +7912,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 628.0,
+						"y": 1227
+					},
 					"visible": {
 						"height": 1203,
 						"width": 966,
@@ -5769,6 +7924,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.873,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 635.5,
 						"y": 1233
@@ -5779,6 +7938,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 643.5,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1209,
 						"width": 1037,
@@ -5787,6 +7950,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.813,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1225
@@ -5797,6 +7964,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 635.0,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1213,
 						"width": 1208,
@@ -5805,6 +7976,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.838,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 623.0,
 						"y": 1221
@@ -5815,6 +7990,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 663.0,
+						"y": 1221
+					},
 					"visible": {
 						"height": 1185,
 						"width": 1024,
@@ -5823,6 +8002,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.884,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 631.0,
 						"y": 1229
@@ -5833,6 +8016,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 643.0,
+						"y": 1229
+					},
 					"visible": {
 						"height": 1202,
 						"width": 942,
@@ -5841,6 +8028,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.917,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 644.5,
 						"y": 1228
@@ -5851,6 +8042,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 648.5,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1199,
 						"width": 971,
@@ -5859,6 +8054,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.855,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 630.0,
 						"y": 1238
@@ -5869,6 +8068,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 630.0,
+						"y": 1238
+					},
 					"visible": {
 						"height": 1230,
 						"width": 1058,
@@ -5877,6 +8080,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.821,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 638.5,
 						"y": 1225
@@ -5887,6 +8094,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 630.5,
+						"y": 1225
+					},
 					"visible": {
 						"height": 1204,
 						"width": 1131,
@@ -5895,6 +8106,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.754,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.5,
 						"y": 1227
@@ -5905,6 +8120,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 631.5,
+						"y": 1227
+					},
 					"visible": {
 						"height": 1205,
 						"width": 1099,
@@ -5913,6 +8132,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.726,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 628.0,
 						"y": 1239
@@ -5923,6 +8146,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 632.0,
+						"y": 1239
+					},
 					"visible": {
 						"height": 1226,
 						"width": 1144,
@@ -5931,6 +8158,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.68,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 625.0,
 						"y": 1195
@@ -5943,6 +8174,10 @@
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 693.0,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1136,
 						"width": 1192,
@@ -5951,6 +8186,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.865,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 634.0,
 						"y": 1181
@@ -5963,6 +8202,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 714.0,
+						"y": 1181
+					},
 					"visible": {
 						"height": 1096,
 						"width": 1170,
@@ -5971,6 +8214,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.875,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 645.5,
 						"y": 1200
@@ -5983,6 +8230,10 @@
 						"landscape_bounds"
 					],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 641.5,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1166,
 						"width": 1211,
@@ -5991,6 +8242,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.838,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 640.5,
 						"y": 1201
@@ -6001,6 +8256,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 652.5,
+						"y": 1201
+					},
 					"visible": {
 						"height": 1166,
 						"width": 1027,
@@ -6009,6 +8268,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.847,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 624.0,
 						"y": 1215
@@ -6019,6 +8282,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 656.0,
+						"y": 1215
+					},
 					"visible": {
 						"height": 1176,
 						"width": 1090,
@@ -6027,6 +8294,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.59,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 515.5,
 						"y": 1504
@@ -6035,8 +8306,14 @@
 						"height": 1536,
 						"width": 1024
 					},
-					"review_flags": [],
+					"review_flags": [
+						"weak_alignment"
+					],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 559.5,
+						"y": 1504
+					},
 					"visible": {
 						"height": 1494,
 						"width": 977,
@@ -6045,6 +8322,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.678,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 634.5,
 						"y": 1262
@@ -6055,6 +8336,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 650.5,
+						"y": 1262
+					},
 					"visible": {
 						"height": 1255,
 						"width": 783,
@@ -6063,6 +8348,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.745,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 654.5,
 						"y": 1229
@@ -6073,6 +8362,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 670.5,
+						"y": 1229
+					},
 					"visible": {
 						"height": 1210,
 						"width": 967,
@@ -6081,6 +8374,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.882,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 627.5,
 						"y": 1233
@@ -6091,6 +8388,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 659.5,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1203,
 						"width": 929,
@@ -6099,6 +8400,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 653.0,
 						"y": 1228
@@ -6109,6 +8411,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 653.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1198,
 						"width": 1002,
@@ -6117,6 +8423,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 764.0,
 						"y": 857
@@ -6130,6 +8437,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 764.0,
+						"y": 857
+					},
 					"visible": {
 						"height": 717,
 						"width": 1508,
@@ -6138,6 +8449,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 770.0,
 						"y": 913
@@ -6151,6 +8463,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 770.0,
+						"y": 913
+					},
 					"visible": {
 						"height": 778,
 						"width": 1522,
@@ -6159,6 +8475,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 771.0,
 						"y": 925
@@ -6173,6 +8490,10 @@
 						"touches_edge"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 771.0,
+						"y": 925
+					},
 					"visible": {
 						"height": 780,
 						"width": 1530,
@@ -6181,6 +8502,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 783.0,
 						"y": 1014
@@ -6193,6 +8515,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 783.0,
+						"y": 1014
+					},
 					"visible": {
 						"height": 1004,
 						"width": 1478,
@@ -6201,6 +8527,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 631.0,
 						"y": 1215
@@ -6213,6 +8540,10 @@
 						"landscape_bounds"
 					],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 631.0,
+						"y": 1215
+					},
 					"visible": {
 						"height": 1187,
 						"width": 1228,
@@ -6221,6 +8552,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.836,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 642.5,
 						"y": 1227
@@ -6231,6 +8566,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 662.5,
+						"y": 1227
+					},
 					"visible": {
 						"height": 1218,
 						"width": 1067,
@@ -6239,6 +8578,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.687,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 654.0,
 						"y": 1236
@@ -6251,6 +8594,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 682.0,
+						"y": 1236
+					},
 					"visible": {
 						"height": 1205,
 						"width": 1104,
@@ -6259,6 +8606,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.826,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 643.0,
 						"y": 1234
@@ -6269,6 +8620,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 651.0,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1219,
 						"width": 838,
@@ -6277,6 +8632,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.888,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 636.0,
 						"y": 1233
@@ -6287,6 +8646,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 664.0,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1219,
 						"width": 908,
@@ -6295,6 +8658,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.604,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 630.0,
 						"y": 1229
@@ -6308,6 +8675,10 @@
 						"landscape_bounds"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 682.0,
+						"y": 1229
+					},
 					"visible": {
 						"height": 1226,
 						"width": 1238,
@@ -6316,6 +8687,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.706,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 627.5,
 						"y": 1243
@@ -6329,6 +8704,10 @@
 						"touches_edge"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 671.5,
+						"y": 1243
+					},
 					"visible": {
 						"height": 1243,
 						"width": 1239,
@@ -6350,6 +8729,7 @@
 			"form": 11,
 			"frames": [
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1232
@@ -6362,6 +8742,10 @@
 						"wardrobe"
 					],
 					"slot": 1,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1232
+					},
 					"visible": {
 						"height": 1215,
 						"width": 1189,
@@ -6370,6 +8754,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 628.0,
 						"y": 1242
@@ -6382,6 +8767,10 @@
 						"wardrobe"
 					],
 					"slot": 2,
+					"stable_anchor": {
+						"x": 628.0,
+						"y": 1242
+					},
 					"visible": {
 						"height": 1238,
 						"width": 1224,
@@ -6390,6 +8779,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 627.5,
 						"y": 1227
@@ -6400,6 +8790,10 @@
 					},
 					"review_flags": [],
 					"slot": 3,
+					"stable_anchor": {
+						"x": 627.5,
+						"y": 1227
+					},
 					"visible": {
 						"height": 1203,
 						"width": 963,
@@ -6408,6 +8802,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.876,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 633.0,
 						"y": 1234
@@ -6418,6 +8816,10 @@
 					},
 					"review_flags": [],
 					"slot": 4,
+					"stable_anchor": {
+						"x": 641.0,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1212,
 						"width": 1012,
@@ -6426,6 +8828,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.801,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1226
@@ -6436,6 +8842,10 @@
 					},
 					"review_flags": [],
 					"slot": 5,
+					"stable_anchor": {
+						"x": 635.0,
+						"y": 1226
+					},
 					"visible": {
 						"height": 1216,
 						"width": 1208,
@@ -6444,6 +8854,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.84,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 625.5,
 						"y": 1221
@@ -6454,6 +8868,10 @@
 					},
 					"review_flags": [],
 					"slot": 6,
+					"stable_anchor": {
+						"x": 669.5,
+						"y": 1221
+					},
 					"visible": {
 						"height": 1185,
 						"width": 1029,
@@ -6462,6 +8880,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.895,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 629.5,
 						"y": 1230
@@ -6472,6 +8894,10 @@
 					},
 					"review_flags": [],
 					"slot": 7,
+					"stable_anchor": {
+						"x": 641.5,
+						"y": 1230
+					},
 					"visible": {
 						"height": 1203,
 						"width": 943,
@@ -6480,6 +8906,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.932,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 637.0,
 						"y": 1228
@@ -6490,6 +8920,10 @@
 					},
 					"review_flags": [],
 					"slot": 8,
+					"stable_anchor": {
+						"x": 649.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1200,
 						"width": 960,
@@ -6498,6 +8932,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.857,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 630.5,
 						"y": 1238
@@ -6508,6 +8946,10 @@
 					},
 					"review_flags": [],
 					"slot": 9,
+					"stable_anchor": {
+						"x": 630.5,
+						"y": 1238
+					},
 					"visible": {
 						"height": 1230,
 						"width": 1057,
@@ -6516,6 +8958,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.824,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 638.5,
 						"y": 1227
@@ -6526,6 +8972,10 @@
 					},
 					"review_flags": [],
 					"slot": 10,
+					"stable_anchor": {
+						"x": 634.5,
+						"y": 1227
+					},
 					"visible": {
 						"height": 1208,
 						"width": 1133,
@@ -6534,6 +8984,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.751,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1228
@@ -6544,6 +8998,10 @@
 					},
 					"review_flags": [],
 					"slot": 11,
+					"stable_anchor": {
+						"x": 631.0,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1205,
 						"width": 1098,
@@ -6552,6 +9010,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.721,
+						"reference_slot": 9
+					},
 					"anchor": {
 						"x": 628.0,
 						"y": 1239
@@ -6562,6 +9024,10 @@
 					},
 					"review_flags": [],
 					"slot": 12,
+					"stable_anchor": {
+						"x": 636.0,
+						"y": 1239
+					},
 					"visible": {
 						"height": 1226,
 						"width": 1144,
@@ -6570,6 +9036,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.663,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 630.5,
 						"y": 1195
@@ -6582,6 +9052,10 @@
 						"landscape_bounds"
 					],
 					"slot": 13,
+					"stable_anchor": {
+						"x": 694.5,
+						"y": 1195
+					},
 					"visible": {
 						"height": 1136,
 						"width": 1203,
@@ -6590,6 +9064,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.869,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 631.0,
 						"y": 1181
@@ -6602,6 +9080,10 @@
 						"landscape_bounds"
 					],
 					"slot": 14,
+					"stable_anchor": {
+						"x": 715.0,
+						"y": 1181
+					},
 					"visible": {
 						"height": 1097,
 						"width": 1164,
@@ -6610,6 +9092,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.878,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 646.0,
 						"y": 1200
@@ -6622,6 +9108,10 @@
 						"landscape_bounds"
 					],
 					"slot": 15,
+					"stable_anchor": {
+						"x": 646.0,
+						"y": 1200
+					},
 					"visible": {
 						"height": 1167,
 						"width": 1210,
@@ -6630,6 +9120,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.838,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 644.0,
 						"y": 1201
@@ -6640,6 +9134,10 @@
 					},
 					"review_flags": [],
 					"slot": 16,
+					"stable_anchor": {
+						"x": 660.0,
+						"y": 1201
+					},
 					"visible": {
 						"height": 1168,
 						"width": 1036,
@@ -6648,6 +9146,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.847,
+						"reference_slot": 13
+					},
 					"anchor": {
 						"x": 624.5,
 						"y": 1215
@@ -6658,6 +9160,10 @@
 					},
 					"review_flags": [],
 					"slot": 17,
+					"stable_anchor": {
+						"x": 656.5,
+						"y": 1215
+					},
 					"visible": {
 						"height": 1176,
 						"width": 1091,
@@ -6666,6 +9172,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.581,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 517.0,
 						"y": 1504
@@ -6674,8 +9184,14 @@
 						"height": 1536,
 						"width": 1024
 					},
-					"review_flags": [],
+					"review_flags": [
+						"weak_alignment"
+					],
 					"slot": 18,
+					"stable_anchor": {
+						"x": 565.0,
+						"y": 1504
+					},
 					"visible": {
 						"height": 1494,
 						"width": 976,
@@ -6684,6 +9200,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.681,
+						"reference_slot": 18
+					},
 					"anchor": {
 						"x": 635.5,
 						"y": 1262
@@ -6694,6 +9214,10 @@
 					},
 					"review_flags": [],
 					"slot": 19,
+					"stable_anchor": {
+						"x": 651.5,
+						"y": 1262
+					},
 					"visible": {
 						"height": 1254,
 						"width": 785,
@@ -6702,6 +9226,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.733,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 652.5,
 						"y": 1229
@@ -6712,6 +9240,10 @@
 					},
 					"review_flags": [],
 					"slot": 20,
+					"stable_anchor": {
+						"x": 672.5,
+						"y": 1229
+					},
 					"visible": {
 						"height": 1212,
 						"width": 973,
@@ -6720,6 +9252,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.894,
+						"reference_slot": 20
+					},
 					"anchor": {
 						"x": 627.5,
 						"y": 1233
@@ -6730,6 +9266,10 @@
 					},
 					"review_flags": [],
 					"slot": 21,
+					"stable_anchor": {
+						"x": 659.5,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1204,
 						"width": 927,
@@ -6738,6 +9278,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 651.5,
 						"y": 1230
@@ -6748,6 +9289,10 @@
 					},
 					"review_flags": [],
 					"slot": 22,
+					"stable_anchor": {
+						"x": 651.5,
+						"y": 1230
+					},
 					"visible": {
 						"height": 1207,
 						"width": 1005,
@@ -6756,6 +9301,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 762.5,
 						"y": 857
@@ -6769,6 +9315,10 @@
 						"landscape_bounds"
 					],
 					"slot": 23,
+					"stable_anchor": {
+						"x": 762.5,
+						"y": 857
+					},
 					"visible": {
 						"height": 715,
 						"width": 1505,
@@ -6777,6 +9327,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 770.5,
 						"y": 915
@@ -6790,6 +9341,10 @@
 						"landscape_bounds"
 					],
 					"slot": 24,
+					"stable_anchor": {
+						"x": 770.5,
+						"y": 915
+					},
 					"visible": {
 						"height": 782,
 						"width": 1523,
@@ -6798,6 +9353,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 771.5,
 						"y": 925
@@ -6812,6 +9368,10 @@
 						"touches_edge"
 					],
 					"slot": 25,
+					"stable_anchor": {
+						"x": 771.5,
+						"y": 925
+					},
 					"visible": {
 						"height": 781,
 						"width": 1529,
@@ -6820,6 +9380,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 783.5,
 						"y": 1014
@@ -6832,6 +9393,10 @@
 						"landscape_bounds"
 					],
 					"slot": 26,
+					"stable_anchor": {
+						"x": 783.5,
+						"y": 1014
+					},
 					"visible": {
 						"height": 1004,
 						"width": 1479,
@@ -6840,6 +9405,7 @@
 					}
 				},
 				{
+					"alignment": null,
 					"anchor": {
 						"x": 631.0,
 						"y": 1214
@@ -6852,6 +9418,10 @@
 						"landscape_bounds"
 					],
 					"slot": 27,
+					"stable_anchor": {
+						"x": 631.0,
+						"y": 1214
+					},
 					"visible": {
 						"height": 1186,
 						"width": 1228,
@@ -6860,6 +9430,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.831,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 634.5,
 						"y": 1228
@@ -6870,6 +9444,10 @@
 					},
 					"review_flags": [],
 					"slot": 28,
+					"stable_anchor": {
+						"x": 666.5,
+						"y": 1228
+					},
 					"visible": {
 						"height": 1219,
 						"width": 1049,
@@ -6878,6 +9456,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.678,
+						"reference_slot": 28
+					},
 					"anchor": {
 						"x": 654.0,
 						"y": 1236
@@ -6890,6 +9472,10 @@
 						"airborne"
 					],
 					"slot": 29,
+					"stable_anchor": {
+						"x": 694.0,
+						"y": 1236
+					},
 					"visible": {
 						"height": 1206,
 						"width": 1106,
@@ -6898,6 +9484,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.829,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 645.0,
 						"y": 1235
@@ -6908,6 +9498,10 @@
 					},
 					"review_flags": [],
 					"slot": 30,
+					"stable_anchor": {
+						"x": 653.0,
+						"y": 1235
+					},
 					"visible": {
 						"height": 1221,
 						"width": 836,
@@ -6916,6 +9510,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.885,
+						"reference_slot": 30
+					},
 					"anchor": {
 						"x": 636.5,
 						"y": 1233
@@ -6926,6 +9524,10 @@
 					},
 					"review_flags": [],
 					"slot": 31,
+					"stable_anchor": {
+						"x": 660.5,
+						"y": 1233
+					},
 					"visible": {
 						"height": 1218,
 						"width": 911,
@@ -6934,6 +9536,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.591,
+						"reference_slot": 3
+					},
 					"anchor": {
 						"x": 627.0,
 						"y": 1234
@@ -6943,9 +9549,14 @@
 						"width": 1254
 					},
 					"review_flags": [
-						"effect_heavy"
+						"effect_heavy",
+						"weak_alignment"
 					],
 					"slot": 32,
+					"stable_anchor": {
+						"x": 667.0,
+						"y": 1234
+					},
 					"visible": {
 						"height": 1229,
 						"width": 1226,
@@ -6954,6 +9565,10 @@
 					}
 				},
 				{
+					"alignment": {
+						"iou": 0.695,
+						"reference_slot": 32
+					},
 					"anchor": {
 						"x": 630.5,
 						"y": 1244
@@ -6968,6 +9583,10 @@
 						"touches_edge"
 					],
 					"slot": 33,
+					"stable_anchor": {
+						"x": 666.5,
+						"y": 1244
+					},
 					"visible": {
 						"height": 1244,
 						"width": 1247,
@@ -6990,8 +9609,10 @@
 		"horizontal_sleep": "Lying pose; must align to the sleeping mat, not the standing ground line.",
 		"landscape_bounds": "Visible content is wider than tall.",
 		"touches_edge": "Visible content reaches the image edge; art may be cropped.",
-		"wardrobe": "Wardrobe pose; framing may differ from gameplay frames."
+		"wardrobe": "Wardrobe pose; framing may differ from gameplay frames.",
+		"weak_alignment": "Silhouette overlap with its reference frame is low (pose or drawing scale differs); check for jitter."
 	},
 	"schema_version": 1,
+	"stable_anchor_rule": "anchor shifted sideways so each frame's silhouette best overlaps its category's first frame (and that frame the idle_neutral frame). Use stable_anchor for animation; y is unchanged.",
 	"threshold_note": "Visible bounds are stable for alpha thresholds 8-64 across the sampled frames; alpha 1-7 is invisible noise and is ignored."
 }

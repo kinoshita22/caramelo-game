@@ -66,12 +66,12 @@ func test_validation_catches_bad_layouts() -> void:
 	bad["layers"][1]["asset"] = "environment.does_not_exist"
 	bad["layers"][2]["pivot"] = "middle"
 	bad["anchors"].erase("sleep")
-	bad["character"]["preview_asset"] = "ui.currency_bone_single"
+	bad["character"]["form"] = 99
 	var errors := IslandStage.validate_layout(bad, _content)
 	check_error(errors, "unknown asset 'environment.does_not_exist'")
 	check_error(errors, "pivot must be one of")
 	check_error(errors, "anchor 'sleep' missing")
-	check_error(errors, "preview_asset must be a character frame")
+	check_error(errors, "character.form must be a known form number")
 
 
 func test_outline_joins_overlapping_rects() -> void:

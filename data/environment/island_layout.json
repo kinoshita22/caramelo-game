@@ -13,18 +13,17 @@
 		{"name": "foreground_decor", "asset": "environment.foreground_decor", "pivot": "bottom_center", "position": [-600, 110], "scale": 0.3, "z": 20}
 	],
 	"character": {
-		"_comment": "One scale for every form; bigger forms simply look bigger. The preview frame is a static stand-in until the Phase 4 animator.",
+		"_comment": "One scale for every form; bigger forms simply look bigger. form is the starting form until progression (Phase 6) sets it.",
 		"scale": 0.224,
 		"z": 10,
-		"preview_asset": "character.f01.s03",
-		"preview_anchor": "idle",
+		"form": 1,
 		"shadow": {"asset": "environment.character_shadow", "pivot": "center", "scale": 0.24, "z": 9}
 	},
 	"anchors": {
 		"idle": {"position": [-40, 25]},
-		"workout": {"position": [150, 20]},
+		"workout": {"position": [60, 10]},
 		"eating": {"position": [-140, 45]},
-		"sleep": {"position": [420, 25]},
+		"sleep": {"position": [280, 30]},
 		"wardrobe": {"position": [-40, 25]},
 		"celebration": {"position": [-40, 25]}
 	},

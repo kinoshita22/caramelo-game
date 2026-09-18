@@ -615,6 +615,21 @@
 						"character.f11.s02"
 					],
 					"meaning": "Wardrobe pose; framing may differ from gameplay frames."
+				},
+				{
+					"count": 8,
+					"flag": "weak_alignment",
+					"frames": [
+						"character.f04.s13",
+						"character.f07.s32",
+						"character.f08.s18",
+						"character.f09.s18",
+						"character.f09.s32",
+						"character.f10.s18",
+						"character.f11.s18",
+						"character.f11.s32"
+					],
+					"meaning": "Silhouette overlap with its reference frame is low (pose or drawing scale differs); check for jitter."
 				}
 			],
 			"id": "frames_flagged_for_review",

@@ -91,6 +91,7 @@ const REVIEW_FLAG_MEANINGS := {
 	"effect_heavy": "Energy effects extend the visible bounds beyond the body.",
 	"landscape_bounds": "Visible content is wider than tall.",
 	"touches_edge": "Visible content reaches the image edge; art may be cropped.",
+	"weak_alignment": "Silhouette overlap with its reference frame is low (pose or drawing scale differs); check for jitter.",
 	"faint_fringe": "Faint but visible pixels (alpha 8 up to the threshold) extend noticeably beyond the bounds: glow, shadow or haze.",
 }
 ## Faint pixels beyond the thresholded bounds by more than this many pixels
@@ -100,6 +101,15 @@ const FAINT_FRINGE_PX := 8
 ## near-invisible noise at alpha 1-7 far outside the art; bounds are stable
 ## from alpha 8 to 64, which is why the default threshold is 32.
 const FRINGE_ALPHA := 8
+## Frame alignment: silhouettes are compared at 1/ALIGN_FACTOR size, shifting
+## up to ALIGN_MAX_SHIFT downscaled pixels. Each frame is registered against
+## the first slot of its category; each category's first slot against
+## ALIGN_ROOT_SLOT. Lying and wardrobe poses are not registered.
+const ALIGN_FACTOR := 4
+const ALIGN_MAX_SHIFT := 24
+const ALIGN_ROOT_SLOT := 3
+const ALIGN_SKIP_CATEGORIES := ["wardrobe", "sleep", "wake"]
+const ALIGN_WEAK_IOU := 0.6
 
 var _errors: Array[String] = []
 
@@ -132,6 +142,7 @@ func _init() -> void:
 		return
 
 	var char_assets: Array = assets.filter(func(a: Dictionary) -> bool: return a["kind"] == "character")
+	_align(char_assets)
 	var forms := _build_forms(char_assets)
 	var outputs := {
 		"catalog/asset_catalog.json": _envelope({
@@ -260,7 +271,38 @@ func _describe(source: String, pack: String, file: String, entry: Dictionary, ro
 	a["_level_min"] = form_info["level_min"]
 	a["_level_max"] = form_info["level_max"]
 	a["_filename_suffix"] = rest.trim_prefix(slot_str + "_")
+	if not SLOTS[slot - 1][0] in ALIGN_SKIP_CATEGORIES:
+		a["_runs"] = AssetIO.silhouette_runs(img, Vector2(a["anchor"]["x"], a["anchor"]["y"]), ALIGN_FACTOR, threshold)
 	return a
+
+
+## Sets "_stable_dx" (source px added to the anchor x) and "_align" on every
+## character frame so that frames of one animation overlap instead of
+## jittering sideways.
+func _align(char_assets: Array) -> void:
+	var by_form := {}
+	for a in char_assets:
+		a["_stable_dx"] = 0.0
+		a["_align"] = null
+		by_form.get_or_add(a["form"], {})[a["slot"]] = a
+	for form in by_form:
+		var frames: Dictionary = by_form[form]
+		var root: Dictionary = frames.get(ALIGN_ROOT_SLOT, {})
+		if not root.has("_runs"):
+			continue
+		var first_of := {}  # category -> first slot
+		for slot in range(1, SLOTS.size() + 1):
+			var category: String = SLOTS[slot - 1][0]
+			if category in ALIGN_SKIP_CATEGORIES or not frames.has(slot):
+				continue
+			var ref_slot: int = first_of.get_or_add(category, slot)
+			var ref: Dictionary = frames[ref_slot] if ref_slot != slot else root
+			if slot == ALIGN_ROOT_SLOT:
+				continue
+			var r := AssetIO.best_shift(ref["_runs"], frames[slot]["_runs"], ALIGN_MAX_SHIFT)
+			frames[slot]["_stable_dx"] = ref["_stable_dx"] - r["shift"] * ALIGN_FACTOR
+			frames[slot]["_align"] = {"reference_slot": ref_slot if ref_slot != slot else ALIGN_ROOT_SLOT,
+					"iou": snappedf(r["iou"], 0.001)}
 
 
 func _build_forms(char_assets: Array) -> Array:
@@ -320,6 +362,8 @@ func _build_geometry(char_assets: Array, threshold: int) -> Dictionary:
 				"image": a["image"],
 				"visible": a["visible"],
 				"anchor": a["anchor"],
+				"stable_anchor": {"x": a["anchor"]["x"] + a["_stable_dx"], "y": a["anchor"]["y"]},
+				"alignment": a["_align"],
 				"review_flags": _review_flags(a),
 			})
 		forms.append({
@@ -332,6 +376,7 @@ func _build_geometry(char_assets: Array, threshold: int) -> Dictionary:
 		"alpha_threshold": threshold,
 		"threshold_note": "Visible bounds are stable for alpha thresholds 8-64 across the sampled frames; alpha 1-7 is invisible noise and is ignored.",
 		"anchor_rule": "bottom_center_of_visible_bounds",
+		"stable_anchor_rule": "anchor shifted sideways so each frame's silhouette best overlaps its category's first frame (and that frame the idle_neutral frame). Use stable_anchor for animation; y is unchanged.",
 		"coordinates": "Source image pixels; origin top-left; y down. Place a frame so its anchor sits on the character's ground point: Sprite2D with centered=false and offset = -anchor.",
 		"canvas_rule": "Per form: the largest visible-bounds width and height across its 33 frames.",
 		"review_flag_meanings": REVIEW_FLAG_MEANINGS,
@@ -341,6 +386,9 @@ func _build_geometry(char_assets: Array, threshold: int) -> Dictionary:
 
 func _review_flags(a: Dictionary) -> Array:
 	var flags: Array = SLOT_REVIEW_FLAGS.get(a["slot"], []).duplicate()
+	var align: Variant = a.get("_align")
+	if align != null and align["iou"] < ALIGN_WEAK_IOU:
+		flags.append("weak_alignment")
 	var b: Rect2i = a["_bounds"]
 	var any: Rect2i = a["_any_alpha"]
 	if b.size.x > b.size.y:

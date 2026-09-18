@@ -20,10 +20,14 @@ godot --path caramelo-game -- --display-mode windowed        # normal window
 godot --path caramelo-game -- --display-mode windowed --window-size 1366x768 --debug-overlay
 godot --path caramelo-game -- --overlay-scale 0.75 --corner bottom_left
 godot --path caramelo-game -- --screenshot shot.png          # save a frame and quit
+godot --path caramelo-game -- --animation workout --form 6    # preview an animation
+godot --path caramelo-game -- --animation celebration --animation-frame 1   # freeze one frame
 ```
 
-F3 toggles the debug overlay: layer bounds, character boxes, anchors, stage
-bounds and the click-through outline. If the OS cannot make the window
+Keys: F3 toggles the debug overlay (layer bounds, character boxes, anchors,
+stage bounds and the click-through outline); `[` / `]` cycle animation groups;
+`-` / `=` cycle forms. Animation groups, frame rates and per-frame fixes live
+in `data/animations/animation_groups.json`. If the OS cannot make the window
 transparent, the game falls back to windowed mode.
 
 ## Repository layout
