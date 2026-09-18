@@ -1,0 +1,57 @@
+{
+	"_comment": "Hand-authored. Maps source packs to runtime folders and import profiles. Read by tools/ingest_assets.gd, tools/build_catalog.gd and the catalog validator.",
+	"runtime_root": "res://assets/runtime",
+	"packs": [
+		{
+			"match_prefix": "Caramelo_Form_",
+			"kind": "character",
+			"runtime_category": "characters",
+			"import_profile": "character_vram",
+			"shared": false
+		},
+		{
+			"match_prefix": "Caramelo_Core_Environment_Pack",
+			"kind": "environment",
+			"runtime_category": "environment",
+			"import_profile": "lossless",
+			"shared": true
+		},
+		{
+			"match_prefix": "Caramelo_Equipment_and_Food_Pack",
+			"kind": "equipment_food",
+			"runtime_category": "equipment_food",
+			"import_profile": "lossless",
+			"shared": true
+		},
+		{
+			"match_prefix": "Caramelo_UI_and_Currency_Pack",
+			"kind": "ui",
+			"runtime_category": "ui",
+			"import_profile": "lossless",
+			"shared": true
+		},
+		{
+			"match_prefix": "Caramelo_Button_State_Pack",
+			"kind": "button_state",
+			"runtime_category": "button_states",
+			"import_profile": "lossless",
+			"shared": true
+		}
+	],
+	"import_profiles": {
+		"character_vram": {
+			"_comment": "S3TC/BPTC VRAM compression: about 1 byte per pixel instead of 4. About 50 MiB per form instead of about 198 MiB.",
+			"params": {
+				"compress/mode": 2,
+				"compress/high_quality": false,
+				"mipmaps/generate": false
+			}
+		},
+		"lossless": {
+			"_comment": "Godot's default 2D import, stored uncompressed. Re-evaluate UI and props once their on-screen sizes are known.",
+			"params": {
+				"compress/mode": 0
+			}
+		}
+	}
+}

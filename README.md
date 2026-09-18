@@ -36,39 +36,69 @@ The original art lives outside the project in `../00` and is never modified.
 |---|---|---|
 | `../00/` | Original packs as delivered. Read-only. | No (outside project) |
 | `assets/source/` | Byte-for-byte local mirror of `../00`. | No (`.gdignore`) |
-| `docs/asset_inventory.*` | Inventory and validation report. | — |
-| `docs/ingestion_report.json` | Result of the last ingestion run. | — |
+| `assets/runtime/` | Hash-verified copies the game loads: the selected form plus shared packs. PNGs only. | Yes |
+| `data/catalog/runtime_layout.json` | Hand-authored: pack → runtime folder and import profile. | — |
+| `data/…` (other JSON) | Generated metadata. Regenerate, never hand-edit. | — |
+| `docs/asset_inventory.*`, `docs/ingestion_report.json` | Reports from the last runs. | — |
 
-Run these from the workspace root (the folder containing `00/` and `caramelo-game/`):
+Run these from the workspace root (the folder containing `00/` and `caramelo-game/`),
+in order:
 
 ```sh
-# Validate the original packs (exit 0 = no unexpected issues)
+# 1. Validate the original packs (exit 0 = no unexpected issues)
 godot --headless --path caramelo-game --script res://tools/asset_inventory.gd -- --source ../00 --out docs
 
-# Mirror them into assets/source (safe to rerun; never overwrites or deletes)
-godot --headless --path caramelo-game --script res://tools/ingest_assets.gd -- \
-    --source ../00 --destination assets/source --runtime-form 01
+# 2. Mirror ../00 into assets/source and stage runtime copies of one form plus
+#    the shared packs (safe to rerun; never overwrites or deletes). Rerun with
+#    another --runtime-form to add that form.
+godot --headless --path caramelo-game --script res://tools/ingest_assets.gd -- --runtime-form 01
+
+# 3. Import the runtime textures
+godot --headless --path caramelo-game --import
+
+# 4. Regenerate the metadata in data/
+godot --headless --path caramelo-game --script res://tools/build_catalog.gd
+
+# 5. Validate metadata, runtime hashes and import settings
+godot --headless --path caramelo-game --script res://tools/validate_catalog.gd
+
+# Tests
+godot --headless --path caramelo-game --script res://tests/run_tests.gd
 ```
 
-If ingestion reports a **conflict**, a file in `assets/source/` differs from the
+If ingestion reports a **conflict**, a file in `assets/` differs from the
 original. The tool leaves it alone. Inspect it, then fix it by hand.
+
+### Import profiles
+
+Before copying a runtime PNG, ingestion writes its `.import` file from the
+pack's profile in `runtime_layout.json`. It never overwrites an existing one.
+Character frames use VRAM compression (S3TC/BPTC, about 50 MiB per form instead
+of about 198 MiB). The other packs are lossless for now.
+
+### Generated metadata
+
+| File | Contents |
+|---|---|
+| `data/catalog/asset_catalog.json` | Every source image: ID, hash, size, visible bounds, anchor, runtime path (null if not staged). |
+| `data/forms/character_forms.json` | Forms 1–11: level ranges (from folder names), theme, staged state. |
+| `data/animations/animation_slots.json` | Canonical 33-slot table. The slot number is the identity. |
+| `data/animations/frame_geometry.json` | Per-frame visible bounds and bottom-centre anchor (alpha ≥ 32), per-form canvas, review flags. |
+| `data/catalog/known_source_issues.json` | Source inconsistencies and how they are handled. |
 
 ## Large source assets
 
-`assets/source/` is about 460 MiB of PNGs (430 files), and more forms and packs
-may follow. Committing that as regular git objects makes clones and history slow.
-Git LFS is **not** enabled. Choose one of these strategies:
+`assets/source/` is about 460 MiB of PNGs (430 files), so it is **kept local and
+git-ignored**. Each developer rebuilds it from the original packs with
+`tools/ingest_assets.gd`. The original packs must be shared outside git (shared
+drive, release archive).
 
-1. **Keep `assets/source/` local and ignored; version only runtime assets.**
-   Add `assets/source/` to `.gitignore`. Each developer rebuilds the mirror from
-   the original packs with `tools/ingest_assets.gd`. The repository versions only
-   the runtime assets and metadata that the game loads. This keeps the repository
-   small, but the original packs must be distributed some other way (shared drive,
-   release archive).
-2. **Track `assets/source/` with Git LFS.**
-   Run `git lfs install` and `git lfs track "assets/source/**/*.png"`, then commit
-   the updated `.gitattributes`. The originals are versioned alongside the code,
-   but every clone needs LFS and the hosting LFS quota must allow about 460 MiB
-   and up.
+The repository versions only what the build needs: `assets/runtime/` (about
+80 MiB with Form 1 and the shared packs, growing by about 40 MiB per extra form)
+and the metadata in `data/`.
 
-Either way, never edit files in `assets/source/` directly.
+Git LFS is **not** enabled. Consider it only after confirming the remote
+supports it and its storage quota fits. Setting it up means `git lfs install`,
+`git lfs track "assets/runtime/**/*.png"`, and committing `.gitattributes`.
+
+Never edit files in `assets/source/` or `assets/runtime/` directly.
