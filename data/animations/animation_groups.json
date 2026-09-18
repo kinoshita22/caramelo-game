@@ -1,11 +1,11 @@
 {
 	"_comment": "Hand-authored. Animation groups built from the 33 canonical slots (animation_slots.json). fps is frames per second at speed 1; loop groups repeat until replaced; one-shot groups play once, then switch to 'next' or hold their last frame. 'anchor' names the island_layout anchor the character stands on. Timings follow master plan Phase 4.",
 	"schema_version": 1,
-	"default_group": "sleeping",
+	"default_group": "idle",
 	"groups": {
 		"idle": {"slots": [3, 3, 4, 5, 5, 5, 5, 4, 3, 3], "fps": 12, "loop": true, "anchor": "idle"},
 		"tail_wag": {"slots": [6, 7, 6, 7, 6, 7], "fps": 3.5, "loop": false, "next": "idle", "anchor": "idle"},
-		"workout": {"slots": [9, 10, 11, 12, 11, 10], "fps": 6, "loop": true, "anchor": "workout"},
+		"workout": {"slots": [9, 10, 11, 12, 11, 10], "fps": 4, "loop": true, "anchor": "workout"},
 		"recovery": {"slots": [20, 21, 20, 21], "fps": 3, "loop": true, "anchor": "workout"},
 		"hunger": {"slots": [18, 19, 18, 19], "fps": 3, "loop": false, "next": "idle", "anchor": "eating"},
 		"eating": {"slots": [13, 14, 13, 15, 16], "fps": 5, "loop": true, "anchor": "eating"},
