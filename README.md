@@ -7,6 +7,25 @@ overlay. The design is in `../Caramelo_Game_Development_Master_Plan.md`.
 - Design canvas: 1920×1080. Development window: 1280×720.
 - Target: desktop, Windows first.
 
+## Running
+
+The game starts as a transparent, borderless overlay in the bottom-right
+corner of the primary screen. Clicks outside the island reach the desktop.
+Defaults live in `data/settings/display_defaults.json`; the island
+composition and anchors in `data/environment/island_layout.json`.
+
+```sh
+godot --path caramelo-game                                   # overlay
+godot --path caramelo-game -- --display-mode windowed        # normal window
+godot --path caramelo-game -- --display-mode windowed --window-size 1366x768 --debug-overlay
+godot --path caramelo-game -- --overlay-scale 0.75 --corner bottom_left
+godot --path caramelo-game -- --screenshot shot.png          # save a frame and quit
+```
+
+F3 toggles the debug overlay: layer bounds, character boxes, anchors, stage
+bounds and the click-through outline. If the OS cannot make the window
+transparent, the game falls back to windowed mode.
+
 ## Repository layout
 
 ```text
