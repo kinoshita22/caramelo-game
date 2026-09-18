@@ -1,0 +1,16 @@
+# Godot cache and generated files
+.godot/
+/android/
+*.translation
+
+# Export output
+/build/
+/export/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Immutable local source mirror (~460 MiB). Rebuild with tools/ingest_assets.gd.
+/assets/source/

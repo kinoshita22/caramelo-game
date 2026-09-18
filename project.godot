@@ -1,0 +1,29 @@
+; Engine configuration file.
+; Edit through Project > Project Settings where possible.
+
+config_version=5
+
+[application]
+
+config/name="My Caramelo"
+config/description="Desktop pet game with normal and live-wallpaper modes."
+run/main_scene="res://scenes/boot/boot.tscn"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+
+[display]
+
+; Design canvas is 1920x1080; 1366x768 and 1280x720-class windows scale down.
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[rendering]
+
+; Compatibility renderer: widest desktop GPU support and lowest idle cost,
+; which matters for the passive wallpaper mode.
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=1
