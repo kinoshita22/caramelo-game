@@ -6,7 +6,7 @@ config_version=5
 [application]
 
 config/name="My Caramelo"
-config/description="Desktop pet game with normal and live-wallpaper modes."
+config/description="Idle growth game shown as a transparent desktop overlay."
 run/main_scene="res://scenes/boot/boot.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
@@ -19,11 +19,22 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+; The game runs as a transparent desktop overlay by default (see PlatformService).
+window/size/borderless=true
+window/size/transparent=true
+window/per_pixel_transparency/allowed=true
+
+[autoload]
+
+ContentCatalog="*res://scripts/autoload/content_catalog.gd"
+PlatformService="*res://scripts/autoload/platform_service.gd"
 
 [rendering]
 
+viewport/transparent_background=true
+
 ; Compatibility renderer: widest desktop GPU support and lowest idle cost,
-; which matters for the passive wallpaper mode.
+; which matters for an overlay left running all day.
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/canvas_textures/default_texture_filter=1

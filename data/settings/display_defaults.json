@@ -1,0 +1,17 @@
+{
+	"_comment": "Default display settings until the settings screen and save file exist (Phases 8 and 10). Command-line overrides: --display-mode overlay|windowed, --overlay-scale, --corner, --window-size WxH, --debug-overlay.",
+	"schema_version": 1,
+	"mode": "overlay",
+	"overlay": {
+		"corner": "bottom_right",
+		"margin_px": 24,
+		"scale": 0.5,
+		"screen": -1,
+		"always_on_top": false
+	},
+	"windowed": {
+		"size": [1280, 720],
+		"background": "#8ec5e8"
+	},
+	"fit_margin": 0.04
+}
