@@ -93,9 +93,8 @@ git-ignored**. Each developer rebuilds it from the original packs with
 `tools/ingest_assets.gd`. The original packs must be shared outside git (shared
 drive, release archive).
 
-The repository versions only what the build needs: `assets/runtime/` (about
-80 MiB with Form 1 and the shared packs, growing by about 40 MiB per extra form)
-and the metadata in `data/`.
+The repository versions only what the build needs: `assets/runtime/` (all 11
+forms and the shared packs, 415 PNGs, about 460 MiB) and the metadata in `data/`.
 
 Git LFS is **not** enabled. Consider it only after confirming the remote
 supports it and its storage quota fits. Setting it up means `git lfs install`,

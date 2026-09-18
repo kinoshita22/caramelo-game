@@ -17,9 +17,9 @@
 			"id": "form_02",
 			"level_max": 19,
 			"level_min": 10,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_02_Levels_10-19",
 			"source_pack": "Caramelo_Form_02_Levels_10-19",
-			"staged": false,
+			"staged": true,
 			"theme": "Natural progression"
 		},
 		{
@@ -28,9 +28,9 @@
 			"id": "form_03",
 			"level_max": 29,
 			"level_min": 20,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_03_Levels_20-29",
 			"source_pack": "Caramelo_Form_03_Levels_20-29",
-			"staged": false,
+			"staged": true,
 			"theme": "Natural progression"
 		},
 		{
@@ -39,9 +39,9 @@
 			"id": "form_04",
 			"level_max": 39,
 			"level_min": 30,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_04_Levels_30-39",
 			"source_pack": "Caramelo_Form_04_Levels_30-39",
-			"staged": false,
+			"staged": true,
 			"theme": "Natural progression"
 		},
 		{
@@ -50,9 +50,9 @@
 			"id": "form_05",
 			"level_max": 49,
 			"level_min": 40,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_05_Levels_40-49",
 			"source_pack": "Caramelo_Form_05_Levels_40-49",
-			"staged": false,
+			"staged": true,
 			"theme": "Natural progression"
 		},
 		{
@@ -61,9 +61,9 @@
 			"id": "form_06",
 			"level_max": 59,
 			"level_min": 50,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_06_Levels_50-59",
 			"source_pack": "Caramelo_Form_06_Levels_50-59",
-			"staged": false,
+			"staged": true,
 			"theme": "Natural progression"
 		},
 		{
@@ -72,9 +72,9 @@
 			"id": "form_07",
 			"level_max": 69,
 			"level_min": 60,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_07_Levels_60-69",
 			"source_pack": "Caramelo_Form_07_Levels_60-69",
-			"staged": false,
+			"staged": true,
 			"theme": "Natural progression"
 		},
 		{
@@ -83,9 +83,9 @@
 			"id": "form_08",
 			"level_max": 79,
 			"level_min": 70,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_08_Levels_70-79",
 			"source_pack": "Caramelo_Form_08_Levels_70-79",
-			"staged": false,
+			"staged": true,
 			"theme": "Peak natural progression"
 		},
 		{
@@ -94,9 +94,9 @@
 			"id": "form_09",
 			"level_max": 89,
 			"level_min": 80,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_09_Levels_80-89",
 			"source_pack": "Caramelo_Form_09_Levels_80-89",
-			"staged": false,
+			"staged": true,
 			"theme": "Golden energy"
 		},
 		{
@@ -105,9 +105,9 @@
 			"id": "form_10",
 			"level_max": 99,
 			"level_min": 90,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_10_Levels_90-99",
 			"source_pack": "Caramelo_Form_10_Levels_90-99",
-			"staged": false,
+			"staged": true,
 			"theme": "Earth and stone"
 		},
 		{
@@ -116,9 +116,9 @@
 			"id": "form_11",
 			"level_max": 100,
 			"level_min": 100,
-			"runtime_dir": null,
+			"runtime_dir": "res://assets/runtime/characters/Caramelo_Form_11_Level_100",
 			"source_pack": "Caramelo_Form_11_Level_100",
-			"staged": false,
+			"staged": true,
 			"theme": "Cosmic"
 		}
 	],

@@ -23,13 +23,14 @@ func test_all_363_character_frames_catalogued() -> void:
 	check_eq(frames.size(), 363, "character frames")
 
 
-func test_form_1_and_shared_packs_staged() -> void:
+func test_all_forms_and_shared_packs_staged() -> void:
 	var staged: Array = _data["catalog"].get("assets", []).filter(
 			func(a: Dictionary) -> bool: return a["runtime_path"] != null)
 	var character := staged.filter(func(a: Dictionary) -> bool: return a["kind"] == "character")
-	check_eq(character.size(), 33, "staged character frames")
-	check(character.all(func(a: Dictionary) -> bool: return int(a["form"]) == 1), "only Form 1 frames staged")
+	check_eq(character.size(), 363, "staged character frames")
 	check_eq(staged.size() - character.size(), 52, "staged shared assets")
+	check(_data["forms"].get("forms", []).all(func(f: Dictionary) -> bool: return f["staged"] == true),
+			"every form marked staged")
 
 
 func test_manifest_form_values_not_propagated() -> void:

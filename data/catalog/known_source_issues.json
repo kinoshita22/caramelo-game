@@ -449,7 +449,7 @@
 						"character.f04.s32",
 						"character.f09.s30"
 					],
-					"meaning": "Faint but visible pixels (alpha >= FRINGE_ALPHA, below the threshold) extend noticeably beyond the bounds: glow, shadow or haze."
+					"meaning": "Faint but visible pixels (alpha 8 up to the threshold) extend noticeably beyond the bounds: glow, shadow or haze."
 				},
 				{
 					"count": 33,

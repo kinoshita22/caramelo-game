@@ -6986,7 +6986,7 @@
 	"review_flag_meanings": {
 		"airborne": "Character is off the ground; a bottom anchor would pull him down to the floor.",
 		"effect_heavy": "Energy effects extend the visible bounds beyond the body.",
-		"faint_fringe": "Faint but visible pixels (alpha >= FRINGE_ALPHA, below the threshold) extend noticeably beyond the bounds: glow, shadow or haze.",
+		"faint_fringe": "Faint but visible pixels (alpha 8 up to the threshold) extend noticeably beyond the bounds: glow, shadow or haze.",
 		"horizontal_sleep": "Lying pose; must align to the sleeping mat, not the standing ground line.",
 		"landscape_bounds": "Visible content is wider than tall.",
 		"touches_edge": "Visible content reaches the image edge; art may be cropped.",
