@@ -63,6 +63,7 @@ static func load_settings(defaults: Variant, argv: PackedStringArray) -> Diction
 			"--animation": s["animation"] = v; i += 1
 			"--form": s["form"] = int(v); i += 1
 			"--animation-frame": s["animation_frame"] = int(v); i += 1
+			"--time-scale": s["time_scale"] = float(v); i += 1
 		i += 1
 	if not s["mode"] in MODES:
 		push_warning("Unknown display mode '%s'; using overlay." % s["mode"])

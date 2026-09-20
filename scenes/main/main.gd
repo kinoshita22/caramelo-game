@@ -8,6 +8,7 @@ extends Node2D
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
 ## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
+## --time-scale N (speeds up the autonomous loop for testing),
 ## --screenshot path.png [--screenshot-frames N].
 
 const DebugOverlay := preload("res://scripts/components/stage_debug_overlay.gd")
@@ -16,6 +17,7 @@ const DisplayLayout := preload("res://scripts/components/display_layout.gd")
 const LAYOUT_PATH := "res://data/environment/island_layout.json"
 const SETTINGS_PATH := "res://data/settings/display_defaults.json"
 const ANIMATIONS_PATH := "res://data/animations/animation_groups.json"
+const BEHAVIOUR_PATH := "res://data/balance/behaviour.json"
 
 @onready var stage: Node2D = $Stage
 
@@ -40,9 +42,18 @@ func _ready() -> void:
 			if settings.has("form"):
 				stage.animator.set_form(int(settings["form"]))
 			if settings.has("animation"):
+				# Previewing one group: leave the autonomous loop switched off.
 				stage.animator.play(settings["animation"], true)
-			if settings.has("animation_frame"):
-				stage.animator.freeze_at(int(settings["animation_frame"]))
+				if settings.has("animation_frame"):
+					stage.animator.freeze_at(int(settings["animation_frame"]))
+			else:
+				var balance: Variant = content.read_json(BEHAVIOUR_PATH)
+				if typeof(balance) != TYPE_DICTIONARY:
+					errors.append("behaviour.json missing or invalid")
+				else:
+					errors.append_array(stage.start_behaviour(balance))
+			if settings.has("time_scale"):
+				Engine.time_scale = maxf(0.01, float(settings["time_scale"]))
 	if not content.is_valid():
 		errors.append_array(content.errors)
 	if not errors.is_empty():
@@ -133,6 +144,9 @@ func _process(_delta: float) -> void:
 		"window_position": [DisplayServer.window_get_position().x, DisplayServer.window_get_position().y],
 		"hit_polygon_window_px": Array(window_polygon).map(func(p: Vector2) -> Array: return [p.x, p.y]),
 		"stage_scale": stage.scale.x,
+		"animation": {"group": stage.animator.group, "slot": stage.animator.current_slot()} if stage.animator != null else {},
+		"behaviour": {"state": stage.behaviour.loop.state, "energy": stage.behaviour.loop.energy,
+				"satiety": stage.behaviour.loop.satiety} if stage.behaviour != null else {},
 	}
 	var f := FileAccess.open(path.get_basename() + ".json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(meta, "\t"))
