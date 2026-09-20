@@ -154,6 +154,21 @@ func test_wardrobe_pauses_the_cycle_until_closed() -> void:
 	check(_run_until(loop, "workout") > 0.0, "cycle resumes")
 
 
+func test_a_listener_can_redirect_the_loop_when_an_action_completes() -> void:
+	# Regression: action_completed used to fire before the state changed, so
+	# the loop overwrote the celebration or evolution asked for here.
+	var loop := _loop()
+	loop.action_completed.connect(func(s: String) -> void:
+		if s == "workout":
+			loop.request("celebration"))
+	_run_until(loop, "workout")
+	var t := 0.0
+	while t < 60.0 and loop.state == "workout":
+		loop.tick(STEP)
+		t += STEP
+	check_eq(loop.state, "celebration", "the requested celebration survived")
+
+
 func test_action_completed_only_on_natural_endings() -> void:
 	var loop := _loop()
 	var completed: Array = []

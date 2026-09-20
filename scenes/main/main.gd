@@ -4,11 +4,11 @@ extends Node2D
 ## click-through region in sync.
 ##
 ## Keys: F3 toggles the debug overlay; [ and ] cycle animation groups;
-## - and = cycle forms (preview only until progression exists).
+## - and = cycle forms; X grants a level's worth of XP (debugging).
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
 ## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
-## --time-scale N (speeds up the autonomous loop for testing),
+## --time-scale N (speeds up the autonomous loop for testing), --start-level N,
 ## --screenshot path.png [--screenshot-frames N].
 
 const DebugOverlay := preload("res://scripts/components/stage_debug_overlay.gd")
@@ -39,6 +39,9 @@ func _ready() -> void:
 	else:
 		errors = stage.build(layout, content, animations)
 		if errors.is_empty():
+			if settings.has("start_level"):
+				GameState.progression.restore(int(settings["start_level"]), 0.0, GameState.progression.bones)
+				stage.animator.set_form(GameState.progression.form)
 			if settings.has("form"):
 				stage.animator.set_form(int(settings["form"]))
 			if settings.has("animation"):
@@ -51,7 +54,8 @@ func _ready() -> void:
 				if typeof(balance) != TYPE_DICTIONARY:
 					errors.append("behaviour.json missing or invalid")
 				else:
-					errors.append_array(stage.start_behaviour(balance))
+					errors.append_array(GameState.errors)
+					errors.append_array(stage.start_behaviour(balance, GameState.progression))
 			if settings.has("time_scale"):
 				Engine.time_scale = maxf(0.01, float(settings["time_scale"]))
 	if not content.is_valid():
@@ -110,6 +114,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			_cycle_group(1 if event.keycode == KEY_BRACKETRIGHT else -1)
 		KEY_MINUS, KEY_EQUAL:
 			_cycle_form(1 if event.keycode == KEY_EQUAL else -1)
+		KEY_X:
+			var p: RefCounted = GameState.progression
+			p.add_xp(maxf(p.xp_to_next(p.level) - p.xp, 1.0))
 
 
 func _cycle_group(step: int) -> void:
@@ -146,7 +153,10 @@ func _process(_delta: float) -> void:
 		"stage_scale": stage.scale.x,
 		"animation": {"group": stage.animator.group, "slot": stage.animator.current_slot()} if stage.animator != null else {},
 		"behaviour": {"state": stage.behaviour.loop.state, "energy": stage.behaviour.loop.energy,
-				"satiety": stage.behaviour.loop.satiety} if stage.behaviour != null else {},
+				"satiety": stage.behaviour.loop.satiety,
+				"recent_states": stage.behaviour.loop.history().slice(-14)} if stage.behaviour != null else {},
+		"progression": {"level": GameState.progression.level, "form": GameState.progression.form,
+				"bones": GameState.progression.bones, "xp": GameState.progression.xp},
 	}
 	var f := FileAccess.open(path.get_basename() + ".json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(meta, "\t"))
