@@ -181,6 +181,9 @@ static func _check_frame(fr: Dictionary, canvas: Dictionary, ctx: String) -> Arr
 		errors.append("%s: anchor lies outside the image" % ctx)
 	if vis["width"] > canvas["width"] or vis["height"] > canvas["height"]:
 		errors.append("%s: visible rect larger than the form canvas" % ctx)
+	var stable: Variant = fr.get("stable_anchor")
+	if typeof(stable) != TYPE_DICTIONARY or not _is_num(stable.get("x")) or not _is_num(stable.get("y")):
+		errors.append("%s: stable_anchor missing" % ctx)
 	if typeof(fr.get("review_flags")) != TYPE_ARRAY:
 		errors.append("%s: review_flags must be an array" % ctx)
 	return errors

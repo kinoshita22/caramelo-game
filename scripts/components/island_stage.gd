@@ -5,6 +5,7 @@ extends Node2D
 ## surface. The static functions hold all placement maths so tests can run
 ## them without a scene tree or textures.
 
+const CharacterAnimator := preload("res://scripts/components/character_animator.gd")
 const REQUIRED_ANCHORS := ["idle", "workout", "eating", "sleep", "wardrobe", "celebration"]
 const PIVOTS := ["bottom_center", "top_center", "center"]
 
@@ -18,13 +19,18 @@ var hit_polygon := PackedVector2Array()
 var placements: Array = []
 ## Reserved character boxes at every anchor, stage units.
 var character_boxes: Array[Rect2] = []
+## Moves between anchors; holds the shadow and the animator.
+var character: Node2D
+var animator: Node2D
 
 
-## Validates the layout, then creates one Sprite2D per layer plus the
-## preview character and shadow. Returns validation errors; builds nothing
-## when there are any.
-func build(layout: Dictionary, content: RefCounted) -> Array[String]:
+## Validates the layout and animation groups, then creates one Sprite2D per
+## layer plus the animated character and its shadow. Returns validation
+## errors; builds nothing when there are any.
+func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -> Array[String]:
 	var errors := validate_layout(layout, content)
+	if errors.is_empty():
+		errors = CharacterAnimator.validate_groups(animation_doc, layout["anchors"].keys())
 	if not errors.is_empty():
 		return errors
 	for child in get_children():
@@ -42,16 +48,29 @@ func build(layout: Dictionary, content: RefCounted) -> Array[String]:
 	for p in placements:
 		add_child(_sprite(p["name"], content.texture(p["asset"]), p))
 	var ch: Dictionary = layout["character"]
-	var at: Vector2 = anchors[ch.get("preview_anchor", "idle")]
+	character = Node2D.new()
+	character.name = "Character"
+	character.z_index = int(ch["z"])
+	add_child(character)
 	var shadow: Dictionary = ch["shadow"]
-	add_child(_sprite("character_shadow", content.texture(shadow["asset"]),
-			place(content.asset(shadow["asset"]), shadow, at)))
-	var frame: Dictionary = content.asset(ch["preview_asset"])
-	add_child(_sprite("character_preview", content.texture(ch["preview_asset"]), {
-		"pivot": Vector2(frame["anchor"]["x"], frame["anchor"]["y"]),
-		"position": at, "scale": float(ch["scale"]), "z": int(ch["z"]),
-	}))
+	var shadow_sprite := _sprite("Shadow", content.texture(shadow["asset"]),
+			place(content.asset(shadow["asset"]), shadow, Vector2.ZERO))
+	shadow_sprite.z_index = int(shadow.get("z", 0)) - int(ch["z"])
+	character.add_child(shadow_sprite)
+	animator = CharacterAnimator.new()
+	animator.name = "Animator"
+	animator.setup(content, animation_doc, float(ch["scale"]))
+	animator.group_started.connect(func(_g: String, anchor_name: String) -> void: move_character_to(anchor_name))
+	character.add_child(animator)
+	animator.set_form(int(ch["form"]))
+	animator.play(animation_doc["default_group"])
 	return errors
+
+
+## Places the character on a named anchor; unknown names are ignored.
+func move_character_to(anchor_name: String) -> void:
+	if character != null and anchors.has(anchor_name):
+		character.position = anchors[anchor_name]
 
 
 func _sprite(node_name: String, tex: Texture2D, p: Dictionary) -> Sprite2D:
@@ -89,11 +108,11 @@ static func validate_layout(layout: Dictionary, content: RefCounted) -> Array[St
 			errors.append("island_layout: character.scale must be a positive number")
 		if not _is_num(ch.get("z")):
 			errors.append("island_layout: character.z must be a number")
-		var preview: Dictionary = content.asset(str(ch.get("preview_asset", "")))
-		if preview.get("kind") != "character":
-			errors.append("island_layout: character.preview_asset must be a character frame")
-		elif preview.get("runtime_path") == null:
-			errors.append("island_layout: character.preview_asset is not staged")
+		var form_ok: bool = _is_num(ch.get("form")) and int(ch["form"]) in content.form_numbers()
+		if not form_ok:
+			errors.append("island_layout: character.form must be a known form number")
+		elif content.asset(CharacterAnimator.frame_id(int(ch["form"]), 1)).get("runtime_path") == null:
+			errors.append("island_layout: character.form %d is not staged" % int(ch["form"]))
 		if typeof(ch.get("shadow")) != TYPE_DICTIONARY:
 			errors.append("island_layout: character.shadow must be an object")
 		else:
@@ -107,8 +126,6 @@ static func validate_layout(layout: Dictionary, content: RefCounted) -> Array[St
 		for a in REQUIRED_ANCHORS:
 			if not anchors.has(a) or not _is_vec(anchors[a].get("position") if typeof(anchors[a]) == TYPE_DICTIONARY else null):
 				errors.append("island_layout: anchor '%s' missing or has no [x, y] position" % a)
-		if typeof(ch) == TYPE_DICTIONARY and not anchors.has(ch.get("preview_anchor", "idle")):
-			errors.append("island_layout: character.preview_anchor names an unknown anchor")
 	return errors
 
 

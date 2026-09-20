@@ -184,3 +184,80 @@ static func import_sidecar(params: Dictionary) -> String:
 		if not String(k).begins_with("_"):
 			lines.append("%s=%s" % [k, var_to_str(json_int(params[k]))])
 	return "\n".join(lines) + "\n"
+
+
+## Silhouette of an image as horizontal runs per row, measured from `anchor`
+## after downscaling by `factor`. Used to register animation frames against
+## each other. Returns {"rows": {row: PackedInt32Array [x0, x1, ...]}, "area": int}.
+static func silhouette_runs(img: Image, anchor: Vector2, factor: int, threshold: int) -> Dictionary:
+	var small := img.duplicate() as Image
+	if small.get_format() != Image.FORMAT_RGBA8:
+		small.convert(Image.FORMAT_RGBA8)
+	small.resize(maxi(1, img.get_width() / factor), maxi(1, img.get_height() / factor), Image.INTERPOLATE_BILINEAR)
+	var w := small.get_width()
+	var data := small.get_data()
+	var ax := roundi(anchor.x / factor)
+	var ay := roundi(anchor.y / factor)
+	var rows := {}
+	var area := 0
+	for y in small.get_height():
+		var runs := PackedInt32Array()
+		var start := -1
+		var i := y * w * 4 + 3
+		for x in w:
+			var on := data[i] >= threshold
+			if on and start < 0:
+				start = x
+			elif not on and start >= 0:
+				runs.append_array([start - ax, x - ax])
+				area += x - start
+				start = -1
+			i += 4
+		if start >= 0:
+			runs.append_array([start - ax, w - ax])
+			area += w - start
+		if not runs.is_empty():
+			rows[y - ay] = runs
+	return {"rows": rows, "area": area}
+
+
+## Horizontal shift (in downscaled pixels) that best overlaps silhouette `b`
+## onto `a`, searching -max_shift..max_shift. Returns {"shift", "iou"}.
+static func best_shift(a: Dictionary, b: Dictionary, max_shift: int) -> Dictionary:
+	var best := {"shift": 0, "iou": -1.0}
+	var tried := {}
+	# Coarse pass in steps of 2, then refine around the best.
+	for s in range(-max_shift, max_shift + 1, 2):
+		best = _better(best, s, _iou(a, b, s))
+		tried[s] = true
+	var centre: int = best["shift"]
+	for s in [centre - 1, centre + 1]:
+		if absi(s) <= max_shift and not tried.has(s):
+			best = _better(best, s, _iou(a, b, s))
+	return best
+
+
+static func _better(best: Dictionary, s: int, iou: float) -> Dictionary:
+	# Ties prefer the smaller shift so identical frames stay put.
+	if iou > best["iou"] + 1e-9 or (is_equal_approx(iou, best["iou"]) and absi(s) < absi(best["shift"])):
+		return {"shift": s, "iou": iou}
+	return best
+
+
+static func _iou(a: Dictionary, b: Dictionary, s: int) -> float:
+	var inter := 0
+	var ra_rows: Dictionary = a["rows"]
+	var rb_rows: Dictionary = b["rows"]
+	for row in ra_rows:
+		if not rb_rows.has(row):
+			continue
+		var ra: PackedInt32Array = ra_rows[row]
+		var rb: PackedInt32Array = rb_rows[row]
+		for i in range(0, ra.size(), 2):
+			for j in range(0, rb.size(), 2):
+				var lo := maxi(ra[i], rb[j] + s)
+				var hi := mini(ra[i + 1], rb[j + 1] + s)
+				if hi > lo:
+					inter += hi - lo
+	var union: int = a["area"] + b["area"] - inter
+	return float(inter) / union if union > 0 else 0.0
