@@ -49,6 +49,9 @@ func _draw() -> void:
 			"state: %s (%.1fs)" % [loop.state, loop.time_in_state],
 			"energy: %.0f   satiety: %.0f" % [loop.energy, loop.satiety],
 			"recent: " + " > ".join(loop.history().slice(-4)),
+			"level %d (form %d)   xp %.0f/%.0f   bones %d" % [GameState.progression.level,
+					GameState.progression.form, GameState.progression.xp,
+					GameState.progression.xp_to_next(GameState.progression.level), GameState.progression.bones],
 		])
 		var at: Vector2 = stage.bounds.position + Vector2(8, 22) * px
 		for line in lines:

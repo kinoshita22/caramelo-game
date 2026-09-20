@@ -28,6 +28,7 @@ window/per_pixel_transparency/allowed=true
 
 ContentCatalog="*res://scripts/autoload/content_catalog.gd"
 PlatformService="*res://scripts/autoload/platform_service.gd"
+GameState="*res://scripts/autoload/game_state.gd"
 
 [rendering]
 

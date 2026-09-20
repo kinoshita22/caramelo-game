@@ -72,9 +72,10 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 
 ## Starts the autonomous loop. Returns validation errors for the balance
 ## data; without it the character just keeps playing its current group.
-func start_behaviour(balance: Dictionary) -> Array[String]:
+func start_behaviour(balance: Dictionary, progression: RefCounted = null) -> Array[String]:
 	var driver: Node = BehaviourDriver.new()
 	driver.name = "Behaviour"
+	driver.progression = progression
 	var errors: Array[String] = driver.setup(animator, balance)
 	if not errors.is_empty():
 		driver.free()

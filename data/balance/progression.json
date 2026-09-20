@@ -1,0 +1,16 @@
+{
+	"_comment": "Hand-authored XP, level and bone tuning (master plan Phase 6). XP needed to leave level L is round(base * L^exponent), so early levels pass quickly and level 99 takes about 1500 XP. With workout_xp 18 and the Phase 5 session length, reaching level 100 takes roughly 25 hours of running. That total is the client's decision (plan §14); change workout_xp to retune it without touching the curve's shape. Phase 7 upgrades will shorten it.",
+	"schema_version": 1,
+	"xp_curve": {
+		"base": 3.0,
+		"exponent": 1.35,
+		"max_level": 100
+	},
+	"rewards": {
+		"workout_xp": 18.0,
+		"workout_bones": 3,
+		"_comment_bonus": "Every Nth completed workout pays a bonus and plays the bone-reward animation.",
+		"bonus_bones_every": 5,
+		"bonus_bones": 10
+	}
+}

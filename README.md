@@ -23,6 +23,7 @@ godot --path caramelo-game -- --screenshot shot.png          # save a frame and 
 godot --path caramelo-game -- --animation workout --form 6    # preview an animation
 godot --path caramelo-game -- --animation celebration --animation-frame 1   # freeze one frame
 godot --path caramelo-game -- --time-scale 10 --debug-overlay  # watch the loop quickly
+godot --path caramelo-game -- --start-level 50               # start further along
 ```
 
 Caramelo runs himself: he trains, recovers, eats when hungry and sleeps when
@@ -31,9 +32,17 @@ values; they steer the cycle, are never shown as a chore, and never cause
 failure. Rates, thresholds and durations live in `data/balance/behaviour.json`.
 Passing `--animation` switches the loop off so a single group can be inspected.
 
+Finished workouts pay XP and bones. Levels run 1-100 and the look changes
+every ten levels, through an evolution the player cannot interrupt. Levels
+never drop, leftover XP carries into the next level, and at level 100 the
+curve ends while bones keep coming. The curve and payouts live in
+`data/balance/progression.json`; reaching 100 currently takes roughly 25
+hours of running, which is a placeholder until the client decides (plan §14)
+and is retuned with `rewards.workout_xp` alone.
+
 Keys: F3 toggles the debug overlay (layer bounds, character boxes, anchors,
 stage bounds and the click-through outline); `[` / `]` cycle animation groups;
-`-` / `=` cycle forms. Animation groups, frame rates and per-frame fixes live
+`-` / `=` cycle forms; `X` grants a level's worth of XP. Animation groups, frame rates and per-frame fixes live
 in `data/animations/animation_groups.json`. If the OS cannot make the window
 transparent, the game falls back to windowed mode.
 
@@ -115,6 +124,7 @@ of about 198 MiB). The other packs are lossless for now.
 | `data/animations/animation_slots.json` | Canonical 33-slot table. The slot number is the identity. |
 | `data/animations/animation_groups.json` | Hand-authored animation groups, frame rates and per-frame fixes. |
 | `data/balance/behaviour.json` | Hand-authored tuning for the autonomous loop. |
+| `data/balance/progression.json` | Hand-authored XP curve and workout payouts. |
 | `data/animations/frame_geometry.json` | Per-frame visible bounds and bottom-centre anchor (alpha ≥ 32), per-form canvas, review flags. |
 | `data/catalog/known_source_issues.json` | Source inconsistencies and how they are handled. |
 

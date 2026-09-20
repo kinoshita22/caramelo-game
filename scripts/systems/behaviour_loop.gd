@@ -10,7 +10,8 @@ extends RefCounted
 ## evolution, and no state ever ends in failure or lost progress.
 
 signal state_changed(from_state: String, to_state: String)
-## Emitted when a state ran to its natural end (not when interrupted).
+## Emitted after a state ran to its natural end (not when interrupted), once
+## the next state is already in place, so listeners may request another.
 signal action_completed(state_name: String)
 
 const IDLE := "idle"
@@ -198,14 +199,16 @@ func _enter(next: String, natural: bool) -> void:
 		push_error("BehaviourLoop: %s -> %s is not an allowed transition" % [state, next])
 		return
 	var previous := state
-	if natural:
-		action_completed.emit(previous)
 	state = next
 	time_in_state = 0.0
 	_history.append(next)
 	if _history.size() > 200:
 		_history = _history.slice(_history.size() - 200)
 	state_changed.emit(previous, next)
+	# Emitted last so a listener may request an event state (a level-up
+	# celebration, say) without this call overwriting it afterwards.
+	if natural:
+		action_completed.emit(previous)
 
 
 ## Checks behaviour.json: every state maps to a known animation group, and
