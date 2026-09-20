@@ -25,6 +25,10 @@ var character: Node2D
 var animator: Node2D
 ## Decides what Caramelo does; null until start_behaviour() succeeds.
 var behaviour: Node
+## Slot name -> Sprite2D for runtime-swapped props (dumbbells, meal).
+var prop_sprites := {}
+var _prop_slots := {}
+var _content: RefCounted
 
 
 ## Validates the layout and animation groups, then creates one Sprite2D per
@@ -38,6 +42,9 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 		return errors
 	for child in get_children():
 		child.queue_free()
+	_content = content
+	_prop_slots = layout.get("prop_slots", {})
+	prop_sprites.clear()
 	placements = compute_placements(layout, content)
 	anchors = compute_anchors(layout)
 	character_boxes = compute_character_boxes(layout, content, anchors)
@@ -72,10 +79,11 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 
 ## Starts the autonomous loop. Returns validation errors for the balance
 ## data; without it the character just keeps playing its current group.
-func start_behaviour(balance: Dictionary, progression: RefCounted = null) -> Array[String]:
+func start_behaviour(balance: Dictionary, progression: RefCounted = null, economy: RefCounted = null) -> Array[String]:
 	var driver: Node = BehaviourDriver.new()
 	driver.name = "Behaviour"
 	driver.progression = progression
+	driver.economy = economy
 	var errors: Array[String] = driver.setup(animator, balance)
 	if not errors.is_empty():
 		driver.free()
@@ -83,6 +91,30 @@ func start_behaviour(balance: Dictionary, progression: RefCounted = null) -> Arr
 	add_child(driver)
 	behaviour = driver
 	return errors
+
+
+## Shows an asset in a prop slot (or hides the slot with an empty id).
+func set_prop(slot_name: String, asset_id: String) -> void:
+	var spec: Variant = _prop_slots.get(slot_name)
+	if typeof(spec) != TYPE_DICTIONARY or _content == null:
+		return
+	var asset: Dictionary = _content.asset(asset_id)
+	if asset.is_empty() or asset.get("runtime_path") == null:
+		if prop_sprites.has(slot_name):
+			prop_sprites[slot_name].visible = false
+		return
+	var placement := place(asset, spec, _vec(spec["position"]))
+	if not prop_sprites.has(slot_name):
+		var sprite := _sprite("Prop_" + slot_name, null, placement)
+		add_child(sprite)
+		prop_sprites[slot_name] = sprite
+	var s: Sprite2D = prop_sprites[slot_name]
+	s.visible = true
+	s.texture = _content.texture(asset_id)
+	s.offset = -placement["pivot"]
+	s.position = placement["position"]
+	s.scale = Vector2.ONE * placement["scale"]
+	s.z_index = placement["z"]
 
 
 ## Places the character on a named anchor; unknown names are ignored.

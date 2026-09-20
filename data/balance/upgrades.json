@@ -1,0 +1,16 @@
+{
+	"_comment": "Hand-authored bone upgrades (master plan Phase 7, client stats). Cost to buy level L is round(base * growth^(L-1)); effect_per_level is applied as described in 'effect'. All four stats speed up the same loop, so buying any of them shortens the climb to level 100.",
+	"schema_version": 1,
+	"cost": {"base": 25, "growth": 1.28},
+	"max_level": 20,
+	"stats": {
+		"strength": {"label": "Strength", "effect": "xp_per_workout", "effect_per_level": 0.04,
+			"icon": "ui.stat_strength_icon"},
+		"endurance": {"label": "Endurance", "effect": "workout_length", "effect_per_level": 0.03,
+			"icon": null},
+		"speed": {"label": "Speed", "effect": "rep_speed", "effect_per_level": 0.03,
+			"icon": null},
+		"recovery": {"label": "Recovery", "effect": "rest_length", "effect_per_level": 0.025,
+			"icon": null}
+	}
+}

@@ -105,6 +105,15 @@ func add_xp(amount: float) -> Dictionary:
 	return result
 
 
+## Spends bones if there are enough. Balances never go negative.
+func spend_bones(amount: int) -> bool:
+	if amount < 0 or amount > bones:
+		return false
+	bones -= amount
+	bones_changed.emit(bones)
+	return true
+
+
 func add_bones(amount: int) -> void:
 	if amount <= 0:
 		return
@@ -114,9 +123,9 @@ func add_bones(amount: int) -> void:
 
 ## Pays out one finished workout session. Every Nth session pays a bonus,
 ## which is the cue for the bone-reward animation.
-func complete_workout() -> Dictionary:
+func complete_workout(xp_multiplier: float = 1.0) -> Dictionary:
 	workouts_completed += 1
-	var result := add_xp(float(_rewards["workout_xp"]))
+	var result := add_xp(float(_rewards["workout_xp"]) * maxf(xp_multiplier, 0.0))
 	var earned := int(_rewards["workout_bones"])
 	var every := int(_rewards.get("bonus_bones_every", 0))
 	var bonus := every > 0 and workouts_completed % every == 0

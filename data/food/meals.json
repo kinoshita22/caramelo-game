@@ -1,0 +1,12 @@
+{
+	"_comment": "Hand-authored food tiers (master plan Phase 7). satiety_multiplier scales how fast a meal fills him up; eating_speed shortens the meal itself. The snack is cheap and quick but thin.",
+	"schema_version": 1,
+	"default": "basic_kibble",
+	"tiers": [
+		{"id": "basic_kibble", "label": "Kibble", "asset": "equipment_food.meal_basic_kibble", "cost": 0, "unlock_level": 1, "satiety_multiplier": 1.0, "eating_speed": 1.0},
+		{"id": "snack_banana_oats", "label": "Banana snack", "asset": "equipment_food.snack_banana_oats", "cost": 80, "unlock_level": 5, "satiety_multiplier": 0.8, "eating_speed": 1.4},
+		{"id": "balanced_chicken", "label": "Chicken bowl", "asset": "equipment_food.meal_balanced_chicken", "cost": 250, "unlock_level": 15, "satiety_multiplier": 1.25, "eating_speed": 1.1},
+		{"id": "fish_sweet_potato", "label": "Fish and sweet potato", "asset": "equipment_food.meal_fish_sweet_potato", "cost": 800, "unlock_level": 40, "satiety_multiplier": 1.5, "eating_speed": 1.2},
+		{"id": "premium_beef_pumpkin", "label": "Beef and pumpkin", "asset": "equipment_food.meal_premium_beef_pumpkin", "cost": 2500, "unlock_level": 70, "satiety_multiplier": 1.8, "eating_speed": 1.35}
+	]
+}

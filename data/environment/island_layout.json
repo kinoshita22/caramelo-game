@@ -19,6 +19,11 @@
 		"form": 1,
 		"shadow": {"asset": "environment.character_shadow", "pivot": "center", "scale": 0.24, "z": 9}
 	},
+	"prop_slots": {
+		"_comment": "Filled at runtime from the equipped dumbbell tier and the active meal. The pair Caramelo lifts is painted into his frames, so this is what the island shows.",
+		"dumbbells": {"position": [180, 95], "pivot": "bottom_center", "scale": 0.1, "z": 7},
+		"meal": {"position": [-175, 88], "pivot": "bottom_center", "scale": 0.1, "z": 7}
+	},
 	"anchors": {
 		"idle": {"position": [-40, 25]},
 		"workout": {"position": [60, 10]},

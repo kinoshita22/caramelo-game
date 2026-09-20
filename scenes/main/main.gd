@@ -4,7 +4,9 @@ extends Node2D
 ## click-through region in sync.
 ##
 ## Keys: F3 toggles the debug overlay; [ and ] cycle animation groups;
-## - and = cycle forms; X grants a level's worth of XP (debugging).
+## - and = cycle forms; X grants a level's worth of XP, B grants bones,
+## 1-4 upgrade the four stats, E and F buy the next dumbbell or meal.
+## Preview options: --bones N, --equip <tier id>, --meal <tier id>.
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
 ## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
@@ -39,6 +41,15 @@ func _ready() -> void:
 	else:
 		errors = stage.build(layout, content, animations)
 		if errors.is_empty():
+			GameState.economy.modifiers_changed.connect(_refresh_props)
+			if settings.has("bones"):
+				GameState.progression.add_bones(int(settings["bones"]))
+			# Preview options: hand over a tier without paying for it.
+			for pair in [["equip", "equipment"], ["meal", "food"]]:
+				if settings.has(pair[0]):
+					GameState.economy.restore({"owned_%s" % pair[1]: [settings[pair[0]]],
+							("equipped_equipment" if pair[1] == "equipment" else "active_food"): settings[pair[0]]})
+			_refresh_props()
 			if settings.has("start_level"):
 				GameState.progression.restore(int(settings["start_level"]), 0.0, GameState.progression.bones)
 				stage.animator.set_form(GameState.progression.form)
@@ -55,7 +66,7 @@ func _ready() -> void:
 					errors.append("behaviour.json missing or invalid")
 				else:
 					errors.append_array(GameState.errors)
-					errors.append_array(stage.start_behaviour(balance, GameState.progression))
+					errors.append_array(stage.start_behaviour(balance, GameState.progression, GameState.economy))
 			if settings.has("time_scale"):
 				Engine.time_scale = maxf(0.01, float(settings["time_scale"]))
 	if not content.is_valid():
@@ -117,6 +128,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_X:
 			var p: RefCounted = GameState.progression
 			p.add_xp(maxf(p.xp_to_next(p.level) - p.xp, 1.0))
+		KEY_B:
+			GameState.progression.add_bones(500)
+		KEY_1, KEY_2, KEY_3, KEY_4:
+			var stat: String = GameState.economy.STATS[event.keycode - KEY_1]
+			print("upgrade %s: %s" % [stat, GameState.economy.upgrade_stat(stat, GameState.progression)])
+		KEY_E, KEY_F:
+			_buy_next(event.keycode == KEY_E)
 
 
 func _cycle_group(step: int) -> void:
@@ -125,6 +143,25 @@ func _cycle_group(step: int) -> void:
 	var names: Array = stage.animator.groups.keys()
 	var i := names.find(stage.animator.group)
 	stage.animator.play(names[posmod(i + step, names.size())], true)
+
+
+## Shows the equipped dumbbells and the active meal on the island.
+func _refresh_props() -> void:
+	stage.set_prop("dumbbells", GameState.economy.equipment_tier().get("asset", ""))
+	stage.set_prop("meal", GameState.economy.food_tier().get("asset", ""))
+
+
+## Buys the next affordable dumbbell tier (equipment) or meal (food).
+func _buy_next(equipment: bool) -> void:
+	var e: RefCounted = GameState.economy
+	var level: int = GameState.progression.level
+	var ids: Array = e.available_equipment(level) if equipment else e.available_food(level)
+	if ids.is_empty():
+		print("nothing to buy yet")
+		return
+	var result: Dictionary = e.buy_equipment(ids[0], GameState.progression, level) if equipment \
+			else e.buy_food(ids[0], GameState.progression, level)
+	print("buy %s: %s" % [ids[0], result])
 
 
 func _cycle_form(step: int) -> void:
@@ -157,6 +194,8 @@ func _process(_delta: float) -> void:
 				"recent_states": stage.behaviour.loop.history().slice(-14)} if stage.behaviour != null else {},
 		"progression": {"level": GameState.progression.level, "form": GameState.progression.form,
 				"bones": GameState.progression.bones, "xp": GameState.progression.xp},
+		"economy": {"stats": GameState.economy.stat_levels, "equipped": GameState.economy.equipped_equipment,
+				"food": GameState.economy.active_food, "modifiers": GameState.economy.modifiers()},
 	}
 	var f := FileAccess.open(path.get_basename() + ".json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(meta, "\t"))

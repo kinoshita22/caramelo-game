@@ -1,0 +1,13 @@
+{
+	"_comment": "Hand-authored dumbbell tiers (master plan Phase 7). The pair Caramelo holds is painted into the character frames, so the equipped tier is shown as a prop beside the rack and multiplies workout XP. unlock_level follows the form themes: golden at 80, stone at 90, cosmic at 100.",
+	"schema_version": 1,
+	"default": "starter_light",
+	"tiers": [
+		{"id": "starter_light", "label": "Starter", "asset": "equipment_food.dumbbells_starter_light", "cost": 0, "unlock_level": 1, "xp_multiplier": 1.0},
+		{"id": "standard_iron", "label": "Iron", "asset": "equipment_food.dumbbells_standard_iron", "cost": 150, "unlock_level": 10, "xp_multiplier": 1.15},
+		{"id": "heavy_pro", "label": "Pro", "asset": "equipment_food.dumbbells_heavy_pro", "cost": 600, "unlock_level": 40, "xp_multiplier": 1.35},
+		{"id": "golden_energy", "label": "Golden", "asset": "equipment_food.dumbbells_golden_energy", "cost": 2000, "unlock_level": 80, "xp_multiplier": 1.6},
+		{"id": "stone_titan", "label": "Stone", "asset": "equipment_food.dumbbells_stone_titan", "cost": 6000, "unlock_level": 90, "xp_multiplier": 1.9},
+		{"id": "cosmic_final", "label": "Cosmic", "asset": "equipment_food.dumbbells_cosmic_final", "cost": 15000, "unlock_level": 100, "xp_multiplier": 2.3}
+	]
+}
