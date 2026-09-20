@@ -11,6 +11,8 @@ var enabled := true
 ## Progression system; when set, finished workouts pay XP and bones and can
 ## trigger a celebration, a bone reward or an evolution.
 var progression: RefCounted
+## Economy system; when set, its upgrades scale the loop and the payouts.
+var economy: RefCounted
 
 
 ## Returns validation errors for data/balance/behaviour.json.
@@ -23,6 +25,9 @@ func setup(character_animator: Node2D, balance: Dictionary) -> Array[String]:
 	loop.action_completed.connect(_on_action_completed)
 	if progression != null:
 		animator.set_form(progression.form)
+	if economy != null:
+		economy.modifiers_changed.connect(apply_modifiers)
+		apply_modifiers()
 	_play_current()
 	return errors
 
@@ -44,13 +49,35 @@ func _on_state_changed(_from: String, to: String) -> void:
 func _on_action_completed(state_name: String) -> void:
 	if state_name != BehaviourLoop.WORKOUT or progression == null:
 		return
-	var result: Dictionary = progression.complete_workout()
+	var xp_multiplier: float = economy.modifiers()["xp_multiplier"] if economy != null else 1.0
+	var result: Dictionary = progression.complete_workout(xp_multiplier)
 	if result["form_changed"]:
 		loop.request(BehaviourLoop.PRE_EVOLUTION)
 	elif result["levels_gained"] > 0:
 		loop.request(BehaviourLoop.CELEBRATION)
 	elif result["bonus"]:
 		loop.request(BehaviourLoop.REWARD)
+
+
+## Pushes the economy's multipliers into the loop and the animator.
+func apply_modifiers() -> void:
+	if economy == null:
+		return
+	var m: Dictionary = economy.modifiers()
+	loop.duration_scale = {
+		"workout_session": m["workout_duration_scale"],
+		"recovery": m["rest_duration_scale"],
+		"sleep_enter": m["rest_duration_scale"],
+		"wake": m["rest_duration_scale"],
+		"eating_max": m["eating_duration_scale"],
+	}
+	loop.rate_scale = {
+		"energy_restore_recovery": m["rest_rate_scale"],
+		"energy_restore_sleeping": m["rest_rate_scale"],
+		"satiety_restore_eating": m["satiety_rate_scale"],
+	}
+	if animator != null:
+		animator.speed_scale = m["animation_speed"]
 
 
 func _play_current() -> void:

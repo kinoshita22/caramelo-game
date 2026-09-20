@@ -24,6 +24,8 @@ godot --path caramelo-game -- --animation workout --form 6    # preview an anima
 godot --path caramelo-game -- --animation celebration --animation-frame 1   # freeze one frame
 godot --path caramelo-game -- --time-scale 10 --debug-overlay  # watch the loop quickly
 godot --path caramelo-game -- --start-level 50               # start further along
+godot --path caramelo-game -- --bones 5000 --equip cosmic_final --meal premium_beef_pumpkin
+godot --path caramelo-game -- --open-shop food --bones 900     # open a purchase window
 ```
 
 Caramelo runs himself: he trains, recovers, eats when hungry and sleeps when
@@ -40,9 +42,20 @@ curve ends while bones keep coming. The curve and payouts live in
 hours of running, which is a placeholder until the client decides (plan §14)
 and is retuned with `rewards.workout_xp` alone.
 
+Bones buy four upgrades (strength, endurance, speed, recovery), six dumbbell
+tiers and five meals, all in `data/balance/upgrades.json`,
+`data/equipment/dumbbells.json` and `data/food/meals.json`. Upgrades only ever
+speed the loop up: more XP per workout, longer sessions, quicker reps, shorter
+rests and better meals. Nothing can be sold and no balance goes negative.
+Clicking the dumbbell rack opens the dumbbell window; clicking the food
+station opens the food window. Each lists every tier with its own art, what it
+does and its price; owned tiers carry a green background and the one in use is
+marked. Bought items are shown in those windows only, never on the island.
+
 Keys: F3 toggles the debug overlay (layer bounds, character boxes, anchors,
 stage bounds and the click-through outline); `[` / `]` cycle animation groups;
-`-` / `=` cycle forms; `X` grants a level's worth of XP. Animation groups, frame rates and per-frame fixes live
+`-` / `=` cycle forms; `X` grants a level's worth of XP; `B` grants bones;
+`1`-`4` buy stat upgrades; `E` / `F` buy the next dumbbell tier or meal. Animation groups, frame rates and per-frame fixes live
 in `data/animations/animation_groups.json`. If the OS cannot make the window
 transparent, the game falls back to windowed mode.
 
@@ -125,6 +138,7 @@ of about 198 MiB). The other packs are lossless for now.
 | `data/animations/animation_groups.json` | Hand-authored animation groups, frame rates and per-frame fixes. |
 | `data/balance/behaviour.json` | Hand-authored tuning for the autonomous loop. |
 | `data/balance/progression.json` | Hand-authored XP curve and workout payouts. |
+| `data/balance/upgrades.json`, `data/equipment/dumbbells.json`, `data/food/meals.json` | Hand-authored bone costs and their effects. |
 | `data/animations/frame_geometry.json` | Per-frame visible bounds and bottom-centre anchor (alpha ≥ 32), per-form canvas, review flags. |
 | `data/catalog/known_source_issues.json` | Source inconsistencies and how they are handled. |
 

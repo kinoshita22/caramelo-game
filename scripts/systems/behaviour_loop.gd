@@ -65,6 +65,10 @@ var satiety := 100.0
 ## Set while a wardrobe preview is open; the cycle waits.
 var paused := false
 
+## Multipliers from the economy: duration key -> factor, rate key -> factor.
+var duration_scale := {}
+var rate_scale := {}
+
 var _rates := {}
 var _thresholds := {}
 var _durations := {}
@@ -134,21 +138,31 @@ func close_wardrobe() -> void:
 func _update_drivers(delta: float) -> void:
 	match state:
 		WORKOUT:
-			energy -= float(_rates["energy_drain_workout"]) * delta
-			satiety -= float(_rates["satiety_drain_workout"]) * delta
+			energy -= _rate("energy_drain_workout") * delta
+			satiety -= _rate("satiety_drain_workout") * delta
 		RECOVERY:
-			energy += float(_rates["energy_restore_recovery"]) * delta
-			satiety -= float(_rates["satiety_drain_default"]) * delta
+			energy += _rate("energy_restore_recovery") * delta
+			satiety -= _rate("satiety_drain_default") * delta
 		SLEEPING, SLEEP_ENTER:
-			energy += float(_rates["energy_restore_sleeping"]) * delta
-			satiety -= float(_rates["satiety_drain_sleeping"]) * delta
+			energy += _rate("energy_restore_sleeping") * delta
+			satiety -= _rate("satiety_drain_sleeping") * delta
 		EATING:
-			satiety += float(_rates["satiety_restore_eating"]) * delta
+			satiety += _rate("satiety_restore_eating") * delta
 		_:
-			energy -= float(_rates["energy_drain_default"]) * delta
-			satiety -= float(_rates["satiety_drain_default"]) * delta
+			energy -= _rate("energy_drain_default") * delta
+			satiety -= _rate("satiety_drain_default") * delta
 	energy = clampf(energy, 0.0, 100.0)
 	satiety = clampf(satiety, 0.0, 100.0)
+
+
+## Tuned rate, after any economy multiplier.
+func _rate(key: String) -> float:
+	return float(_rates[key]) * float(rate_scale.get(key, 1.0))
+
+
+## Tuned duration, after any economy multiplier.
+func _duration(key: String) -> float:
+	return float(_durations[key]) * float(duration_scale.get(key, 1.0))
 
 
 ## The state to move to now, or "" to stay.
@@ -156,31 +170,31 @@ func _next_state() -> String:
 	var elapsed := time_in_state
 	match state:
 		WORKOUT:
-			if elapsed >= float(_durations["workout_session"]) or energy <= float(_thresholds["tired"]):
+			if elapsed >= _duration("workout_session") or energy <= float(_thresholds["tired"]):
 				return RECOVERY
 		RECOVERY:
-			if elapsed >= float(_durations["recovery"]):
+			if elapsed >= _duration("recovery"):
 				return _decide()
 		HUNGER_CUE:
-			if elapsed >= float(_durations["hunger_cue"]):
+			if elapsed >= _duration("hunger_cue"):
 				return EATING
 		EATING:
-			if satiety >= float(_thresholds["full"]) or elapsed >= float(_durations["eating_max"]):
+			if satiety >= float(_thresholds["full"]) or elapsed >= _duration("eating_max"):
 				return SLEEP_ENTER if energy <= float(_thresholds["tired"]) else WORKOUT
 		SLEEP_ENTER:
-			if elapsed >= float(_durations["sleep_enter"]):
+			if elapsed >= _duration("sleep_enter"):
 				return SLEEPING
 		SLEEPING:
-			if energy >= float(_thresholds["rested"]) or elapsed >= float(_durations["sleeping_max"]):
+			if energy >= float(_thresholds["rested"]) or elapsed >= _duration("sleeping_max"):
 				return WAKE
 		WAKE:
-			if elapsed >= float(_durations["wake"]):
+			if elapsed >= _duration("wake"):
 				return HUNGER_CUE if satiety <= float(_thresholds["hungry"]) else WORKOUT
 		IDLE:
-			if elapsed >= float(_durations["idle_gap"]):
+			if elapsed >= _duration("idle_gap"):
 				return _decide()
 		CELEBRATION, REWARD, EVOLUTION, PRE_EVOLUTION:
-			if elapsed >= float(_durations[state]):
+			if elapsed >= _duration(state):
 				return TRANSITIONS[state][0]
 	return ""
 

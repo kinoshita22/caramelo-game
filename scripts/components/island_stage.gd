@@ -25,6 +25,9 @@ var character: Node2D
 var animator: Node2D
 ## Decides what Caramelo does; null until start_behaviour() succeeds.
 var behaviour: Node
+## Layer name -> Sprite2D.
+var layer_sprites := {}
+var _content: RefCounted
 
 
 ## Validates the layout and animation groups, then creates one Sprite2D per
@@ -38,6 +41,7 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 		return errors
 	for child in get_children():
 		child.queue_free()
+	_content = content
 	placements = compute_placements(layout, content)
 	anchors = compute_anchors(layout)
 	character_boxes = compute_character_boxes(layout, content, anchors)
@@ -48,8 +52,11 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 	bounds = union_rect(rects).grow(float(layout.get("stage_padding", 0)))
 	hit_polygon = outline(rects, float(layout.get("passthrough", {}).get("padding", 0)))
 
+	layer_sprites.clear()
 	for p in placements:
-		add_child(_sprite(p["name"], content.texture(p["asset"]), p))
+		var sprite := _sprite(p["name"], content.texture(p["asset"]), p)
+		layer_sprites[p["name"]] = sprite
+		add_child(sprite)
 	var ch: Dictionary = layout["character"]
 	character = Node2D.new()
 	character.name = "Character"
@@ -72,10 +79,11 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 
 ## Starts the autonomous loop. Returns validation errors for the balance
 ## data; without it the character just keeps playing its current group.
-func start_behaviour(balance: Dictionary, progression: RefCounted = null) -> Array[String]:
+func start_behaviour(balance: Dictionary, progression: RefCounted = null, economy: RefCounted = null) -> Array[String]:
 	var driver: Node = BehaviourDriver.new()
 	driver.name = "Behaviour"
 	driver.progression = progression
+	driver.economy = economy
 	var errors: Array[String] = driver.setup(animator, balance)
 	if not errors.is_empty():
 		driver.free()
@@ -83,6 +91,17 @@ func start_behaviour(balance: Dictionary, progression: RefCounted = null) -> Arr
 	add_child(driver)
 	behaviour = driver
 	return errors
+
+
+## The click action of the topmost layer under a stage-space point, or "".
+static func click_action_at(placements: Array, point: Vector2) -> String:
+	var best := ""
+	var best_z := -1000000
+	for p in placements:
+		if p["click_action"] != "" and p["rect"].has_point(point) and int(p["z"]) > best_z:
+			best = p["click_action"]
+			best_z = int(p["z"])
+	return best
 
 
 ## Places the character on a named anchor; unknown names are ignored.
@@ -174,6 +193,7 @@ static func compute_placements(layout: Dictionary, content: RefCounted) -> Array
 		var p := place(content.asset(l["asset"]), l, _vec(l["position"]))
 		p["name"] = l["name"]
 		p["asset"] = l["asset"]
+		p["click_action"] = l.get("click_action", "")
 		out.append(p)
 	return out
 
