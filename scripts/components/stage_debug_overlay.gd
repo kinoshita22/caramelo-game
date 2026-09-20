@@ -16,6 +16,12 @@ func _ready() -> void:
 	z_as_relative = false
 
 
+func _process(_delta: float) -> void:
+	# The readout below changes every frame, so redraw while it is shown.
+	if visible:
+		queue_redraw()
+
+
 func _draw() -> void:
 	if stage == null:
 		return
@@ -36,5 +42,17 @@ func _draw() -> void:
 		var at: Vector2 = stage.anchors[n]
 		draw_circle(at, 6 * px, ANCHOR_COLOR)
 		draw_string(font, at + Vector2(8, -8) * px, n, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, ANCHOR_COLOR)
+	var behaviour: Node = stage.behaviour
+	if behaviour != null:
+		var loop: RefCounted = behaviour.loop
+		var lines := PackedStringArray([
+			"state: %s (%.1fs)" % [loop.state, loop.time_in_state],
+			"energy: %.0f   satiety: %.0f" % [loop.energy, loop.satiety],
+			"recent: " + " > ".join(loop.history().slice(-4)),
+		])
+		var at: Vector2 = stage.bounds.position + Vector2(8, 22) * px
+		for line in lines:
+			draw_string(font, at, line, HORIZONTAL_ALIGNMENT_LEFT, -1, int(16 * px), BOUNDS_COLOR)
+			at.y += 20 * px
 	draw_line(Vector2(-20, 0) * px, Vector2(20, 0) * px, Color.WHITE, px)
 	draw_line(Vector2(0, -20) * px, Vector2(0, 20) * px, Color.WHITE, px)

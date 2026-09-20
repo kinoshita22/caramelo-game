@@ -6,6 +6,7 @@ extends Node2D
 ## them without a scene tree or textures.
 
 const CharacterAnimator := preload("res://scripts/components/character_animator.gd")
+const BehaviourDriver := preload("res://scripts/components/behaviour_driver.gd")
 const REQUIRED_ANCHORS := ["idle", "workout", "eating", "sleep", "wardrobe", "celebration"]
 const PIVOTS := ["bottom_center", "top_center", "center"]
 
@@ -22,6 +23,8 @@ var character_boxes: Array[Rect2] = []
 ## Moves between anchors; holds the shadow and the animator.
 var character: Node2D
 var animator: Node2D
+## Decides what Caramelo does; null until start_behaviour() succeeds.
+var behaviour: Node
 
 
 ## Validates the layout and animation groups, then creates one Sprite2D per
@@ -64,6 +67,20 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 	character.add_child(animator)
 	animator.set_form(int(ch["form"]))
 	animator.play(animation_doc["default_group"])
+	return errors
+
+
+## Starts the autonomous loop. Returns validation errors for the balance
+## data; without it the character just keeps playing its current group.
+func start_behaviour(balance: Dictionary) -> Array[String]:
+	var driver: Node = BehaviourDriver.new()
+	driver.name = "Behaviour"
+	var errors: Array[String] = driver.setup(animator, balance)
+	if not errors.is_empty():
+		driver.free()
+		return errors
+	add_child(driver)
+	behaviour = driver
 	return errors
 
 

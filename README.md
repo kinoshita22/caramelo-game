@@ -22,7 +22,14 @@ godot --path caramelo-game -- --overlay-scale 0.75 --corner bottom_left
 godot --path caramelo-game -- --screenshot shot.png          # save a frame and quit
 godot --path caramelo-game -- --animation workout --form 6    # preview an animation
 godot --path caramelo-game -- --animation celebration --animation-frame 1   # freeze one frame
+godot --path caramelo-game -- --time-scale 10 --debug-overlay  # watch the loop quickly
 ```
+
+Caramelo runs himself: he trains, recovers, eats when hungry and sleeps when
+tired, with no input from the player. Energy and satiety are hidden 0-100
+values; they steer the cycle, are never shown as a chore, and never cause
+failure. Rates, thresholds and durations live in `data/balance/behaviour.json`.
+Passing `--animation` switches the loop off so a single group can be inspected.
 
 Keys: F3 toggles the debug overlay (layer bounds, character boxes, anchors,
 stage bounds and the click-through outline); `[` / `]` cycle animation groups;
@@ -106,6 +113,8 @@ of about 198 MiB). The other packs are lossless for now.
 | `data/catalog/asset_catalog.json` | Every source image: ID, hash, size, visible bounds, anchor, runtime path (null if not staged). |
 | `data/forms/character_forms.json` | Forms 1–11: level ranges (from folder names), theme, staged state. |
 | `data/animations/animation_slots.json` | Canonical 33-slot table. The slot number is the identity. |
+| `data/animations/animation_groups.json` | Hand-authored animation groups, frame rates and per-frame fixes. |
+| `data/balance/behaviour.json` | Hand-authored tuning for the autonomous loop. |
 | `data/animations/frame_geometry.json` | Per-frame visible bounds and bottom-centre anchor (alpha ≥ 32), per-form canvas, review flags. |
 | `data/catalog/known_source_issues.json` | Source inconsistencies and how they are handled. |
 
