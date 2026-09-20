@@ -105,9 +105,11 @@ func test_loop_and_speed_scale() -> void:
 	var a := _animator()
 	a.play("workout")
 	a.speed_scale = 2.0
-	a.tick(0.5 / 2.0 + 0.001)  # 3 frames at 6 fps x2 = 0.25 s
+	var g: Dictionary = _doc["groups"]["workout"]
+	var frame_time: float = 1.0 / (float(g["fps"]) * 2.0)
+	a.tick(3 * frame_time + frame_time * 0.01)
 	check_eq(a.frame_index, 3, "speed scale doubles frame rate")
-	a.tick(0.25)
+	a.tick((g["slots"].size() - 3) * frame_time)
 	check_eq(a.frame_index, 0, "workout loops")
 	check_eq(a.group, "workout", "still working out")
 	a.free()
