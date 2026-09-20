@@ -3,10 +3,13 @@ extends Node2D
 ## windowed mode, keeps the stage fitted to the window and keeps the
 ## click-through region in sync.
 ##
+## Clicking the dumbbell rack or the food station opens its purchase window.
+##
 ## Keys: F3 toggles the debug overlay; [ and ] cycle animation groups;
 ## - and = cycle forms; X grants a level's worth of XP, B grants bones,
 ## 1-4 upgrade the four stats, E and F buy the next dumbbell or meal.
-## Preview options: --bones N, --equip <tier id>, --meal <tier id>.
+## Preview options: --bones N, --equip <tier id>, --meal <tier id>,
+## --open-shop equipment|food.
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
 ## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
@@ -14,6 +17,8 @@ extends Node2D
 ## --screenshot path.png [--screenshot-frames N].
 
 const DebugOverlay := preload("res://scripts/components/stage_debug_overlay.gd")
+const IslandStage := preload("res://scripts/components/island_stage.gd")
+const ShopModal := preload("res://scripts/components/shop_modal.gd")
 const PlatformServiceScript := preload("res://scripts/autoload/platform_service.gd")
 const DisplayLayout := preload("res://scripts/components/display_layout.gd")
 const LAYOUT_PATH := "res://data/environment/island_layout.json"
@@ -26,6 +31,7 @@ const BEHAVIOUR_PATH := "res://data/balance/behaviour.json"
 var settings: Dictionary = {}
 var window_polygon := PackedVector2Array()
 var _debug: Node2D
+var _shop: Control
 var _screenshot_path := ""
 var _screenshot_frames := 0
 
@@ -41,7 +47,6 @@ func _ready() -> void:
 	else:
 		errors = stage.build(layout, content, animations)
 		if errors.is_empty():
-			GameState.economy.modifiers_changed.connect(_refresh_props)
 			if settings.has("bones"):
 				GameState.progression.add_bones(int(settings["bones"]))
 			# Preview options: hand over a tier without paying for it.
@@ -49,7 +54,6 @@ func _ready() -> void:
 				if settings.has(pair[0]):
 					GameState.economy.restore({"owned_%s" % pair[1]: [settings[pair[0]]],
 							("equipped_equipment" if pair[1] == "equipment" else "active_food"): settings[pair[0]]})
-			_refresh_props()
 			if settings.has("start_level"):
 				GameState.progression.restore(int(settings["start_level"]), 0.0, GameState.progression.bones)
 				stage.animator.set_form(GameState.progression.form)
@@ -81,11 +85,41 @@ func _ready() -> void:
 	_debug.visible = settings["debug_overlay"]
 	stage.add_child(_debug)
 
+	_build_ui()
 	_apply_mode()
 	get_viewport().size_changed.connect(_refit)
 	_refit()
+	if settings.has("open_shop"):
+		_open_shop("shop_%s" % settings["open_shop"])
 	_screenshot_path = settings.get("screenshot", "")
 	_screenshot_frames = int(settings.get("screenshot_frames", 10))
+
+
+## Click-through windows live on their own layer, above the island.
+func _build_ui() -> void:
+	var layer := CanvasLayer.new()
+	layer.name = "UI"
+	add_child(layer)
+	_shop = ShopModal.new()
+	_shop.name = "Shop"
+	_shop.visible = false
+	_shop.closed.connect(_on_shop_closed)
+	layer.add_child(_shop)
+
+
+func _open_shop(action: String) -> void:
+	_shop.open(ContentCatalog.data, GameState.economy, GameState.progression, action)
+	# While a window is open the whole window takes clicks, not just the island.
+	PlatformService.set_hit_polygon(_window_rect_polygon())
+
+
+func _on_shop_closed() -> void:
+	PlatformService.set_hit_polygon(window_polygon)
+
+
+func _window_rect_polygon() -> PackedVector2Array:
+	var size := Vector2(DisplayServer.window_get_size())
+	return PackedVector2Array([Vector2.ZERO, Vector2(size.x, 0), size, Vector2(0, size.y)])
 
 
 func _apply_mode() -> void:
@@ -115,6 +149,11 @@ func _refit() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var action := IslandStage.click_action_at(stage.placements, stage.to_local(get_global_mouse_position()))
+		if action != "":
+			_open_shop(action)
+		return
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
 	match event.keycode:
@@ -143,12 +182,6 @@ func _cycle_group(step: int) -> void:
 	var names: Array = stage.animator.groups.keys()
 	var i := names.find(stage.animator.group)
 	stage.animator.play(names[posmod(i + step, names.size())], true)
-
-
-## Shows the equipped dumbbells and the active meal on the island.
-func _refresh_props() -> void:
-	stage.set_prop("dumbbells", GameState.economy.equipment_tier().get("asset", ""))
-	stage.set_prop("meal", GameState.economy.food_tier().get("asset", ""))
 
 
 ## Buys the next affordable dumbbell tier (equipment) or meal (food).

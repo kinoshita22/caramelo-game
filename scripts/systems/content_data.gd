@@ -12,6 +12,7 @@ var docs: Dictionary = {}
 var errors: Array[String] = []
 var _assets: Dictionary = {}
 var _textures: Dictionary = {}
+var _icons: Dictionary = {}
 
 
 ## Loads and validates data_root (a res:// path). Returns true when valid.
@@ -20,6 +21,7 @@ func load_from(data_root: String = "res://data") -> bool:
 	errors = CatalogValidator.validate(docs, false)
 	_assets.clear()
 	_textures.clear()
+	_icons.clear()
 	if not errors.is_empty():
 		return false
 	for a in docs["catalog"]["assets"]:
@@ -74,6 +76,56 @@ func form_numbers() -> Array[int]:
 		out.append(int(f["form"]))
 	out.sort()
 	return out
+
+
+## Texture cropped to the asset's visible bounds. UI and item art sits on a
+## large transparent canvas; cropping keeps it from shrinking in a layout.
+func icon_texture(id: String) -> Texture2D:
+	if _icons.has(id):
+		return _icons[id]
+	var base := texture(id)
+	var a := asset(id)
+	var icon: Texture2D = base
+	if base != null and a.has("visible"):
+		var atlas := AtlasTexture.new()
+		atlas.atlas = base
+		atlas.region = visible_rect(id)
+		icon = atlas
+	_icons[id] = icon
+	return icon
+
+
+## The asset's art cropped to its visible bounds and scaled to `height`
+## pixels, as a plain texture. UI art is drawn far larger than it is shown,
+## and a style box takes its minimum size from the source pixels, so the
+## small version is what the interface needs.
+func ui_texture(id: String, height: int) -> Texture2D:
+	var key := "%s@%d" % [id, height]
+	if _icons.has(key):
+		return _icons[key]
+	var base := texture(id)
+	var made: Texture2D = base
+	if base != null:
+		var image := base.get_image()
+		if image != null:
+			image = image.duplicate()
+			image.decompress()
+			var rect := visible_rect(id)
+			if rect.size.x > 0.0:
+				image = image.get_region(Rect2i(rect))
+			var scale := float(height) / maxf(image.get_height(), 1.0)
+			image.resize(maxi(1, roundi(image.get_width() * scale)), height, Image.INTERPOLATE_LANCZOS)
+			made = ImageTexture.create_from_image(image)
+	_icons[key] = made
+	return made
+
+
+## The asset's visible bounds in source pixels.
+func visible_rect(id: String) -> Rect2:
+	var v: Dictionary = asset(id).get("visible", {})
+	if v.is_empty():
+		return Rect2()
+	return Rect2(v["x"], v["y"], v["width"], v["height"])
 
 
 ## Largest per-form canvas across every form, in source pixels.

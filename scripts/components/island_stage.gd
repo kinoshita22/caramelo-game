@@ -25,9 +25,8 @@ var character: Node2D
 var animator: Node2D
 ## Decides what Caramelo does; null until start_behaviour() succeeds.
 var behaviour: Node
-## Slot name -> Sprite2D for runtime-swapped props (dumbbells, meal).
-var prop_sprites := {}
-var _prop_slots := {}
+## Layer name -> Sprite2D.
+var layer_sprites := {}
 var _content: RefCounted
 
 
@@ -43,8 +42,6 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 	for child in get_children():
 		child.queue_free()
 	_content = content
-	_prop_slots = layout.get("prop_slots", {})
-	prop_sprites.clear()
 	placements = compute_placements(layout, content)
 	anchors = compute_anchors(layout)
 	character_boxes = compute_character_boxes(layout, content, anchors)
@@ -55,8 +52,11 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 	bounds = union_rect(rects).grow(float(layout.get("stage_padding", 0)))
 	hit_polygon = outline(rects, float(layout.get("passthrough", {}).get("padding", 0)))
 
+	layer_sprites.clear()
 	for p in placements:
-		add_child(_sprite(p["name"], content.texture(p["asset"]), p))
+		var sprite := _sprite(p["name"], content.texture(p["asset"]), p)
+		layer_sprites[p["name"]] = sprite
+		add_child(sprite)
 	var ch: Dictionary = layout["character"]
 	character = Node2D.new()
 	character.name = "Character"
@@ -93,28 +93,15 @@ func start_behaviour(balance: Dictionary, progression: RefCounted = null, econom
 	return errors
 
 
-## Shows an asset in a prop slot (or hides the slot with an empty id).
-func set_prop(slot_name: String, asset_id: String) -> void:
-	var spec: Variant = _prop_slots.get(slot_name)
-	if typeof(spec) != TYPE_DICTIONARY or _content == null:
-		return
-	var asset: Dictionary = _content.asset(asset_id)
-	if asset.is_empty() or asset.get("runtime_path") == null:
-		if prop_sprites.has(slot_name):
-			prop_sprites[slot_name].visible = false
-		return
-	var placement := place(asset, spec, _vec(spec["position"]))
-	if not prop_sprites.has(slot_name):
-		var sprite := _sprite("Prop_" + slot_name, null, placement)
-		add_child(sprite)
-		prop_sprites[slot_name] = sprite
-	var s: Sprite2D = prop_sprites[slot_name]
-	s.visible = true
-	s.texture = _content.texture(asset_id)
-	s.offset = -placement["pivot"]
-	s.position = placement["position"]
-	s.scale = Vector2.ONE * placement["scale"]
-	s.z_index = placement["z"]
+## The click action of the topmost layer under a stage-space point, or "".
+static func click_action_at(placements: Array, point: Vector2) -> String:
+	var best := ""
+	var best_z := -1000000
+	for p in placements:
+		if p["click_action"] != "" and p["rect"].has_point(point) and int(p["z"]) > best_z:
+			best = p["click_action"]
+			best_z = int(p["z"])
+	return best
 
 
 ## Places the character on a named anchor; unknown names are ignored.
@@ -206,6 +193,7 @@ static func compute_placements(layout: Dictionary, content: RefCounted) -> Array
 		var p := place(content.asset(l["asset"]), l, _vec(l["position"]))
 		p["name"] = l["name"]
 		p["asset"] = l["asset"]
+		p["click_action"] = l.get("click_action", "")
 		out.append(p)
 	return out
 

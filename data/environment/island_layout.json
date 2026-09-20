@@ -5,11 +5,11 @@
 		{"name": "island", "asset": "environment.floating_island_base", "pivot": [1040, 245], "position": [0, 0], "scale": 0.75, "z": -10},
 		{"name": "tree", "asset": "environment.large_shade_tree", "pivot": "bottom_center", "position": [-500, 10], "scale": 0.42, "z": 0},
 		{"name": "swing", "asset": "environment.wooden_rope_swing", "pivot": "top_center", "position": [-410, -230], "scale": 0.16, "z": 1},
-		{"name": "dumbbell_rack", "asset": "environment.dumbbell_rack", "pivot": "bottom_center", "position": [260, 0], "scale": 0.25, "z": 2},
+		{"name": "dumbbell_rack", "asset": "environment.dumbbell_rack", "pivot": "bottom_center", "position": [260, 0], "scale": 0.25, "z": 2, "click_action": "shop_equipment"},
 		{"name": "chair", "asset": "environment.yellow_plastic_chair", "pivot": "bottom_center", "position": [480, 30], "scale": 0.192, "z": 3},
 		{"name": "side_table", "asset": "environment.boteco_side_table", "pivot": "bottom_center", "position": [580, 50], "scale": 0.192, "z": 4},
 		{"name": "sleeping_mat", "asset": "environment.sleeping_mat", "pivot": "bottom_center", "position": [280, 70], "scale": 0.179, "z": 5},
-		{"name": "food_station", "asset": "environment.food_station", "pivot": "bottom_center", "position": [-330, 65], "scale": 0.2, "z": 6},
+		{"name": "food_station", "asset": "environment.food_station", "pivot": "bottom_center", "position": [-330, 65], "scale": 0.2, "z": 6, "click_action": "shop_food"},
 		{"name": "foreground_decor", "asset": "environment.foreground_decor", "pivot": "bottom_center", "position": [-600, 110], "scale": 0.3, "z": 20}
 	],
 	"character": {
@@ -19,15 +19,10 @@
 		"form": 1,
 		"shadow": {"asset": "environment.character_shadow", "pivot": "center", "scale": 0.24, "z": 9}
 	},
-	"prop_slots": {
-		"_comment": "Filled at runtime from the equipped dumbbell tier and the active meal. The pair Caramelo lifts is painted into his frames, so this is what the island shows.",
-		"dumbbells": {"position": [180, 95], "pivot": "bottom_center", "scale": 0.1, "z": 7},
-		"meal": {"position": [-175, 88], "pivot": "bottom_center", "scale": 0.1, "z": 7}
-	},
 	"anchors": {
 		"idle": {"position": [-40, 25]},
 		"workout": {"position": [60, 10]},
-		"eating": {"position": [-140, 45]},
+		"eating": {"position": [-140, 36]},
 		"sleep": {"position": [280, 30]},
 		"wardrobe": {"position": [-40, 25]},
 		"celebration": {"position": [-40, 25]}

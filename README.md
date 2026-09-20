@@ -25,6 +25,7 @@ godot --path caramelo-game -- --animation celebration --animation-frame 1   # fr
 godot --path caramelo-game -- --time-scale 10 --debug-overlay  # watch the loop quickly
 godot --path caramelo-game -- --start-level 50               # start further along
 godot --path caramelo-game -- --bones 5000 --equip cosmic_final --meal premium_beef_pumpkin
+godot --path caramelo-game -- --open-shop food --bones 900     # open a purchase window
 ```
 
 Caramelo runs himself: he trains, recovers, eats when hungry and sleeps when
@@ -46,9 +47,10 @@ tiers and five meals, all in `data/balance/upgrades.json`,
 `data/equipment/dumbbells.json` and `data/food/meals.json`. Upgrades only ever
 speed the loop up: more XP per workout, longer sessions, quicker reps, shorter
 rests and better meals. Nothing can be sold and no balance goes negative.
-The pair Caramelo lifts is painted into his frames, so the equipped tier shows
-as a prop beside the bed and multiplies XP; the active meal shows as a bowl by
-the food station.
+Clicking the dumbbell rack opens the dumbbell window; clicking the food
+station opens the food window. Each lists every tier with its own art, what it
+does and its price; owned tiers carry a green background and the one in use is
+marked. Bought items are shown in those windows only, never on the island.
 
 Keys: F3 toggles the debug overlay (layer bounds, character boxes, anchors,
 stage bounds and the click-through outline); `[` / `]` cycle animation groups;

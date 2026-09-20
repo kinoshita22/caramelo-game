@@ -68,6 +68,7 @@ static func load_settings(defaults: Variant, argv: PackedStringArray) -> Diction
 			"--bones": s["bones"] = int(v); i += 1
 			"--equip": s["equip"] = v; i += 1
 			"--meal": s["meal"] = v; i += 1
+			"--open-shop": s["open_shop"] = v; i += 1
 		i += 1
 	if not s["mode"] in MODES:
 		push_warning("Unknown display mode '%s'; using overlay." % s["mode"])
