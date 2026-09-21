@@ -10,6 +10,7 @@ extends Control
 signal closed
 
 const UIKit := preload("res://scripts/components/ui_kit.gd")
+const Localization := preload("res://scripts/systems/localization.gd")
 
 const PANEL_SIZE := Vector2(1180, 760)
 const ROW_HEIGHT := 104.0
@@ -186,7 +187,7 @@ static func sections_for(items: RefCounted, level: int, bones: int, previewing: 
 				actionable = false
 			elif not owned and not unlocked:
 				state = "locked"
-				action_label = "Level %d" % int(it["unlock_level"])
+				action_label = Localization.tr_format("Level %d", [int(it["unlock_level"])])
 				actionable = false
 			elif not owned:
 				state = "affordable" if bones >= cost else "too_expensive"

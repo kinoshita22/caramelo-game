@@ -5,6 +5,7 @@ signal closed
 
 const UIKit := preload("res://scripts/components/ui_kit.gd")
 const OfflineProgress := preload("res://scripts/systems/offline_progress.gd")
+const Localization := preload("res://scripts/systems/localization.gd")
 
 const PANEL_SIZE := Vector2(820, 560)
 
@@ -53,14 +54,15 @@ static func worth_showing(summary: Dictionary) -> bool:
 static func lines_for(summary: Dictionary) -> Array[String]:
 	var lines: Array[String] = []
 	if summary.get("clock_rollback", false):
-		lines.append("The clock went backwards, so no time was counted.")
+		lines.append(Localization.tr_format("The clock went backwards, so no time was counted."))
 		return lines
-	lines.append("Caramelo trained for %s." % OfflineProgress.describe_duration(summary["counted_seconds"]))
-	lines.append("%d workouts, +%d bones." % [summary["workouts"], summary["bones_gained"]])
+	var duration := OfflineProgress.describe_duration(summary["counted_seconds"])
+	lines.append(Localization.tr_format("Caramelo trained for %s.", [duration]))
+	lines.append(Localization.tr_format("%d workouts, +%d bones.", [summary["workouts"], summary["bones_gained"]]))
 	if summary["levels_gained"] > 0:
-		lines.append("Level %d → %d!" % [summary["from_level"], summary["to_level"]])
+		lines.append(Localization.tr_format("Level %d → %d!", [summary["from_level"], summary["to_level"]]))
 	if summary["to_form"] != summary["from_form"]:
-		lines.append("He evolved into form %d!" % summary["to_form"])
+		lines.append(Localization.tr_format("He evolved into form %d!", [summary["to_form"]]))
 	if summary.get("capped", false):
-		lines.append("(Only the first %s counts while away.)" % OfflineProgress.describe_duration(summary["counted_seconds"]))
+		lines.append(Localization.tr_format("(Only the first %s counts while away.)", [duration]))
 	return lines

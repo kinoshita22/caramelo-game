@@ -26,10 +26,12 @@ window/per_pixel_transparency/allowed=true
 
 [autoload]
 
+SingleInstance="*res://scripts/autoload/single_instance.gd"
 ContentCatalog="*res://scripts/autoload/content_catalog.gd"
 PlatformService="*res://scripts/autoload/platform_service.gd"
 GameState="*res://scripts/autoload/game_state.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
+AudioManager="*res://scripts/autoload/audio_manager.gd"
 
 [physics]
 

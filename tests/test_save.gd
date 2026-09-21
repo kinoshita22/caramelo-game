@@ -184,7 +184,7 @@ func _offline(seconds: float, config_overrides: Dictionary = {}) -> Dictionary:
 
 func test_an_hour_away_pays_like_an_hour_watched() -> void:
 	var r := _offline(3600.0)
-	check(r["workouts"] > 100, "about one workout every 20-odd seconds: %d" % r["workouts"])
+	check(r["workouts"] > 50, "about one workout every 45-odd seconds: %d" % r["workouts"])
 	check_eq(r["bones_gained"], r["progression"].bones, "bones reported match bones earned")
 	check(r["levels_gained"] > 0, "levels were gained")
 	check_eq(r["counted_seconds"], 3600.0, "the whole hour counted")

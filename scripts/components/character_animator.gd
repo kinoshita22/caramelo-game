@@ -19,6 +19,11 @@ var overrides: Array = []
 var base_scale := 1.0
 ## Multiplies every group's fps (e.g. the Speed stat for workouts).
 var speed_scale := 1.0
+## Whether a finished one-shot group starts its "next" group by itself. The
+## behaviour driver turns this off: the loop decides what follows, and a
+## group handing over early made him idle between states (hungry -> idle ->
+## eating). Previews keep it on.
+var follow_next := true
 var form := 0
 var group := ""
 var frame_index := 0
@@ -90,7 +95,7 @@ func tick(delta: float) -> void:
 		if step["finished"]:
 			var finished := group
 			group_finished.emit(finished)
-			if g.has("next") and group == finished:
+			if follow_next and g.has("next") and group == finished:
 				play(g["next"], true)
 				return
 			frame_index = step["index"]
@@ -155,6 +160,16 @@ func set_cosmetic(slot_name: String, item: Dictionary) -> void:
 	var f: Dictionary = _frames.get(current_slot(), {})
 	if not f.is_empty():
 		_place_cosmetic(slot_name, f)
+
+
+## Offset from this node's origin to an attachment point ("head_top"...) on
+## the current frame, in this node's parent units. Falls back to straight up.
+func point_offset(point_name: String) -> Vector2:
+	var f: Dictionary = _frames.get(current_slot(), {})
+	var point: Variant = f.get("attach", {}).get(point_name)
+	if f.is_empty() or typeof(point) != TYPE_ARRAY:
+		return Vector2(0.0, -300.0 * base_scale)
+	return (Vector2(point[0], point[1]) - f["anchor"]) * base_scale * float(f["scale"])
 
 
 ## Where a cosmetic sprite goes on the current frame, or {} when hidden.

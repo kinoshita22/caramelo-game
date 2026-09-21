@@ -12,7 +12,7 @@ extends Node2D
 ## 1-4 upgrade the four stats, E and F buy the next dumbbell or meal.
 ## Preview options: --bones N, --equip <tier id>, --meal <tier id>,
 ## --open-shop equipment|food|upgrades|menu|furniture|wardrobe,
-## --preview-cosmetic slot:asset_id[:scale] (development check only).
+## --preview-cosmetic slot:asset_id[:scale], --play-effect <name> (development checks only).
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
 ## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
@@ -27,6 +27,9 @@ const MenuModal := preload("res://scripts/components/menu_modal.gd")
 const CollectionModal := preload("res://scripts/components/collection_modal.gd")
 const AwayModal := preload("res://scripts/components/away_modal.gd")
 const FramePacer := preload("res://scripts/components/frame_pacer.gd")
+const EffectsPlayer := preload("res://scripts/components/effects_player.gd")
+const Localization := preload("res://scripts/systems/localization.gd")
+const EFFECTS_PATH := "res://data/effects/effects.json"
 const PERFORMANCE_PATH := "res://data/settings/performance.json"
 const Hud := preload("res://scripts/components/hud.gd")
 ## Clicking Caramelo opens the training window.
@@ -51,6 +54,8 @@ var _wardrobe_open := false
 var _away: Control
 var _pacer: Node
 var _modal_open := false
+var _effects: Node2D
+var _last_bones := 0
 # Press-and-drag on the island moves the overlay; a short press is a click.
 var _press_at := Vector2i.ZERO
 var _press_window_at := Vector2i.ZERO
@@ -68,6 +73,7 @@ func _ready() -> void:
 	# The save goes in first so the island is built at the saved level and
 	# with the saved gear, after catching up on time away.
 	SaveManager.begin()
+	TranslationServer.set_locale(Localization.language_for(str(SaveManager.settings.get("language", "")), OS.get_locale()))
 	var defaults: Variant = content.read_json(SETTINGS_PATH)
 	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("display_mode"):
 		defaults["mode"] = SaveManager.settings["display_mode"]
@@ -152,6 +158,11 @@ func _ready() -> void:
 	if AwayModal.worth_showing(SaveManager.offline_summary) and not settings.has("open_shop"):
 		_away.open(ContentCatalog.data, SaveManager.offline_summary)
 		_take_all_clicks()
+	if settings.has("play_effect") and _effects.effects.has(settings["play_effect"]):
+		# Development check: fire one effect shortly after start.
+		get_tree().create_timer(0.3).timeout.connect(func() -> void:
+			_effects.play(_effects.effects[settings["play_effect"]],
+					{"level": GameState.progression.level, "amount": 13, "form": GameState.progression.form}))
 	match settings.get("open_shop", ""):
 		"": pass
 		"upgrades": _open_upgrades()
@@ -196,6 +207,13 @@ func _build_ui() -> void:
 	_collection_window.closed.connect(_on_modal_closed)
 	layer.add_child(_collection_window)
 
+	_effects = EffectsPlayer.new()
+	_effects.name = "Effects"
+	var effects_doc: Variant = ContentCatalog.data.read_json(EFFECTS_PATH)
+	_effects.setup(ContentCatalog.data, effects_doc if typeof(effects_doc) == TYPE_DICTIONARY else {}, stage, _hud)
+	layer.add_child(_effects)
+	_connect_effects()
+
 	_away = AwayModal.new()
 	_away.name = "Away"
 	_away.visible = false
@@ -208,11 +226,41 @@ func _build_ui() -> void:
 	_menu.closed.connect(_on_modal_closed)
 	_menu.mode_toggle_requested.connect(_toggle_display_mode)
 	_menu.size_cycle_requested.connect(_cycle_size)
+	_menu.language_cycle_requested.connect(_cycle_language)
 	_menu.option_toggled.connect(_toggle_option)
 	_menu.quit_requested.connect(func() -> void:
 		SaveManager.save_game()
 		get_tree().quit())
 	layer.add_child(_menu)
+
+
+## Effects follow the behaviour loop's own states (so they match the
+## animation) and every change in the bone balance.
+func _connect_effects() -> void:
+	var p: RefCounted = GameState.progression
+	_last_bones = p.bones
+	p.bones_changed.connect(func(total: int) -> void:
+		var delta := total - _last_bones
+		_last_bones = total
+		if delta > 0:
+			_effects.trigger("bones_gained", {"amount": delta})
+			AudioManager.play_event("bones_gained")
+		elif delta < 0:
+			_effects.trigger("bones_spent", {"amount": -delta})
+			AudioManager.play_event("bones_spent"))
+	if stage.behaviour != null:
+		stage.behaviour.loop.state_changed.connect(func(_from: String, to: String) -> void:
+			_effects.trigger("state:" + to, {"level": p.level, "form": p.form})
+			AudioManager.play_event("state:" + to))
+	# Every button anywhere clicks, including ones built later.
+	get_tree().node_added.connect(func(node: Node) -> void:
+		if node is BaseButton:
+			node.pressed.connect(func() -> void: AudioManager.play_event("ui_click")))
+	for volume_bus in AudioManager.volumes.keys():
+		var saved: Variant = SaveManager.settings.get("volume_" + volume_bus.to_lower())
+		if saved != null:
+			AudioManager.set_volume(volume_bus, float(saved))
+	AudioManager.start_background()
 
 
 func _open_shop(action: String) -> void:
@@ -288,6 +336,15 @@ func _size_presets() -> Dictionary:
 
 func _size_name() -> String:
 	return DisplayLayout.size_name_for(float(settings["overlay"]["scale"]), _size_presets())
+
+
+func _cycle_language() -> void:
+	var current := "pt_BR" if TranslationServer.get_locale().begins_with("pt") else "en"
+	var next := Localization.next_language(current)
+	TranslationServer.set_locale(next)
+	SaveManager.settings["language"] = next
+	SaveManager.save_game()
+	_open_menu()
 
 
 ## Small -> medium -> large -> small: resizes the overlay where it stands.

@@ -8,12 +8,14 @@ extends Control
 signal closed
 signal mode_toggle_requested
 signal size_cycle_requested
+signal language_cycle_requested
 signal option_toggled(option: String)
 signal quit_requested
 
 const UIKit := preload("res://scripts/components/ui_kit.gd")
+const Localization := preload("res://scripts/systems/localization.gd")
 
-const PANEL_SIZE := Vector2(820, 760)
+const PANEL_SIZE := Vector2(820, 840)
 const CLOSE_SIZE := 76.0
 ## Options that are on until the player turns them off.
 const DEFAULT_ON := ["drag_to_move"]
@@ -28,6 +30,7 @@ const OPTIONS := {
 var content: RefCounted
 var _mode_button: Button
 var _size_button: Button
+var _language_button: Button
 var _option_buttons := {}
 
 
@@ -45,6 +48,7 @@ func open(content_data: RefCounted, mode: String, settings: Dictionary, unavaila
 		_build()
 	_mode_button.text = "Switch to window" if mode == "overlay" else "Switch to overlay"
 	_size_button.text = size_label(size_name)
+	_language_button.text = language_label(TranslationServer.get_locale())
 	_size_button.disabled = mode != "overlay"
 	for option in OPTIONS:
 		var button: Button = _option_buttons[option]
@@ -80,6 +84,10 @@ func _build() -> void:
 	_size_button.pressed.connect(func() -> void: size_cycle_requested.emit())
 	column.add_child(_size_button)
 
+	_language_button = UIKit.button(content, "", wide)
+	_language_button.pressed.connect(func() -> void: language_cycle_requested.emit())
+	column.add_child(_language_button)
+
 	for option in OPTIONS:
 		var button := UIKit.button(content, "", wide)
 		button.pressed.connect(func() -> void: option_toggled.emit(option))
@@ -103,13 +111,20 @@ func _gui_input(event: InputEvent) -> void:
 		close()
 
 
-## "Size: Medium". Pure.
+## "Size: Medium", translated. Pure.
 static func size_label(size_name: String) -> String:
-	return "Size: %s" % size_name.capitalize()
+	return "%s: %s" % [TranslationServer.translate("Size"), TranslationServer.translate(size_name.capitalize())]
+
+
+## "Language: Português". Language names stay in their own language.
+static func language_label(locale: String) -> String:
+	var code := "pt_BR" if locale.begins_with("pt") else "en"
+	return "%s: %s" % [TranslationServer.translate("Language"), Localization.LANGUAGE_NAMES[code]]
 
 
 ## "Always on top: On", or the reason it is unavailable. Pure.
 static func option_label(option: String, value: bool, unavailable_reason: String = "") -> String:
+	var name := TranslationServer.translate(OPTIONS.get(option, option))
 	if unavailable_reason != "":
-		return "%s: %s" % [OPTIONS.get(option, option), unavailable_reason]
-	return "%s: %s" % [OPTIONS.get(option, option), "On" if value else "Off"]
+		return "%s: %s" % [name, TranslationServer.translate(unavailable_reason)]
+	return "%s: %s" % [name, TranslationServer.translate("On" if value else "Off")]
