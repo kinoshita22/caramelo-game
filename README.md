@@ -29,9 +29,9 @@ godot --path caramelo-game -- --open-shop food --bones 900     # open a window: 
 ```
 
 Caramelo runs himself: he trains, recovers, eats when hungry and sleeps when
-tired, with no input from the player. Energy and satiety are hidden 0-100
-values; they steer the cycle, are never shown as a chore, and never cause
-failure. Rates, thresholds and durations live in `data/balance/behaviour.json`.
+tired, with no input from the player. Energy and satiety are 0-100 values
+shown as the sleep and hunger bars; they steer the cycle, need no attention
+from the player, and never cause failure. Rates, thresholds and durations live in `data/balance/behaviour.json`.
 Passing `--animation` switches the loop off so a single group can be inspected.
 
 Finished workouts pay XP and bones. Levels run 1-100 and the look changes
@@ -47,7 +47,9 @@ tiers and five meals, all in `data/balance/upgrades.json`,
 `data/equipment/dumbbells.json` and `data/food/meals.json`. Upgrades only ever
 speed the loop up: more XP per workout, longer sessions, quicker reps, shorter
 rests and better meals. Nothing can be sold and no balance goes negative.
-A strip along the bottom of the island shows the level badge, the XP bar and
+Hunger and sleep bars (the loop's satiety and energy, live) sit over the
+tree; `island_layout.json` names the layer and the offset under `"hud"`. A
+strip along the bottom of the island shows the level badge, the XP bar and
 the bone count, with buttons for training, the wardrobe (a placeholder until
 cosmetic art arrives) and the menu. The menu switches between overlay and
 windowed mode and quits the game, which an overlay needs because it has no

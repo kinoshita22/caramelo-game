@@ -41,6 +41,7 @@ var _shop: Control
 var _upgrades: Control
 var _menu: Control
 var _hud: Control
+var _layout: Dictionary = {}
 var _screenshot_path := ""
 var _screenshot_frames := 0
 
@@ -49,6 +50,7 @@ func _ready() -> void:
 	var content: RefCounted = ContentCatalog.data
 	settings = DisplayLayout.load_settings(content.read_json(SETTINGS_PATH), OS.get_cmdline_user_args())
 	var layout: Variant = content.read_json(LAYOUT_PATH)
+	_layout = layout if typeof(layout) == TYPE_DICTIONARY else {}
 	var animations: Variant = content.read_json(ANIMATIONS_PATH)
 	var errors: Array[String] = []
 	if typeof(layout) != TYPE_DICTIONARY or typeof(animations) != TYPE_DICTIONARY:
@@ -116,6 +118,8 @@ func _build_ui() -> void:
 	_hud.name = "Hud"
 	layer.add_child(_hud)
 	_hud.setup(ContentCatalog.data, GameState.progression)
+	if stage.behaviour != null:
+		_hud.needs = stage.behaviour.loop
 	_hud.upgrades_requested.connect(_open_upgrades)
 	_hud.wardrobe_requested.connect(func() -> void: print("Wardrobe: waiting on cosmetic art"))
 	_hud.menu_requested.connect(_open_menu)
@@ -201,6 +205,22 @@ func _refit() -> void:
 	var to_window := get_viewport().get_final_transform() * stage.get_global_transform_with_canvas()
 	window_polygon = to_window * stage.hit_polygon
 	PlatformService.set_hit_polygon(window_polygon)
+	_place_needs()
+
+
+## Puts the HUD's hunger and sleep bars over the layer named in the layout.
+func _place_needs() -> void:
+	if _hud == null:
+		return
+	var hud_spec: Dictionary = _layout.get("hud", {})
+	var layer_name: String = hud_spec.get("needs_over_layer", "")
+	for p in stage.placements:
+		if p["name"] == layer_name:
+			var offset: Array = hud_spec.get("needs_offset", [0, 0])
+			var top := Vector2(p["rect"].get_center().x, p["rect"].position.y) + Vector2(offset[0], offset[1])
+			# Stage and HUD layer share the canvas coordinate space.
+			_hud.place_needs(stage.get_global_transform_with_canvas() * top)
+			return
 
 
 func _unhandled_input(event: InputEvent) -> void:

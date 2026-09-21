@@ -60,9 +60,9 @@ static func button(content: RefCounted, text: String, min_size := Vector2(210, 7
 	return node
 
 
-## A round button showing an icon, for the HUD.
-static func icon_button(content: RefCounted, asset_id: String, box: float) -> Button:
-	var node := button(content, "", Vector2(box, box))
+## A button showing an icon, for the HUD. `width` defaults to `box`.
+static func icon_button(content: RefCounted, asset_id: String, box: float, width: float = 0.0) -> Button:
+	var node := button(content, "", Vector2(width if width > 0.0 else box, box))
 	var art := icon(content, asset_id, box * 0.62)
 	art.set_anchors_preset(Control.PRESET_FULL_RECT)
 	art.mouse_filter = Control.MOUSE_FILTER_IGNORE

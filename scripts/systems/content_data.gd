@@ -99,8 +99,11 @@ func icon_texture(id: String) -> Texture2D:
 ## pixels, as a plain texture. UI art is drawn far larger than it is shown,
 ## and a style box takes its minimum size from the source pixels, so the
 ## small version is what the interface needs.
-func ui_texture(id: String, height: int) -> Texture2D:
-	var key := "%s@%d" % [id, height]
+##
+## `greyscale` drops the colour (and lifts the brightness) so the art can be
+## tinted to any colour, e.g. one progress fill used for several bars.
+func ui_texture(id: String, height: int, greyscale: bool = false) -> Texture2D:
+	var key := "%s@%d%s" % [id, height, "g" if greyscale else ""]
 	if _icons.has(key):
 		return _icons[key]
 	var base := texture(id)
@@ -115,6 +118,8 @@ func ui_texture(id: String, height: int) -> Texture2D:
 				image = image.get_region(Rect2i(rect))
 			var scale := float(height) / maxf(image.get_height(), 1.0)
 			image.resize(maxi(1, roundi(image.get_width() * scale)), height, Image.INTERPOLATE_LANCZOS)
+			if greyscale:
+				image.adjust_bcs(1.7, 0.9, 0.0)
 			made = ImageTexture.create_from_image(image)
 	_icons[key] = made
 	return made
