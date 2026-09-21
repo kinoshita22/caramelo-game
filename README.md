@@ -79,6 +79,13 @@ the menu switches language. Sound runs through Music, Effects and Ambience
 buses with saved volumes; `data/audio/audio.json` maps events to sounds, and
 until sound files arrive every event is silent.
 
+Only one copy of the game runs at a time. Starting it again brings the
+running copy to the front and the new one quits before touching the save.
+The running copy holds local port 47817 (released by the OS even after a
+crash); if some other program owns that port, the game runs anyway. Use
+`--allow-multiple` for a development preview while the game is open, or
+`--instance-port <n>` to test with another port.
+
 To stay cheap when left running all day, the game runs at 60 FPS while
 someone uses it, 20 FPS when idle (the animations never exceed 12), 15 on
 battery where the system reports it (Linux today), and 5 when minimized;
