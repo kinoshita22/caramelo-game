@@ -27,6 +27,29 @@ static func overlay_size(bounds_size: Vector2, scale: float, usable: Vector2i, m
 	return Vector2i(size.floor())
 
 
+## Order the menu cycles through, smallest first.
+const SIZE_ORDER := ["small", "medium", "large"]
+
+
+## The preset name closest to `scale`.
+static func size_name_for(scale: float, presets: Dictionary) -> String:
+	var best := "medium"
+	var best_gap := INF
+	for name in SIZE_ORDER:
+		if presets.has(name) and absf(float(presets[name]) - scale) < best_gap:
+			best_gap = absf(float(presets[name]) - scale)
+			best = name
+	return best
+
+
+## The size after `current` in the menu's cycle, wrapping round.
+static func next_size(current: String, presets: Dictionary) -> String:
+	var names: Array = SIZE_ORDER.filter(func(n: String) -> bool: return presets.has(n))
+	if names.is_empty():
+		return current
+	return names[(names.find(current) + 1) % names.size()]
+
+
 ## Pointer travel (screen pixels) that turns a press into a drag.
 const DRAG_THRESHOLD := 8.0
 

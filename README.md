@@ -77,7 +77,8 @@ battery where the system reports it (Linux today), and 5 when minimized;
 In overlay mode the island can be dragged anywhere on the desktop; a short
 press still counts as a click, the overlay is kept on screen, and the spot is
 saved. The menu (closed with its X, Escape or a click outside) can turn
-"Drag to move" off, and also offers "Always on top", a "30 FPS cap" and "Start with the
+"Drag to move" off, pick the overlay's size (Small, Medium or Large;
+presets in `display_defaults.json`), and also offers "Always on top", a "30 FPS cap" and "Start with the
 computer" (installed builds only: the Windows registry Run key, or an
 autostart file on Linux); all three are saved.
 

@@ -6,6 +6,8 @@
 		"corner": "bottom_right",
 		"margin_px": 24,
 		"scale": 0.7,
+		"_comment_sizes": "Sizes the player can pick in the menu: overlay scale per size. The default size matches 'scale'.",
+		"size_presets": {"small": 0.5, "medium": 0.7, "large": 0.9},
 		"screen": -1,
 		"always_on_top": false
 	},

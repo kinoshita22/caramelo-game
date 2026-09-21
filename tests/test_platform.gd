@@ -96,6 +96,10 @@ func test_start_with_os_refuses_to_register_the_editor() -> void:
 	service.free()
 
 
+func test_menu_size_label() -> void:
+	check_eq(MenuModal.size_label("large"), "Size: Large", "size label")
+
+
 func test_menu_option_labels() -> void:
 	check_eq(MenuModal.option_label("always_on_top", true), "Always on top: On", "on")
 	check_eq(MenuModal.option_label("fps_cap_30", false), "30 FPS cap: Off", "off")

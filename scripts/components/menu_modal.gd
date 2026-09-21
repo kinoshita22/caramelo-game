@@ -7,12 +7,13 @@ extends Control
 
 signal closed
 signal mode_toggle_requested
+signal size_cycle_requested
 signal option_toggled(option: String)
 signal quit_requested
 
 const UIKit := preload("res://scripts/components/ui_kit.gd")
 
-const PANEL_SIZE := Vector2(820, 680)
+const PANEL_SIZE := Vector2(820, 760)
 const CLOSE_SIZE := 76.0
 ## Options that are on until the player turns them off.
 const DEFAULT_ON := ["drag_to_move"]
@@ -26,6 +27,7 @@ const OPTIONS := {
 
 var content: RefCounted
 var _mode_button: Button
+var _size_button: Button
 var _option_buttons := {}
 
 
@@ -36,11 +38,14 @@ func _init() -> void:
 
 ## settings: the saved option values; unavailable: option -> reason it is
 ## greyed out.
-func open(content_data: RefCounted, mode: String, settings: Dictionary, unavailable: Dictionary = {}) -> void:
+func open(content_data: RefCounted, mode: String, settings: Dictionary, unavailable: Dictionary = {},
+		size_name: String = "medium") -> void:
 	content = content_data
 	if get_child_count() == 0:
 		_build()
 	_mode_button.text = "Switch to window" if mode == "overlay" else "Switch to overlay"
+	_size_button.text = size_label(size_name)
+	_size_button.disabled = mode != "overlay"
 	for option in OPTIONS:
 		var button: Button = _option_buttons[option]
 		var value := bool(settings.get(option, option in DEFAULT_ON))
@@ -71,6 +76,10 @@ func _build() -> void:
 	_mode_button.pressed.connect(func() -> void: mode_toggle_requested.emit())
 	column.add_child(_mode_button)
 
+	_size_button = UIKit.button(content, "", wide)
+	_size_button.pressed.connect(func() -> void: size_cycle_requested.emit())
+	column.add_child(_size_button)
+
 	for option in OPTIONS:
 		var button := UIKit.button(content, "", wide)
 		button.pressed.connect(func() -> void: option_toggled.emit(option))
@@ -92,6 +101,11 @@ func _build() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		close()
+
+
+## "Size: Medium". Pure.
+static func size_label(size_name: String) -> String:
+	return "Size: %s" % size_name.capitalize()
 
 
 ## "Always on top: On", or the reason it is unavailable. Pure.

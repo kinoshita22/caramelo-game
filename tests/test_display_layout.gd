@@ -3,6 +3,7 @@ extends "res://tests/lib/test_case.gd"
 
 const DisplayLayout := preload("res://scripts/components/display_layout.gd")
 const PlatformServiceScript := preload("res://scripts/autoload/platform_service.gd")
+const ContentDataScript := preload("res://scripts/systems/content_data.gd")
 
 
 func test_fit_centres_and_scales() -> void:
@@ -48,6 +49,19 @@ func test_dragging_follows_the_pointer_but_stays_on_screen() -> void:
 	check_eq(DisplayLayout.dragged_position(Vector2i(500, 300), Vector2i(900, 600), Vector2i(-2000, 5000), size, usable),
 			Vector2i(0, 514), "cannot leave the screen")
 	check_eq(DisplayLayout.clamp_to(Vector2i(5000, -40), size, usable), Vector2i(1120, 0), "saved spots are pulled back on screen")
+
+
+func test_size_presets_cycle_and_match_the_scale() -> void:
+	var presets := {"small": 0.5, "medium": 0.7, "large": 0.9}
+	check_eq(DisplayLayout.size_name_for(0.7, presets), "medium", "exact match")
+	check_eq(DisplayLayout.size_name_for(0.85, presets), "large", "nearest preset")
+	check_eq(DisplayLayout.next_size("small", presets), "medium", "small -> medium")
+	check_eq(DisplayLayout.next_size("large", presets), "small", "wraps back to small")
+	check_eq(DisplayLayout.next_size("medium", {"medium": 0.7, "large": 0.9}), "large", "skips missing presets")
+	var shipped: Dictionary = DisplayLayout.load_settings(
+			ContentDataScript.new().read_json("res://data/settings/display_defaults.json"), PackedStringArray())
+	check_eq(DisplayLayout.size_name_for(shipped["overlay"]["scale"], shipped["overlay"]["size_presets"]), "medium",
+			"the default size is medium")
 
 
 func test_corner_positions() -> void:

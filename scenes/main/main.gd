@@ -50,6 +50,7 @@ var _collection_window: Control
 var _wardrobe_open := false
 var _away: Control
 var _pacer: Node
+var _modal_open := false
 # Press-and-drag on the island moves the overlay; a short press is a click.
 var _press_at := Vector2i.ZERO
 var _press_window_at := Vector2i.ZERO
@@ -70,6 +71,10 @@ func _ready() -> void:
 	var defaults: Variant = content.read_json(SETTINGS_PATH)
 	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("display_mode"):
 		defaults["mode"] = SaveManager.settings["display_mode"]
+	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("overlay_size"):
+		var presets: Dictionary = defaults["overlay"].get("size_presets", {})
+		if presets.has(SaveManager.settings["overlay_size"]):
+			defaults["overlay"]["scale"] = presets[SaveManager.settings["overlay_size"]]
 	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("always_on_top"):
 		defaults["overlay"]["always_on_top"] = bool(SaveManager.settings["always_on_top"])
 	settings = DisplayLayout.load_settings(defaults, OS.get_cmdline_user_args())
@@ -202,6 +207,7 @@ func _build_ui() -> void:
 	_menu.visible = false
 	_menu.closed.connect(_on_modal_closed)
 	_menu.mode_toggle_requested.connect(_toggle_display_mode)
+	_menu.size_cycle_requested.connect(_cycle_size)
 	_menu.option_toggled.connect(_toggle_option)
 	_menu.quit_requested.connect(func() -> void:
 		SaveManager.save_game()
@@ -272,8 +278,32 @@ func _open_menu() -> void:
 	var unavailable := {}
 	if not PlatformService.start_with_os_available():
 		unavailable["start_with_os"] = "installed game only"
-	_menu.open(ContentCatalog.data, PlatformService.mode, SaveManager.settings, unavailable)
+	_menu.open(ContentCatalog.data, PlatformService.mode, SaveManager.settings, unavailable, _size_name())
 	_take_all_clicks()
+
+
+func _size_presets() -> Dictionary:
+	return settings["overlay"].get("size_presets", {})
+
+
+func _size_name() -> String:
+	return DisplayLayout.size_name_for(float(settings["overlay"]["scale"]), _size_presets())
+
+
+## Small -> medium -> large -> small: resizes the overlay where it stands.
+func _cycle_size() -> void:
+	var next := DisplayLayout.next_size(_size_name(), _size_presets())
+	settings["overlay"]["scale"] = float(_size_presets()[next])
+	SaveManager.settings["overlay_size"] = next
+	# Keep the overlay where the player put it; clamping keeps it on screen.
+	if PlatformService.mode == "overlay":
+		SaveManager.settings["overlay_position"] = [DisplayServer.window_get_position().x,
+				DisplayServer.window_get_position().y]
+	SaveManager.save_game()
+	_apply_mode()
+	_refit()
+	_take_all_clicks()
+	_open_menu()
 
 
 func _toggle_option(option: String) -> void:
@@ -296,12 +326,14 @@ func _toggle_option(option: String) -> void:
 
 ## While a window is open the whole window takes clicks, not just the island.
 func _take_all_clicks() -> void:
+	_modal_open = true
 	PlatformService.set_hit_polygon(_window_rect_polygon())
 	if _pacer != null:
 		_pacer.window_open = true
 
 
 func _on_modal_closed() -> void:
+	_modal_open = false
 	PlatformService.set_hit_polygon(window_polygon)
 	if _pacer != null:
 		_pacer.window_open = false
@@ -352,7 +384,9 @@ func _refit() -> void:
 	_debug.queue_redraw()
 	var to_window := get_viewport().get_final_transform() * stage.get_global_transform_with_canvas()
 	window_polygon = to_window * stage.hit_polygon
-	PlatformService.set_hit_polygon(window_polygon)
+	# While a window is open the whole overlay must keep taking clicks, even
+	# if it was just resized; otherwise clicks fall through to the desktop.
+	PlatformService.set_hit_polygon(_window_rect_polygon() if _modal_open else window_polygon)
 	_place_needs()
 
 
