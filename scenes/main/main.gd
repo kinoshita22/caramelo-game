@@ -26,6 +26,8 @@ const UpgradesModal := preload("res://scripts/components/upgrades_modal.gd")
 const MenuModal := preload("res://scripts/components/menu_modal.gd")
 const CollectionModal := preload("res://scripts/components/collection_modal.gd")
 const AwayModal := preload("res://scripts/components/away_modal.gd")
+const FramePacer := preload("res://scripts/components/frame_pacer.gd")
+const PERFORMANCE_PATH := "res://data/settings/performance.json"
 const Hud := preload("res://scripts/components/hud.gd")
 ## Clicking Caramelo opens the training window.
 const CHARACTER_ACTION := "upgrades"
@@ -47,6 +49,7 @@ var _menu: Control
 var _collection_window: Control
 var _wardrobe_open := false
 var _away: Control
+var _pacer: Node
 var _hud: Control
 var _layout: Dictionary = {}
 var _screenshot_path := ""
@@ -61,6 +64,8 @@ func _ready() -> void:
 	var defaults: Variant = content.read_json(SETTINGS_PATH)
 	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("display_mode"):
 		defaults["mode"] = SaveManager.settings["display_mode"]
+	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("always_on_top"):
+		defaults["overlay"]["always_on_top"] = bool(SaveManager.settings["always_on_top"])
 	settings = DisplayLayout.load_settings(defaults, OS.get_cmdline_user_args())
 	var layout: Variant = content.read_json(LAYOUT_PATH)
 	_layout = layout if typeof(layout) == TYPE_DICTIONARY else {}
@@ -124,6 +129,12 @@ func _ready() -> void:
 	stage.add_child(_debug)
 
 	_build_ui()
+	_pacer = FramePacer.new()
+	_pacer.name = "FramePacer"
+	var performance: Variant = content.read_json(PERFORMANCE_PATH)
+	_pacer.setup(performance if typeof(performance) == TYPE_DICTIONARY else {})
+	_pacer.cap_30 = bool(SaveManager.settings.get("fps_cap_30", false))
+	add_child(_pacer)
 	_apply_mode()
 	get_viewport().size_changed.connect(_refit)
 	_refit()
@@ -185,6 +196,7 @@ func _build_ui() -> void:
 	_menu.visible = false
 	_menu.closed.connect(_on_modal_closed)
 	_menu.mode_toggle_requested.connect(_toggle_display_mode)
+	_menu.option_toggled.connect(_toggle_option)
 	_menu.quit_requested.connect(func() -> void:
 		SaveManager.save_game()
 		get_tree().quit())
@@ -251,17 +263,42 @@ func _apply_furniture(_slot_name: String = "") -> void:
 
 
 func _open_menu() -> void:
-	_menu.open(ContentCatalog.data, PlatformService.mode)
+	var unavailable := {}
+	if not PlatformService.start_with_os_available():
+		unavailable["start_with_os"] = "installed game only"
+	_menu.open(ContentCatalog.data, PlatformService.mode, SaveManager.settings, unavailable)
 	_take_all_clicks()
+
+
+func _toggle_option(option: String) -> void:
+	var value := not bool(SaveManager.settings.get(option, false))
+	match option:
+		"always_on_top":
+			PlatformService.set_always_on_top(value)
+			settings["overlay"]["always_on_top"] = value
+		"fps_cap_30":
+			_pacer.cap_30 = value
+		"start_with_os":
+			var err: String = PlatformService.set_start_with_os(value)
+			if err != "":
+				push_warning("Start with the computer: " + err)
+				return
+	SaveManager.settings[option] = value
+	SaveManager.save_game()
+	_open_menu()
 
 
 ## While a window is open the whole window takes clicks, not just the island.
 func _take_all_clicks() -> void:
 	PlatformService.set_hit_polygon(_window_rect_polygon())
+	if _pacer != null:
+		_pacer.window_open = true
 
 
 func _on_modal_closed() -> void:
 	PlatformService.set_hit_polygon(window_polygon)
+	if _pacer != null:
+		_pacer.window_open = false
 	if _wardrobe_open:
 		_wardrobe_open = false
 		if stage.behaviour != null:
@@ -415,6 +452,9 @@ func _process(_delta: float) -> void:
 		"window_position": [DisplayServer.window_get_position().x, DisplayServer.window_get_position().y],
 		"hit_polygon_window_px": Array(window_polygon).map(func(p: Vector2) -> Array: return [p.x, p.y]),
 		"stage_scale": stage.scale.x,
+		"target_fps": _pacer.target if _pacer != null else 0,
+		"max_fps": Engine.max_fps,
+		"measured_fps": Engine.get_frames_per_second(),
 		"animation": {"group": stage.animator.group, "slot": stage.animator.current_slot()} if stage.animator != null else {},
 		"behaviour": {"state": stage.behaviour.loop.state, "energy": stage.behaviour.loop.energy,
 				"satiety": stage.behaviour.loop.satiety,

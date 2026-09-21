@@ -31,6 +31,11 @@ PlatformService="*res://scripts/autoload/platform_service.gd"
 GameState="*res://scripts/autoload/game_state.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
 
+[physics]
+
+; Nothing uses physics; tick it rarely to save power.
+common/physics_ticks_per_second=10
+
 [rendering]
 
 viewport/transparent_background=true
