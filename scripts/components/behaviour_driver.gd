@@ -64,18 +64,7 @@ func apply_modifiers() -> void:
 	if economy == null:
 		return
 	var m: Dictionary = economy.modifiers()
-	loop.duration_scale = {
-		"workout_session": m["workout_duration_scale"],
-		"recovery": m["rest_duration_scale"],
-		"sleep_enter": m["rest_duration_scale"],
-		"wake": m["rest_duration_scale"],
-		"eating_max": m["eating_duration_scale"],
-	}
-	loop.rate_scale = {
-		"energy_restore_recovery": m["rest_rate_scale"],
-		"energy_restore_sleeping": m["rest_rate_scale"],
-		"satiety_restore_eating": m["satiety_rate_scale"],
-	}
+	loop.apply_modifiers(m)
 	if animator != null:
 		animator.speed_scale = m["animation_speed"]
 

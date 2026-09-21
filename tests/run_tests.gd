@@ -30,6 +30,8 @@ func _init() -> void:
 		for name in names:
 			var t: Object = script.new()
 			t.call(name)
+			if t.checks == 0:
+				t.failures.append("no checks ran; the test probably stopped on a script error")
 			if t.failures.is_empty():
 				passed += 1
 				print("ok    %s::%s" % [file.get_basename(), name])

@@ -1,0 +1,11 @@
+{
+	"_comment": "Hand-authored save and offline-progress tuning (master plan Phase 10). Time away is simulated with the real behaviour loop at step_seconds, up to cap_hours; the cap is a placeholder until the client decides (plan §14). Absences shorter than min_seconds count for nothing. A clock that moved backwards grants nothing.",
+	"schema_version": 1,
+	"_comment_rate": "Share of the live pace earned while away: 1.0 = the same as watching, 0.5 = half the workouts. The client may want less than 1.",
+	"offline_rate": 1.0,
+	"cap_hours": 8.0,
+	"min_seconds": 60.0,
+	"step_seconds": 1.0,
+	"autosave_seconds": 60.0,
+	"save_debounce_seconds": 1.5
+}

@@ -94,6 +94,23 @@ func configure(balance: Dictionary, group_names: Array = []) -> Array[String]:
 	return errors
 
 
+## Applies the economy's modifiers (Economy.modifiers()) to durations and
+## rates. Shared by the live game and the offline simulation.
+func apply_modifiers(m: Dictionary) -> void:
+	duration_scale = {
+		"workout_session": m["workout_duration_scale"],
+		"recovery": m["rest_duration_scale"],
+		"sleep_enter": m["rest_duration_scale"],
+		"wake": m["rest_duration_scale"],
+		"eating_max": m["eating_duration_scale"],
+	}
+	rate_scale = {
+		"energy_restore_recovery": m["rest_rate_scale"],
+		"energy_restore_sleeping": m["rest_rate_scale"],
+		"satiety_restore_eating": m["satiety_rate_scale"],
+	}
+
+
 ## Animation group for the current state.
 func group_for(state_name: String) -> String:
 	return _groups.get(state_name, "")

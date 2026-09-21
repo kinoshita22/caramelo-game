@@ -70,6 +70,18 @@ food station opens the food window. Each lists every tier with its own art, what
 does and its price; owned tiers carry a green background and the one in use is
 marked. Bought items are shown in those windows only, never on the island.
 
+The game saves to `user://save.json` (on Windows,
+`%APPDATA%\Godot\app_userdata\My Caramelo\save.json`) after level-ups,
+evolutions and purchases, every minute, and on quitting. Writes are atomic
+and keep the previous save as `save.bak.json`; a save that fails to load is
+renamed aside, never deleted, and the backup is used instead. On startup the
+time since the last save is played through the real behaviour loop, up to
+8 hours (a placeholder in `data/balance/offline.json` until the client
+decides), and a "while you were away" window sums it up. A clock that moved
+backwards grants nothing. `--no-save` neither loads nor writes, and
+`--save-file <path>` uses another file; use one of them with preview options
+such as `--start-level` or `--bones`, which would otherwise be saved.
+
 Keys: F3 toggles the debug overlay (layer bounds, character boxes, anchors,
 stage bounds and the click-through outline); `[` / `]` cycle animation groups;
 `-` / `=` cycle forms; `X` grants a level's worth of XP; `B` grants bones;
