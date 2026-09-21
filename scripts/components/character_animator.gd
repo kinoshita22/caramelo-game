@@ -23,7 +23,10 @@ var form := 0
 var group := ""
 var frame_index := 0
 
-var _frames: Dictionary = {}  # slot -> {texture, anchor, scale}
+var _frames: Dictionary = {}  # slot -> {texture, anchor, scale, attach, flags}
+## Cosmetic slot -> {"rule": slot spec from cosmetics.json, "item": item or {},
+## "sprite": Sprite2D}.
+var _cosmetics: Dictionary = {}
 var _elapsed := 0.0
 var _holding := false  # one-shot group finished with no next group
 var _sprite: Sprite2D
@@ -124,7 +127,83 @@ func _show() -> void:
 	_sprite.texture = f["texture"]
 	_sprite.offset = -f["anchor"]
 	_sprite.scale = Vector2.ONE * base_scale * f["scale"]
+	for cosmetic_slot in _cosmetics:
+		_place_cosmetic(cosmetic_slot, f)
 	frame_changed.emit(slot)
+
+
+## Declares the cosmetic slots (cosmetics.json "slots"). Call once.
+func setup_cosmetics(slot_rules: Dictionary) -> void:
+	for slot_name in slot_rules:
+		if String(slot_name).begins_with("_"):
+			continue
+		var sprite := Sprite2D.new()
+		sprite.name = "Cosmetic_" + slot_name
+		sprite.centered = false
+		sprite.visible = false
+		add_child(sprite)
+		_cosmetics[slot_name] = {"rule": slot_rules[slot_name], "item": {}, "sprite": sprite}
+
+
+## Shows `item` (a cosmetics.json entry) in a slot, or clears it with {}.
+func set_cosmetic(slot_name: String, item: Dictionary) -> void:
+	if not _cosmetics.has(slot_name):
+		return
+	_cosmetics[slot_name]["item"] = item
+	var sprite: Sprite2D = _cosmetics[slot_name]["sprite"]
+	sprite.texture = content.texture(item["asset"]) if not item.is_empty() else null
+	var f: Dictionary = _frames.get(current_slot(), {})
+	if not f.is_empty():
+		_place_cosmetic(slot_name, f)
+
+
+## Where a cosmetic sprite goes on the current frame, or {} when hidden.
+## Pure maths, so tests can check every form and frame.
+static func cosmetic_placement(item: Dictionary, rule: Dictionary, frame: Dictionary, form_number: int,
+		item_visible: Rect2, character_scale: float) -> Dictionary:
+	if item.is_empty():
+		return {}
+	for flag in rule.get("hide_on_flags", []):
+		if flag in frame.get("flags", []):
+			return {}
+	var point: Variant = frame.get("attach", {}).get(rule.get("attach", ""))
+	if typeof(point) != TYPE_ARRAY or point.size() != 2:
+		return {}
+	var tuning: Dictionary = item.get("per_form", {}).get(str(form_number), {})
+	var offset: Array = tuning.get("offset", item.get("offset", [0, 0]))
+	var item_scale := float(tuning.get("scale", item.get("scale", 1.0)))
+	var frame_scale := character_scale * float(frame["scale"])
+	var target := Vector2(point[0], point[1]) + Vector2(offset[0], offset[1])
+	return {
+		"position": (target - frame["anchor"]) * frame_scale,
+		"pivot": _pivot(item_visible, item.get("pivot", "bottom_center")),
+		"scale": frame_scale * item_scale,
+	}
+
+
+func _place_cosmetic(slot_name: String, f: Dictionary) -> void:
+	var entry: Dictionary = _cosmetics[slot_name]
+	var sprite: Sprite2D = entry["sprite"]
+	var item: Dictionary = entry["item"]
+	var rect := Rect2()
+	if not item.is_empty():
+		rect = content.visible_rect(item["asset"])
+	var p := cosmetic_placement(item, entry["rule"], f, form, rect, base_scale)
+	sprite.visible = not p.is_empty()
+	if p.is_empty():
+		return
+	sprite.position = p["position"]
+	sprite.offset = -p["pivot"]
+	sprite.scale = Vector2.ONE * p["scale"]
+
+
+static func _pivot(visible: Rect2, spec: String) -> Vector2:
+	match spec:
+		"center":
+			return visible.get_center()
+		"top_center":
+			return Vector2(visible.get_center().x, visible.position.y)
+	return Vector2(visible.get_center().x, visible.end.y)
 
 
 ## Next frame index. One-shot groups report finished after the last frame
@@ -159,7 +238,10 @@ static func resolve_frame(content_data: RefCounted, frame_overrides: Array, f: i
 			anchor.y += float(o["lift"]) * float(geo["visible"]["height"])
 		if o.has("scale"):
 			scale *= float(o["scale"])
-	return {"texture": content_data.texture(frame_id(f, slot)), "anchor": anchor, "scale": scale}
+	return {
+		"texture": content_data.texture(frame_id(f, slot)), "anchor": anchor, "scale": scale,
+		"attach": content_data.attachment_points(f, slot), "flags": geo.get("review_flags", []),
+	}
 
 
 ## Checks animation_groups.json against the slot table and layout anchors.

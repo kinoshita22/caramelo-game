@@ -181,6 +181,15 @@ static func _check_frame(fr: Dictionary, canvas: Dictionary, ctx: String) -> Arr
 		errors.append("%s: anchor lies outside the image" % ctx)
 	if vis["width"] > canvas["width"] or vis["height"] > canvas["height"]:
 		errors.append("%s: visible rect larger than the form canvas" % ctx)
+	var attach: Variant = fr.get("attach")
+	if typeof(attach) != TYPE_DICTIONARY:
+		errors.append("%s: attach must be an object" % ctx)
+	else:
+		for point_name in attach:
+			var pt: Variant = attach[point_name]
+			if typeof(pt) != TYPE_ARRAY or pt.size() != 2 or not _is_num(pt[0]) or not _is_num(pt[1]) \
+					or pt[0] < 0 or pt[1] < 0 or pt[0] > img["width"] or pt[1] > img["height"]:
+				errors.append("%s: attach point '%s' missing or outside the image" % [ctx, point_name])
 	var stable: Variant = fr.get("stable_anchor")
 	if typeof(stable) != TYPE_DICTIONARY or not _is_num(stable.get("x")) or not _is_num(stable.get("y")):
 		errors.append("%s: stable_anchor missing" % ctx)

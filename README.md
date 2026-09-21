@@ -25,7 +25,8 @@ godot --path caramelo-game -- --animation celebration --animation-frame 1   # fr
 godot --path caramelo-game -- --time-scale 10 --debug-overlay  # watch the loop quickly
 godot --path caramelo-game -- --start-level 50               # start further along
 godot --path caramelo-game -- --bones 5000 --equip cosmic_final --meal premium_beef_pumpkin
-godot --path caramelo-game -- --open-shop food --bones 900     # open a window: food, equipment, upgrades, menu
+godot --path caramelo-game -- --open-shop food --bones 900     # open a window: food, equipment, upgrades, menu, furniture, wardrobe
+godot --path caramelo-game -- --preview-cosmetic head:ui.currency_xp_star:0.28   # development check of attachment points
 ```
 
 Caramelo runs himself: he trains, recovers, eats when hungry and sleeps when
@@ -56,7 +57,15 @@ windowed mode and quits the game, which an overlay needs because it has no
 title bar; Escape opens it too.
 
 Clicking Caramelo opens the training window, where bones buy the four stat
-upgrades. Clicking the dumbbell rack opens the dumbbell window; clicking the
+upgrades. Clicking the chair or the table opens the furniture window, and the
+HUD's wardrobe button opens the wardrobe. Both list items by slot, and items
+not yet owned can be tried on the island or on Caramelo before buying. Adding
+furniture or cosmetics is a data change only (`data/furniture/furniture.json`,
+`data/cosmetics/cosmetics.json`); no variant or cosmetic art exists yet, so
+the wardrobe is empty and each furniture slot holds today's piece. Cosmetics
+attach to per-frame points estimated from each frame's silhouette (top of
+head, eyes, neck, chest; see `frame_geometry.json`), corrected by hand in
+`data/animations/attachment_overrides.json`, and hide on lying-down frames. Clicking the dumbbell rack opens the dumbbell window; clicking the
 food station opens the food window. Each lists every tier with its own art, what it
 does and its price; owned tiers carry a green background and the one in use is
 marked. Bought items are shown in those windows only, never on the island.

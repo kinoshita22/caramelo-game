@@ -13,6 +13,7 @@ var errors: Array[String] = []
 var _assets: Dictionary = {}
 var _textures: Dictionary = {}
 var _icons: Dictionary = {}
+var _overrides: Variant = null
 
 
 ## Loads and validates data_root (a res:// path). Returns true when valid.
@@ -67,6 +68,19 @@ func frame_geometry(form: int, slot: int) -> Dictionary:
 				if int(fr["slot"]) == slot:
 					return fr
 	return {}
+
+
+## Estimated cosmetic attachment points for a frame (source px), with any
+## hand corrections from attachment_overrides.json applied.
+func attachment_points(form: int, slot: int) -> Dictionary:
+	var points: Dictionary = frame_geometry(form, slot).get("attach", {}).duplicate()
+	if _overrides == null:
+		var doc: Variant = read_json("res://data/animations/attachment_overrides.json")
+		_overrides = doc.get("forms", {}) if typeof(doc) == TYPE_DICTIONARY else {}
+	var fix: Variant = _overrides.get(str(form), {}).get(str(slot), {})
+	if typeof(fix) == TYPE_DICTIONARY:
+		points.merge(fix, true)
+	return points
 
 
 ## Form numbers present in the catalog, ascending.

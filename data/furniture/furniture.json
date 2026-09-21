@@ -1,0 +1,14 @@
+{
+	"_comment": "Hand-authored furniture (master plan Phase 9). Each slot is an island layer whose art is swapped for the equipped item; position, pivot and scale stay the layer's own, and an item may add its own 'scale'. Adding a variant is a data change only: an entry in 'items' with an asset from the catalog. Slots with no items yet stay hidden until their art arrives (plan §13).",
+	"schema_version": 1,
+	"slots": {
+		"chair": {"label": "Chair", "layer": "chair"},
+		"table": {"label": "Table", "layer": "side_table"},
+		"kitchen_island": {"label": "Kitchen island", "layer": "", "allow_empty": true},
+		"decor": {"label": "Decor", "layer": "", "allow_empty": true}
+	},
+	"items": [
+		{"id": "yellow_plastic_chair", "slot": "chair", "label": "Plastic chair", "asset": "environment.yellow_plastic_chair", "cost": 0, "unlock_level": 1},
+		{"id": "boteco_side_table", "slot": "table", "label": "Boteco table", "asset": "environment.boteco_side_table", "cost": 0, "unlock_level": 1}
+	]
+}

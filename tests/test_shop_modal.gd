@@ -100,6 +100,9 @@ func test_clicking_elsewhere_opens_nothing() -> void:
 	var placements := IslandStage.compute_placements(_layout, _content)
 	check_eq(IslandStage.click_action_at(placements, Vector2(-10000, -10000)), "", "empty sky does nothing")
 	for p in placements:
-		if p["name"] in ["tree", "swing", "sleeping_mat", "chair"]:
+		if p["name"] in ["tree", "swing", "sleeping_mat"]:
 			check_eq(IslandStage.click_action_at([p], p["rect"].get_center()), "",
 					"%s is not clickable" % p["name"])
+		if p["name"] in ["chair", "side_table"]:
+			check_eq(IslandStage.click_action_at([p], p["rect"].get_center()), "furniture",
+					"%s opens the furniture window" % p["name"])

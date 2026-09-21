@@ -4,13 +4,15 @@ extends Node2D
 ## click-through region in sync.
 ##
 ## Clicking Caramelo opens the training window; the dumbbell rack and the
-## food station open their purchase windows. Escape opens the menu.
+## food station open their purchase windows; the chair and the table open the
+## furniture window. Escape opens the menu.
 ##
 ## Keys: F3 toggles the debug overlay; [ and ] cycle animation groups;
 ## - and = cycle forms; X grants a level's worth of XP, B grants bones,
 ## 1-4 upgrade the four stats, E and F buy the next dumbbell or meal.
 ## Preview options: --bones N, --equip <tier id>, --meal <tier id>,
-## --open-shop equipment|food|upgrades|menu.
+## --open-shop equipment|food|upgrades|menu|furniture|wardrobe,
+## --preview-cosmetic slot:asset_id[:scale] (development check only).
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
 ## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
@@ -22,6 +24,7 @@ const IslandStage := preload("res://scripts/components/island_stage.gd")
 const ShopModal := preload("res://scripts/components/shop_modal.gd")
 const UpgradesModal := preload("res://scripts/components/upgrades_modal.gd")
 const MenuModal := preload("res://scripts/components/menu_modal.gd")
+const CollectionModal := preload("res://scripts/components/collection_modal.gd")
 const Hud := preload("res://scripts/components/hud.gd")
 ## Clicking Caramelo opens the training window.
 const CHARACTER_ACTION := "upgrades"
@@ -40,6 +43,8 @@ var _debug: Node2D
 var _shop: Control
 var _upgrades: Control
 var _menu: Control
+var _collection_window: Control
+var _wardrobe_open := false
 var _hud: Control
 var _layout: Dictionary = {}
 var _screenshot_path := ""
@@ -65,6 +70,18 @@ func _ready() -> void:
 				if settings.has(pair[0]):
 					GameState.economy.restore({"owned_%s" % pair[1]: [settings[pair[0]]],
 							("equipped_equipment" if pair[1] == "equipment" else "active_food"): settings[pair[0]]})
+			GameState.furniture.changed.connect(_apply_furniture)
+			_apply_furniture()
+			stage.animator.setup_cosmetics(GameState.cosmetics.slots)
+			GameState.cosmetics.changed.connect(_apply_cosmetics)
+			_apply_cosmetics()
+			# Development check only: put any catalog image in a cosmetic slot,
+			# e.g. --preview-cosmetic head:ui.currency_xp_star:0.25
+			if settings.has("preview_cosmetic"):
+				var parts: PackedStringArray = String(settings["preview_cosmetic"]).split(":")
+				if parts.size() >= 2:
+					stage.animator.set_cosmetic(parts[0], {"id": "preview", "asset": parts[1],
+							"scale": float(parts[2]) if parts.size() > 2 else 0.3})
 			if settings.has("start_level"):
 				GameState.progression.restore(int(settings["start_level"]), 0.0, GameState.progression.bones)
 				stage.animator.set_form(GameState.progression.form)
@@ -104,6 +121,8 @@ func _ready() -> void:
 		"": pass
 		"upgrades": _open_upgrades()
 		"menu": _open_menu()
+		"furniture": _open_furniture()
+		"wardrobe": _open_wardrobe()
 		var shop: _open_shop("shop_%s" % shop)
 	_screenshot_path = settings.get("screenshot", "")
 	_screenshot_frames = int(settings.get("screenshot_frames", 10))
@@ -121,7 +140,7 @@ func _build_ui() -> void:
 	if stage.behaviour != null:
 		_hud.needs = stage.behaviour.loop
 	_hud.upgrades_requested.connect(_open_upgrades)
-	_hud.wardrobe_requested.connect(func() -> void: print("Wardrobe: waiting on cosmetic art"))
+	_hud.wardrobe_requested.connect(_open_wardrobe)
 	_hud.menu_requested.connect(_open_menu)
 
 	_shop = ShopModal.new()
@@ -135,6 +154,12 @@ func _build_ui() -> void:
 	_upgrades.visible = false
 	_upgrades.closed.connect(_on_modal_closed)
 	layer.add_child(_upgrades)
+
+	_collection_window = CollectionModal.new()
+	_collection_window.name = "Collection"
+	_collection_window.visible = false
+	_collection_window.closed.connect(_on_modal_closed)
+	layer.add_child(_collection_window)
 
 	_menu = MenuModal.new()
 	_menu.name = "Menu"
@@ -155,6 +180,55 @@ func _open_upgrades() -> void:
 	_take_all_clicks()
 
 
+func _open_furniture() -> void:
+	_collection_window.open(ContentCatalog.data, GameState.furniture, GameState.progression, "Furniture",
+			"No furniture to choose yet.", _preview_furniture)
+	_take_all_clicks()
+
+
+## Shows `item_id` in a furniture slot, or the equipped item for "".
+func _preview_furniture(slot_name: String, item_id: String) -> void:
+	var furniture: RefCounted = GameState.furniture
+	var layer_name: String = furniture.slots.get(slot_name, {}).get("layer", "")
+	if layer_name == "":
+		return
+	var id := item_id if item_id != "" else String(furniture.equipped.get(slot_name, ""))
+	var it: Dictionary = furniture.item(id)
+	if not it.is_empty():
+		stage.set_layer_asset(layer_name, it["asset"], float(it.get("scale", 1.0)))
+
+
+func _open_wardrobe() -> void:
+	# The loop pauses on the accessory-ready pose while the wardrobe is open.
+	if stage.behaviour != null:
+		stage.behaviour.loop.request("wardrobe")
+	elif stage.animator != null:
+		stage.animator.play("wardrobe", true)
+	_collection_window.open(ContentCatalog.data, GameState.cosmetics, GameState.progression, "Wardrobe",
+			"No outfits yet. Hats and glasses arrive with the next art delivery.", _preview_cosmetic)
+	_wardrobe_open = true
+	_take_all_clicks()
+
+
+## Shows `item_id` in a cosmetic slot, or the equipped item for "".
+func _preview_cosmetic(slot_name: String, item_id: String) -> void:
+	var cosmetics: RefCounted = GameState.cosmetics
+	var id := item_id if item_id != "" else String(cosmetics.equipped.get(slot_name, ""))
+	stage.animator.set_cosmetic(slot_name, cosmetics.item(id))
+
+
+## Puts every equipped cosmetic on Caramelo.
+func _apply_cosmetics(_slot_name: String = "") -> void:
+	for slot_name in GameState.cosmetics.slot_names():
+		_preview_cosmetic(slot_name, "")
+
+
+## Puts every equipped furniture item on the island.
+func _apply_furniture(_slot_name: String = "") -> void:
+	for slot_name in GameState.furniture.slot_names():
+		_preview_furniture(slot_name, "")
+
+
 func _open_menu() -> void:
 	_menu.open(ContentCatalog.data, PlatformService.mode)
 	_take_all_clicks()
@@ -167,6 +241,10 @@ func _take_all_clicks() -> void:
 
 func _on_modal_closed() -> void:
 	PlatformService.set_hit_polygon(window_polygon)
+	if _wardrobe_open:
+		_wardrobe_open = false
+		if stage.behaviour != null:
+			stage.behaviour.loop.close_wardrobe()
 
 
 func _toggle_display_mode() -> void:
@@ -232,6 +310,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		match action:
 			"": pass
 			CHARACTER_ACTION: _open_upgrades()
+			"furniture": _open_furniture()
 			_: _open_shop(action)
 		return
 	if not (event is InputEventKey and event.pressed and not event.echo):

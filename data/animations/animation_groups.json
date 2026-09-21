@@ -16,7 +16,7 @@
 		"celebration": {"slots": [28, 29, 28, 29, 28], "fps": 6, "loop": false, "next": "idle", "anchor": "celebration"},
 		"reward": {"slots": [30, 30, 31, 31, 31, 31, 31, 31, 31, 31], "fps": 8, "loop": false, "next": "idle", "anchor": "celebration"},
 		"pre_evolution": {"slots": [32, 33], "fps": 6, "loop": true, "anchor": "celebration"},
-		"wardrobe": {"slots": [2], "fps": 1, "loop": true, "anchor": "wardrobe"}
+		"wardrobe": {"slots": [1], "fps": 1, "loop": true, "anchor": "wardrobe"}
 	},
 	"frame_overrides": [
 		{"_comment": "Victory jump is drawn airborne; lift it off the ground by a share of its visible height.", "slot": 29, "lift": 0.12},
