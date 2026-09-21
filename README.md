@@ -25,13 +25,13 @@ godot --path caramelo-game -- --animation celebration --animation-frame 1   # fr
 godot --path caramelo-game -- --time-scale 10 --debug-overlay  # watch the loop quickly
 godot --path caramelo-game -- --start-level 50               # start further along
 godot --path caramelo-game -- --bones 5000 --equip cosmic_final --meal premium_beef_pumpkin
-godot --path caramelo-game -- --open-shop food --bones 900     # open a purchase window
+godot --path caramelo-game -- --open-shop food --bones 900     # open a window: food, equipment, upgrades, menu
 ```
 
 Caramelo runs himself: he trains, recovers, eats when hungry and sleeps when
-tired, with no input from the player. Energy and satiety are hidden 0-100
-values; they steer the cycle, are never shown as a chore, and never cause
-failure. Rates, thresholds and durations live in `data/balance/behaviour.json`.
+tired, with no input from the player. Energy and satiety are 0-100 values
+shown as the sleep and hunger bars; they steer the cycle, need no attention
+from the player, and never cause failure. Rates, thresholds and durations live in `data/balance/behaviour.json`.
 Passing `--animation` switches the loop off so a single group can be inspected.
 
 Finished workouts pay XP and bones. Levels run 1-100 and the look changes
@@ -47,8 +47,17 @@ tiers and five meals, all in `data/balance/upgrades.json`,
 `data/equipment/dumbbells.json` and `data/food/meals.json`. Upgrades only ever
 speed the loop up: more XP per workout, longer sessions, quicker reps, shorter
 rests and better meals. Nothing can be sold and no balance goes negative.
-Clicking the dumbbell rack opens the dumbbell window; clicking the food
-station opens the food window. Each lists every tier with its own art, what it
+Hunger and sleep bars (the loop's satiety and energy, live) sit over the
+tree; `island_layout.json` names the layer and the offset under `"hud"`. A
+strip along the bottom of the island shows the level badge, the XP bar and
+the bone count, with buttons for training, the wardrobe (a placeholder until
+cosmetic art arrives) and the menu. The menu switches between overlay and
+windowed mode and quits the game, which an overlay needs because it has no
+title bar; Escape opens it too.
+
+Clicking Caramelo opens the training window, where bones buy the four stat
+upgrades. Clicking the dumbbell rack opens the dumbbell window; clicking the
+food station opens the food window. Each lists every tier with its own art, what it
 does and its price; owned tiers carry a green background and the one in use is
 marked. Bought items are shown in those windows only, never on the island.
 

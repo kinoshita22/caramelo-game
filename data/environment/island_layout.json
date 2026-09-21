@@ -19,6 +19,11 @@
 		"form": 1,
 		"shadow": {"asset": "environment.character_shadow", "pivot": "center", "scale": 0.24, "z": 9}
 	},
+	"hud": {
+		"_comment": "The hunger and sleep bars sit over this layer: centred on it, their top at the layer's top plus offset (stage units).",
+		"needs_over_layer": "tree",
+		"needs_offset": [0, 42]
+	},
 	"anchors": {
 		"idle": {"position": [-40, 25]},
 		"workout": {"position": [60, 10]},

@@ -62,6 +62,12 @@ func stat_level(stat_name: String) -> int:
 
 
 ## Bones needed for the next level of a stat; 0 when it is maxed.
+## Icon asset for a stat, or "" when the data gives none.
+func stat_icon(stat_name: String) -> String:
+	var icon: Variant = _upgrades.get("stats", {}).get(stat_name, {}).get("icon")
+	return icon if typeof(icon) == TYPE_STRING else ""
+
+
 func stat_cost(stat_name: String) -> int:
 	var next_level := stat_level(stat_name) + 1
 	if not stat_name in STATS or next_level > max_stat_level():

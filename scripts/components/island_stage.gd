@@ -23,6 +23,8 @@ var character_boxes: Array[Rect2] = []
 ## Moves between anchors; holds the shadow and the animator.
 var character: Node2D
 var animator: Node2D
+## Scale the character is drawn at, from the layout.
+var character_scale := 1.0
 ## Decides what Caramelo does; null until start_behaviour() succeeds.
 var behaviour: Node
 ## Layer name -> Sprite2D.
@@ -69,7 +71,8 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 	character.add_child(shadow_sprite)
 	animator = CharacterAnimator.new()
 	animator.name = "Animator"
-	animator.setup(content, animation_doc, float(ch["scale"]))
+	character_scale = float(ch["scale"])
+	animator.setup(content, animation_doc, character_scale)
 	animator.group_started.connect(func(_g: String, anchor_name: String) -> void: move_character_to(anchor_name))
 	character.add_child(animator)
 	animator.set_form(int(ch["form"]))

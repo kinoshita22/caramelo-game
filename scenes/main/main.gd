@@ -3,13 +3,14 @@ extends Node2D
 ## windowed mode, keeps the stage fitted to the window and keeps the
 ## click-through region in sync.
 ##
-## Clicking the dumbbell rack or the food station opens its purchase window.
+## Clicking Caramelo opens the training window; the dumbbell rack and the
+## food station open their purchase windows. Escape opens the menu.
 ##
 ## Keys: F3 toggles the debug overlay; [ and ] cycle animation groups;
 ## - and = cycle forms; X grants a level's worth of XP, B grants bones,
 ## 1-4 upgrade the four stats, E and F buy the next dumbbell or meal.
 ## Preview options: --bones N, --equip <tier id>, --meal <tier id>,
-## --open-shop equipment|food.
+## --open-shop equipment|food|upgrades|menu.
 ## Command-line overrides (after --): --display-mode overlay|windowed,
 ## --overlay-scale N, --corner top_left|top_right|bottom_left|bottom_right,
 ## --window-size WxH, --debug-overlay, --animation group [--animation-frame i], --form N,
@@ -19,6 +20,11 @@ extends Node2D
 const DebugOverlay := preload("res://scripts/components/stage_debug_overlay.gd")
 const IslandStage := preload("res://scripts/components/island_stage.gd")
 const ShopModal := preload("res://scripts/components/shop_modal.gd")
+const UpgradesModal := preload("res://scripts/components/upgrades_modal.gd")
+const MenuModal := preload("res://scripts/components/menu_modal.gd")
+const Hud := preload("res://scripts/components/hud.gd")
+## Clicking Caramelo opens the training window.
+const CHARACTER_ACTION := "upgrades"
 const PlatformServiceScript := preload("res://scripts/autoload/platform_service.gd")
 const DisplayLayout := preload("res://scripts/components/display_layout.gd")
 const LAYOUT_PATH := "res://data/environment/island_layout.json"
@@ -32,6 +38,10 @@ var settings: Dictionary = {}
 var window_polygon := PackedVector2Array()
 var _debug: Node2D
 var _shop: Control
+var _upgrades: Control
+var _menu: Control
+var _hud: Control
+var _layout: Dictionary = {}
 var _screenshot_path := ""
 var _screenshot_frames := 0
 
@@ -40,6 +50,7 @@ func _ready() -> void:
 	var content: RefCounted = ContentCatalog.data
 	settings = DisplayLayout.load_settings(content.read_json(SETTINGS_PATH), OS.get_cmdline_user_args())
 	var layout: Variant = content.read_json(LAYOUT_PATH)
+	_layout = layout if typeof(layout) == TYPE_DICTIONARY else {}
 	var animations: Variant = content.read_json(ANIMATIONS_PATH)
 	var errors: Array[String] = []
 	if typeof(layout) != TYPE_DICTIONARY or typeof(animations) != TYPE_DICTIONARY:
@@ -89,8 +100,11 @@ func _ready() -> void:
 	_apply_mode()
 	get_viewport().size_changed.connect(_refit)
 	_refit()
-	if settings.has("open_shop"):
-		_open_shop("shop_%s" % settings["open_shop"])
+	match settings.get("open_shop", ""):
+		"": pass
+		"upgrades": _open_upgrades()
+		"menu": _open_menu()
+		var shop: _open_shop("shop_%s" % shop)
 	_screenshot_path = settings.get("screenshot", "")
 	_screenshot_frames = int(settings.get("screenshot_frames", 10))
 
@@ -100,21 +114,66 @@ func _build_ui() -> void:
 	var layer := CanvasLayer.new()
 	layer.name = "UI"
 	add_child(layer)
+	_hud = Hud.new()
+	_hud.name = "Hud"
+	layer.add_child(_hud)
+	_hud.setup(ContentCatalog.data, GameState.progression)
+	if stage.behaviour != null:
+		_hud.needs = stage.behaviour.loop
+	_hud.upgrades_requested.connect(_open_upgrades)
+	_hud.wardrobe_requested.connect(func() -> void: print("Wardrobe: waiting on cosmetic art"))
+	_hud.menu_requested.connect(_open_menu)
+
 	_shop = ShopModal.new()
 	_shop.name = "Shop"
 	_shop.visible = false
-	_shop.closed.connect(_on_shop_closed)
+	_shop.closed.connect(_on_modal_closed)
 	layer.add_child(_shop)
+
+	_upgrades = UpgradesModal.new()
+	_upgrades.name = "Upgrades"
+	_upgrades.visible = false
+	_upgrades.closed.connect(_on_modal_closed)
+	layer.add_child(_upgrades)
+
+	_menu = MenuModal.new()
+	_menu.name = "Menu"
+	_menu.visible = false
+	_menu.closed.connect(_on_modal_closed)
+	_menu.mode_toggle_requested.connect(_toggle_display_mode)
+	_menu.quit_requested.connect(func() -> void: get_tree().quit())
+	layer.add_child(_menu)
 
 
 func _open_shop(action: String) -> void:
 	_shop.open(ContentCatalog.data, GameState.economy, GameState.progression, action)
-	# While a window is open the whole window takes clicks, not just the island.
+	_take_all_clicks()
+
+
+func _open_upgrades() -> void:
+	_upgrades.open(ContentCatalog.data, GameState.economy, GameState.progression)
+	_take_all_clicks()
+
+
+func _open_menu() -> void:
+	_menu.open(ContentCatalog.data, PlatformService.mode)
+	_take_all_clicks()
+
+
+## While a window is open the whole window takes clicks, not just the island.
+func _take_all_clicks() -> void:
 	PlatformService.set_hit_polygon(_window_rect_polygon())
 
 
-func _on_shop_closed() -> void:
+func _on_modal_closed() -> void:
 	PlatformService.set_hit_polygon(window_polygon)
+
+
+func _toggle_display_mode() -> void:
+	settings["mode"] = "windowed" if PlatformService.mode == "overlay" else "overlay"
+	_apply_mode()
+	_refit()
+	_menu.close()
 
 
 func _window_rect_polygon() -> PackedVector2Array:
@@ -146,17 +205,43 @@ func _refit() -> void:
 	var to_window := get_viewport().get_final_transform() * stage.get_global_transform_with_canvas()
 	window_polygon = to_window * stage.hit_polygon
 	PlatformService.set_hit_polygon(window_polygon)
+	_place_needs()
+
+
+## Puts the HUD's hunger and sleep bars over the layer named in the layout.
+func _place_needs() -> void:
+	if _hud == null:
+		return
+	var hud_spec: Dictionary = _layout.get("hud", {})
+	var layer_name: String = hud_spec.get("needs_over_layer", "")
+	for p in stage.placements:
+		if p["name"] == layer_name:
+			var offset: Array = hud_spec.get("needs_offset", [0, 0])
+			var top := Vector2(p["rect"].get_center().x, p["rect"].position.y) + Vector2(offset[0], offset[1])
+			# Stage and HUD layer share the canvas coordinate space.
+			_hud.place_needs(stage.get_global_transform_with_canvas() * top)
+			return
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var action := IslandStage.click_action_at(stage.placements, stage.to_local(get_global_mouse_position()))
-		if action != "":
-			_open_shop(action)
+		var point := stage.to_local(get_global_mouse_position())
+		var action := IslandStage.click_action_at(stage.placements, point)
+		if action == "" and stage.character != null and _character_rect().has_point(point):
+			action = CHARACTER_ACTION
+		match action:
+			"": pass
+			CHARACTER_ACTION: _open_upgrades()
+			_: _open_shop(action)
 		return
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
 	match event.keycode:
+		KEY_ESCAPE:
+			if _menu.visible:
+				_menu.close()
+			else:
+				_open_menu()
 		KEY_F3:
 			_debug.visible = not _debug.visible
 			_debug.queue_redraw()
@@ -174,6 +259,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			print("upgrade %s: %s" % [stat, GameState.economy.upgrade_stat(stat, GameState.progression)])
 		KEY_E, KEY_F:
 			_buy_next(event.keycode == KEY_E)
+
+
+## Where Caramelo stands now, as a clickable box.
+func _character_rect() -> Rect2:
+	var size: Vector2 = ContentCatalog.data.max_character_canvas() * float(stage.character_scale)
+	var at: Vector2 = stage.character.position
+	return Rect2(at.x - size.x / 2.0, at.y - size.y, size.x, size.y)
 
 
 func _cycle_group(step: int) -> void:
