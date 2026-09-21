@@ -25,6 +25,7 @@ const ShopModal := preload("res://scripts/components/shop_modal.gd")
 const UpgradesModal := preload("res://scripts/components/upgrades_modal.gd")
 const MenuModal := preload("res://scripts/components/menu_modal.gd")
 const CollectionModal := preload("res://scripts/components/collection_modal.gd")
+const AwayModal := preload("res://scripts/components/away_modal.gd")
 const Hud := preload("res://scripts/components/hud.gd")
 ## Clicking Caramelo opens the training window.
 const CHARACTER_ACTION := "upgrades"
@@ -45,6 +46,7 @@ var _upgrades: Control
 var _menu: Control
 var _collection_window: Control
 var _wardrobe_open := false
+var _away: Control
 var _hud: Control
 var _layout: Dictionary = {}
 var _screenshot_path := ""
@@ -53,7 +55,13 @@ var _screenshot_frames := 0
 
 func _ready() -> void:
 	var content: RefCounted = ContentCatalog.data
-	settings = DisplayLayout.load_settings(content.read_json(SETTINGS_PATH), OS.get_cmdline_user_args())
+	# The save goes in first so the island is built at the saved level and
+	# with the saved gear, after catching up on time away.
+	SaveManager.begin()
+	var defaults: Variant = content.read_json(SETTINGS_PATH)
+	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("display_mode"):
+		defaults["mode"] = SaveManager.settings["display_mode"]
+	settings = DisplayLayout.load_settings(defaults, OS.get_cmdline_user_args())
 	var layout: Variant = content.read_json(LAYOUT_PATH)
 	_layout = layout if typeof(layout) == TYPE_DICTIONARY else {}
 	var animations: Variant = content.read_json(ANIMATIONS_PATH)
@@ -99,6 +107,8 @@ func _ready() -> void:
 				else:
 					errors.append_array(GameState.errors)
 					errors.append_array(stage.start_behaviour(balance, GameState.progression, GameState.economy))
+					if stage.behaviour != null:
+						SaveManager.attach_loop(stage.behaviour.loop)
 			if settings.has("time_scale"):
 				Engine.time_scale = maxf(0.01, float(settings["time_scale"]))
 	if not content.is_valid():
@@ -117,6 +127,9 @@ func _ready() -> void:
 	_apply_mode()
 	get_viewport().size_changed.connect(_refit)
 	_refit()
+	if AwayModal.worth_showing(SaveManager.offline_summary) and not settings.has("open_shop"):
+		_away.open(ContentCatalog.data, SaveManager.offline_summary)
+		_take_all_clicks()
 	match settings.get("open_shop", ""):
 		"": pass
 		"upgrades": _open_upgrades()
@@ -161,12 +174,20 @@ func _build_ui() -> void:
 	_collection_window.closed.connect(_on_modal_closed)
 	layer.add_child(_collection_window)
 
+	_away = AwayModal.new()
+	_away.name = "Away"
+	_away.visible = false
+	_away.closed.connect(_on_modal_closed)
+	layer.add_child(_away)
+
 	_menu = MenuModal.new()
 	_menu.name = "Menu"
 	_menu.visible = false
 	_menu.closed.connect(_on_modal_closed)
 	_menu.mode_toggle_requested.connect(_toggle_display_mode)
-	_menu.quit_requested.connect(func() -> void: get_tree().quit())
+	_menu.quit_requested.connect(func() -> void:
+		SaveManager.save_game()
+		get_tree().quit())
 	layer.add_child(_menu)
 
 
@@ -249,6 +270,8 @@ func _on_modal_closed() -> void:
 
 func _toggle_display_mode() -> void:
 	settings["mode"] = "windowed" if PlatformService.mode == "overlay" else "overlay"
+	SaveManager.settings["display_mode"] = settings["mode"]
+	SaveManager.save_game()
 	_apply_mode()
 	_refit()
 	_menu.close()
@@ -404,4 +427,5 @@ func _process(_delta: float) -> void:
 	var f := FileAccess.open(path.get_basename() + ".json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(meta, "\t"))
 	f.close()
+	SaveManager.save_game()
 	get_tree().quit()
