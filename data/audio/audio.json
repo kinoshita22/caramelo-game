@@ -1,0 +1,20 @@
+{
+	"_comment": "Hand-authored audio (master plan Phase 12). No sound files exist yet (plan §13), so 'sounds' is empty and every event is silent. Adding a sound is a data change: an entry in 'sounds' pointing at a file under res://assets/runtime/audio/ and its bus. 'events' says which sound plays for what: behaviour states ('state:<name>'), bone changes, and 'ui_click' for any button. Volumes are 0-1 and saved per player; whether an overlay starts muted is the client's decision (plan §14).",
+	"schema_version": 1,
+	"buses": ["Music", "Effects", "Ambience"],
+	"default_volumes": {"Music": 0.6, "Effects": 0.8, "Ambience": 0.5},
+	"sounds": {},
+	"events": {
+		"state:celebration": "level_up",
+		"state:evolution": "evolution",
+		"state:reward": "bone_reward",
+		"state:workout": "workout_effort",
+		"state:eating": "eating",
+		"state:sleeping": "sleeping",
+		"bones_gained": "bone_pickup",
+		"bones_spent": "purchase",
+		"ui_click": "button_click"
+	},
+	"music": "",
+	"ambience": ""
+}

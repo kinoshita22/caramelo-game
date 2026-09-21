@@ -101,7 +101,9 @@ func _build_row(row: Dictionary) -> Control:
 	var text_column := VBoxContainer.new()
 	text_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	text_column.add_theme_constant_override("separation", 2)
-	text_column.add_child(UIKit.label("%s   %d/%d" % [row["label"], row["level"], row["max_level"]], 34))
+	var name := UIKit.label("%s   %d/%d" % [TranslationServer.translate(row["label"]), row["level"], row["max_level"]], 34)
+	name.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	text_column.add_child(name)
 	text_column.add_child(UIKit.label(row["detail"], 26, UIKit.MUTED))
 	box.add_child(text_column)
 

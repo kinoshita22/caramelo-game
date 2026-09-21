@@ -157,6 +157,16 @@ func set_cosmetic(slot_name: String, item: Dictionary) -> void:
 		_place_cosmetic(slot_name, f)
 
 
+## Offset from this node's origin to an attachment point ("head_top"...) on
+## the current frame, in this node's parent units. Falls back to straight up.
+func point_offset(point_name: String) -> Vector2:
+	var f: Dictionary = _frames.get(current_slot(), {})
+	var point: Variant = f.get("attach", {}).get(point_name)
+	if f.is_empty() or typeof(point) != TYPE_ARRAY:
+		return Vector2(0.0, -300.0 * base_scale)
+	return (Vector2(point[0], point[1]) - f["anchor"]) * base_scale * float(f["scale"])
+
+
 ## Where a cosmetic sprite goes on the current frame, or {} when hidden.
 ## Pure maths, so tests can check every form and frame.
 static func cosmetic_placement(item: Dictionary, rule: Dictionary, frame: Dictionary, form_number: int,

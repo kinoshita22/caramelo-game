@@ -215,6 +215,11 @@ func _process(_delta: float) -> void:
 	_sleep_bar.value = clampf(needs.energy / 100.0, 0.0, 1.0)
 
 
+## Centre of the bone count, in HUD coordinates (for effects).
+func bone_counter_centre() -> Vector2:
+	return _bones_label.get_global_rect().get_center()
+
+
 func refresh() -> void:
 	_level_label.text = str(progression.level)
 	var needed: float = progression.xp_to_next(progression.level)

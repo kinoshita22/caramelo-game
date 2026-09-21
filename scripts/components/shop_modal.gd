@@ -13,6 +13,7 @@ const EQUIPMENT := "shop_equipment"
 const FOOD := "shop_food"
 
 const UIKit := preload("res://scripts/components/ui_kit.gd")
+const Localization := preload("res://scripts/systems/localization.gd")
 
 const PANEL_SIZE := Vector2(1180, 760)
 const ROW_HEIGHT := 104.0
@@ -161,7 +162,7 @@ static func rows_for(shop_kind: String, economy_system: RefCounted, level: int, 
 			actionable = false
 		elif not is_owned and level < int(tier["unlock_level"]):
 			state = "locked"
-			action_label = "Level %d" % int(tier["unlock_level"])
+			action_label = Localization.tr_format("Level %d", [int(tier["unlock_level"])])
 			actionable = false
 		elif not is_owned:
 			state = "affordable" if bones >= cost else "too_expensive"
@@ -184,6 +185,6 @@ static func rows_for(shop_kind: String, economy_system: RefCounted, level: int, 
 static func _detail(tier: Dictionary, equipment: bool) -> String:
 	if equipment:
 		return "XP x%.2f" % float(tier.get("xp_multiplier", 1.0))
-	return "Fills x%.2f, eats x%.2f" % [float(tier.get("satiety_multiplier", 1.0)), float(tier.get("eating_speed", 1.0))]
+	return Localization.tr_format("Fills x%.2f, eats x%.2f", [float(tier.get("satiety_multiplier", 1.0)), float(tier.get("eating_speed", 1.0))])
 
 

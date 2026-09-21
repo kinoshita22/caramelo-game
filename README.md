@@ -70,6 +70,15 @@ food station opens the food window. Each lists every tier with its own art, what
 does and its price; owned tiers carry a green background and the one in use is
 marked. Bought items are shown in those windows only, never on the island.
 
+Short effects mark level-ups (a star and "Level 12!"), evolutions (a flash),
+bone rewards (the reward burst), bones earned ("+3") and bones spent ("-150"),
+using art already in the pack; `data/effects/effects.json` defines them.
+The game speaks Brazilian Portuguese and English (`data/i18n/pt_BR.json`;
+English is the source text), picks Portuguese on a Portuguese system, and
+the menu switches language. Sound runs through Music, Effects and Ambience
+buses with saved volumes; `data/audio/audio.json` maps events to sounds, and
+until sound files arrive every event is silent.
+
 To stay cheap when left running all day, the game runs at 60 FPS while
 someone uses it, 20 FPS when idle (the animations never exceed 12), 15 on
 battery where the system reports it (Linux today), and 5 when minimized;
