@@ -1,19 +1,19 @@
 {
-	"_comment": "Hand-authored tuning for the autonomous loop (master plan Phase 5). Energy and satiety are hidden drivers on a 0-100 scale; the player never manages them and they never cause failure. Rates are per second at time scale 1. Durations are seconds.",
+	"_comment": "Hand-authored tuning for the autonomous loop (master plan Phase 5). Tuned so that, measured over hours of simulated play, a workout lasts about 21 s, a meal about 18 s and a night's sleep about 19 s (twice, three times and five times the first tuning). Energy and satiety are hidden drivers on a 0-100 scale; the player never manages them and they never cause failure. Rates are per second at time scale 1. Durations are seconds.",
 	"schema_version": 1,
 	"drivers": {
 		"energy": {"start": 100.0},
 		"satiety": {"start": 100.0}
 	},
 	"rates": {
-		"energy_drain_workout": 3.5,
+		"energy_drain_workout": 1.75,
 		"energy_drain_default": 0.3,
 		"energy_restore_recovery": 1.5,
-		"energy_restore_sleeping": 9.0,
+		"energy_restore_sleeping": 2.6,
 		"satiety_drain_default": 0.7,
-		"satiety_drain_workout": 1.4,
+		"satiety_drain_workout": 0.7,
 		"satiety_drain_sleeping": 0.25,
-		"satiety_restore_eating": 11.0
+		"satiety_restore_eating": 3.9
 	},
 	"thresholds": {
 		"_comment": "hungry starts the eating detour and full ends it. tired ends a workout early; sleepy (checked when the cycle is free to choose) sends him to bed, so he sleeps roughly every second session; rested wakes him.",
@@ -24,12 +24,12 @@
 		"rested": 90.0
 	},
 	"durations": {
-		"workout_session": 14.0,
+		"workout_session": 32.0,
 		"recovery": 6.0,
 		"hunger_cue": 3.0,
-		"eating_max": 25.0,
+		"eating_max": 75.0,
 		"sleep_enter": 2.5,
-		"sleeping_max": 180.0,
+		"sleeping_max": 900.0,
 		"wake": 3.0,
 		"celebration": 3.0,
 		"reward": 3.0,

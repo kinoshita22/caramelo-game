@@ -169,6 +169,34 @@ func test_a_listener_can_redirect_the_loop_when_an_action_completes() -> void:
 	check_eq(loop.state, "celebration", "the requested celebration survived")
 
 
+func test_hunger_cue_goes_straight_to_eating_on_screen() -> void:
+	# Regression: the hunger animation handed over to idle on its own, so he
+	# idled (and walked to the idle spot) before eating.
+	var content: RefCounted = preload("res://scripts/systems/content_data.gd").new()
+	content.load_from("res://data")
+	var animator: Node2D = preload("res://scripts/components/character_animator.gd").new()
+	animator.setup(content, _content.read_json("res://data/animations/animation_groups.json"), 1.0)
+	animator.set_form(1)
+	var driver: Node = preload("res://scripts/components/behaviour_driver.gd").new()
+	var balance := _balance.duplicate(true)
+	balance["drivers"]["satiety"]["start"] = 36.0
+	driver.setup(animator, balance)
+	var shown: Array = []
+	animator.group_started.connect(func(g: String, _a: String) -> void: shown.append(g))
+	var t := 0.0
+	while t < 120.0 and driver.loop.state != "eating":
+		driver.loop.tick(STEP)
+		animator.tick(STEP)
+		t += STEP
+	check_eq(driver.loop.state, "eating", "he got to eat")
+	var hunger_at := shown.find("hunger")
+	check(hunger_at >= 0, "the hunger cue played")
+	check_eq(shown.slice(hunger_at, hunger_at + 2), ["hunger", "eating"], "hunger went straight to eating")
+	check(not "idle" in shown.slice(hunger_at), "no idle in between")
+	driver.free()
+	animator.free()
+
+
 func test_action_completed_only_on_natural_endings() -> void:
 	var loop := _loop()
 	var completed: Array = []

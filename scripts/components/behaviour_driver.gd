@@ -18,6 +18,8 @@ var economy: RefCounted
 ## Returns validation errors for data/balance/behaviour.json.
 func setup(character_animator: Node2D, balance: Dictionary) -> Array[String]:
 	animator = character_animator
+	# The loop decides what comes after each state, not the animation data.
+	animator.follow_next = false
 	var errors := loop.configure(balance, animator.groups.keys())
 	if not errors.is_empty():
 		return errors

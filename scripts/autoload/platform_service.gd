@@ -28,8 +28,11 @@ func enter_overlay(rect: Rect2i, always_on_top: bool) -> void:
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_TRANSPARENT, true)
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, always_on_top)
-	DisplayServer.window_set_size(rect.size)
-	DisplayServer.window_set_position(rect.position)
+	# Through the Window, not DisplayServer: the Window updates its viewport
+	# at once. DisplayServer alone can leave the viewport at the old size
+	# (seen when shrinking on X11), so the content stays drawn too large.
+	root.size = rect.size
+	root.position = rect.position
 
 
 func enter_windowed(size: Vector2i, background: Color, screen: int) -> void:
@@ -41,9 +44,9 @@ func enter_windowed(size: Vector2i, background: Color, screen: int) -> void:
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, false)
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_TRANSPARENT, false)
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-	DisplayServer.window_set_size(size)
+	root.size = size
 	var usable := DisplayServer.screen_get_usable_rect(resolve_screen(screen))
-	DisplayServer.window_set_position(usable.position + (usable.size - size) / 2)
+	root.position = usable.position + (usable.size - size) / 2
 
 
 ## Window-pixel polygon that receives the mouse; everything else passes

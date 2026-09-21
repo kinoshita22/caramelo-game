@@ -19,6 +19,11 @@ var overrides: Array = []
 var base_scale := 1.0
 ## Multiplies every group's fps (e.g. the Speed stat for workouts).
 var speed_scale := 1.0
+## Whether a finished one-shot group starts its "next" group by itself. The
+## behaviour driver turns this off: the loop decides what follows, and a
+## group handing over early made him idle between states (hungry -> idle ->
+## eating). Previews keep it on.
+var follow_next := true
 var form := 0
 var group := ""
 var frame_index := 0
@@ -90,7 +95,7 @@ func tick(delta: float) -> void:
 		if step["finished"]:
 			var finished := group
 			group_finished.emit(finished)
-			if g.has("next") and group == finished:
+			if follow_next and g.has("next") and group == finished:
 				play(g["next"], true)
 				return
 			frame_index = step["index"]
