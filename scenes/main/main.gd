@@ -26,6 +26,8 @@ const UpgradesModal := preload("res://scripts/components/upgrades_modal.gd")
 const MenuModal := preload("res://scripts/components/menu_modal.gd")
 const CollectionModal := preload("res://scripts/components/collection_modal.gd")
 const AwayModal := preload("res://scripts/components/away_modal.gd")
+const FramePacer := preload("res://scripts/components/frame_pacer.gd")
+const PERFORMANCE_PATH := "res://data/settings/performance.json"
 const Hud := preload("res://scripts/components/hud.gd")
 ## Clicking Caramelo opens the training window.
 const CHARACTER_ACTION := "upgrades"
@@ -47,6 +49,14 @@ var _menu: Control
 var _collection_window: Control
 var _wardrobe_open := false
 var _away: Control
+var _pacer: Node
+var _modal_open := false
+# Press-and-drag on the island moves the overlay; a short press is a click.
+var _press_at := Vector2i.ZERO
+var _press_window_at := Vector2i.ZERO
+var _press_stage_point := Vector2.ZERO
+var _pressing := false
+var _dragging := false
 var _hud: Control
 var _layout: Dictionary = {}
 var _screenshot_path := ""
@@ -61,6 +71,12 @@ func _ready() -> void:
 	var defaults: Variant = content.read_json(SETTINGS_PATH)
 	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("display_mode"):
 		defaults["mode"] = SaveManager.settings["display_mode"]
+	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("overlay_size"):
+		var presets: Dictionary = defaults["overlay"].get("size_presets", {})
+		if presets.has(SaveManager.settings["overlay_size"]):
+			defaults["overlay"]["scale"] = presets[SaveManager.settings["overlay_size"]]
+	if typeof(defaults) == TYPE_DICTIONARY and SaveManager.settings.has("always_on_top"):
+		defaults["overlay"]["always_on_top"] = bool(SaveManager.settings["always_on_top"])
 	settings = DisplayLayout.load_settings(defaults, OS.get_cmdline_user_args())
 	var layout: Variant = content.read_json(LAYOUT_PATH)
 	_layout = layout if typeof(layout) == TYPE_DICTIONARY else {}
@@ -124,6 +140,12 @@ func _ready() -> void:
 	stage.add_child(_debug)
 
 	_build_ui()
+	_pacer = FramePacer.new()
+	_pacer.name = "FramePacer"
+	var performance: Variant = content.read_json(PERFORMANCE_PATH)
+	_pacer.setup(performance if typeof(performance) == TYPE_DICTIONARY else {})
+	_pacer.cap_30 = bool(SaveManager.settings.get("fps_cap_30", false))
+	add_child(_pacer)
 	_apply_mode()
 	get_viewport().size_changed.connect(_refit)
 	_refit()
@@ -185,6 +207,8 @@ func _build_ui() -> void:
 	_menu.visible = false
 	_menu.closed.connect(_on_modal_closed)
 	_menu.mode_toggle_requested.connect(_toggle_display_mode)
+	_menu.size_cycle_requested.connect(_cycle_size)
+	_menu.option_toggled.connect(_toggle_option)
 	_menu.quit_requested.connect(func() -> void:
 		SaveManager.save_game()
 		get_tree().quit())
@@ -251,17 +275,68 @@ func _apply_furniture(_slot_name: String = "") -> void:
 
 
 func _open_menu() -> void:
-	_menu.open(ContentCatalog.data, PlatformService.mode)
+	var unavailable := {}
+	if not PlatformService.start_with_os_available():
+		unavailable["start_with_os"] = "installed game only"
+	_menu.open(ContentCatalog.data, PlatformService.mode, SaveManager.settings, unavailable, _size_name())
 	_take_all_clicks()
+
+
+func _size_presets() -> Dictionary:
+	return settings["overlay"].get("size_presets", {})
+
+
+func _size_name() -> String:
+	return DisplayLayout.size_name_for(float(settings["overlay"]["scale"]), _size_presets())
+
+
+## Small -> medium -> large -> small: resizes the overlay where it stands.
+func _cycle_size() -> void:
+	var next := DisplayLayout.next_size(_size_name(), _size_presets())
+	settings["overlay"]["scale"] = float(_size_presets()[next])
+	SaveManager.settings["overlay_size"] = next
+	# Keep the overlay where the player put it; clamping keeps it on screen.
+	if PlatformService.mode == "overlay":
+		SaveManager.settings["overlay_position"] = [DisplayServer.window_get_position().x,
+				DisplayServer.window_get_position().y]
+	SaveManager.save_game()
+	_apply_mode()
+	_refit()
+	_take_all_clicks()
+	_open_menu()
+
+
+func _toggle_option(option: String) -> void:
+	var value := not bool(SaveManager.settings.get(option, option == "drag_to_move"))
+	match option:
+		"always_on_top":
+			PlatformService.set_always_on_top(value)
+			settings["overlay"]["always_on_top"] = value
+		"fps_cap_30":
+			_pacer.cap_30 = value
+		"start_with_os":
+			var err: String = PlatformService.set_start_with_os(value)
+			if err != "":
+				push_warning("Start with the computer: " + err)
+				return
+	SaveManager.settings[option] = value
+	SaveManager.save_game()
+	_open_menu()
 
 
 ## While a window is open the whole window takes clicks, not just the island.
 func _take_all_clicks() -> void:
+	_modal_open = true
 	PlatformService.set_hit_polygon(_window_rect_polygon())
+	if _pacer != null:
+		_pacer.window_open = true
 
 
 func _on_modal_closed() -> void:
+	_modal_open = false
 	PlatformService.set_hit_polygon(window_polygon)
+	if _pacer != null:
+		_pacer.window_open = false
 	if _wardrobe_open:
 		_wardrobe_open = false
 		if stage.behaviour != null:
@@ -289,6 +364,10 @@ func _apply_mode() -> void:
 		var usable := DisplayServer.screen_get_usable_rect(screen)
 		var size := DisplayLayout.overlay_size(stage.bounds.size, float(o["scale"]), usable.size, int(o["margin_px"]))
 		var pos := PlatformServiceScript.corner_position(usable, size, o["corner"], int(o["margin_px"]))
+		# A place the player dragged it to wins over the corner, if it still fits.
+		var saved: Variant = SaveManager.settings.get("overlay_position")
+		if typeof(saved) == TYPE_ARRAY and saved.size() == 2:
+			pos = DisplayLayout.clamp_to(Vector2i(int(saved[0]), int(saved[1])), size, usable)
 		PlatformService.enter_overlay(Rect2i(pos, size), bool(o["always_on_top"]))
 		return
 	if settings["mode"] == "overlay":
@@ -305,7 +384,9 @@ func _refit() -> void:
 	_debug.queue_redraw()
 	var to_window := get_viewport().get_final_transform() * stage.get_global_transform_with_canvas()
 	window_polygon = to_window * stage.hit_polygon
-	PlatformService.set_hit_polygon(window_polygon)
+	# While a window is open the whole overlay must keep taking clicks, even
+	# if it was just resized; otherwise clicks fall through to the desktop.
+	PlatformService.set_hit_polygon(_window_rect_polygon() if _modal_open else window_polygon)
 	_place_needs()
 
 
@@ -325,16 +406,30 @@ func _place_needs() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var point := stage.to_local(get_global_mouse_position())
-		var action := IslandStage.click_action_at(stage.placements, point)
-		if action == "" and stage.character != null and _character_rect().has_point(point):
-			action = CHARACTER_ACTION
-		match action:
-			"": pass
-			CHARACTER_ACTION: _open_upgrades()
-			"furniture": _open_furniture()
-			_: _open_shop(action)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_pressing = true
+			_dragging = false
+			_press_at = DisplayServer.mouse_get_position()
+			_press_window_at = DisplayServer.window_get_position()
+			_press_stage_point = stage.to_local(get_global_mouse_position())
+		elif _pressing:
+			_pressing = false
+			if _dragging:
+				_dragging = false
+				SaveManager.settings["overlay_position"] = [DisplayServer.window_get_position().x,
+						DisplayServer.window_get_position().y]
+				SaveManager.save_game()
+			else:
+				_click_at(_press_stage_point)
+		return
+	if event is InputEventMouseMotion and _pressing and _can_drag():
+		var now := DisplayServer.mouse_get_position()
+		if _dragging or DisplayLayout.is_drag(_press_at, now):
+			_dragging = true
+			var screen := DisplayServer.window_get_current_screen()
+			DisplayServer.window_set_position(DisplayLayout.dragged_position(_press_window_at, _press_at, now,
+					DisplayServer.window_get_size(), DisplayServer.screen_get_usable_rect(screen)))
 		return
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
@@ -361,6 +456,24 @@ func _unhandled_input(event: InputEvent) -> void:
 			print("upgrade %s: %s" % [stat, GameState.economy.upgrade_stat(stat, GameState.progression)])
 		KEY_E, KEY_F:
 			_buy_next(event.keycode == KEY_E)
+
+
+## What a click on the island opens.
+func _click_at(point: Vector2) -> void:
+	var action := IslandStage.click_action_at(stage.placements, point)
+	if action == "" and stage.character != null and _character_rect().has_point(point):
+		action = CHARACTER_ACTION
+	match action:
+		"": pass
+		CHARACTER_ACTION: _open_upgrades()
+		"furniture": _open_furniture()
+		_: _open_shop(action)
+
+
+## Dragging moves the overlay (a normal window has its title bar for that),
+## unless the player turned it off.
+func _can_drag() -> bool:
+	return PlatformService.mode == "overlay" and bool(SaveManager.settings.get("drag_to_move", true))
 
 
 ## Where Caramelo stands now, as a clickable box.
@@ -415,6 +528,9 @@ func _process(_delta: float) -> void:
 		"window_position": [DisplayServer.window_get_position().x, DisplayServer.window_get_position().y],
 		"hit_polygon_window_px": Array(window_polygon).map(func(p: Vector2) -> Array: return [p.x, p.y]),
 		"stage_scale": stage.scale.x,
+		"target_fps": _pacer.target if _pacer != null else 0,
+		"max_fps": Engine.max_fps,
+		"measured_fps": Engine.get_frames_per_second(),
 		"animation": {"group": stage.animator.group, "slot": stage.animator.current_slot()} if stage.animator != null else {},
 		"behaviour": {"state": stage.behaviour.loop.state, "energy": stage.behaviour.loop.energy,
 				"satiety": stage.behaviour.loop.satiety,

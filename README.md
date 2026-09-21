@@ -70,6 +70,18 @@ food station opens the food window. Each lists every tier with its own art, what
 does and its price; owned tiers carry a green background and the one in use is
 marked. Bought items are shown in those windows only, never on the island.
 
+To stay cheap when left running all day, the game runs at 60 FPS while
+someone uses it, 20 FPS when idle (the animations never exceed 12), 15 on
+battery where the system reports it (Linux today), and 5 when minimized;
+`data/settings/performance.json` holds the numbers and nothing uses physics.
+In overlay mode the island can be dragged anywhere on the desktop; a short
+press still counts as a click, the overlay is kept on screen, and the spot is
+saved. The menu (closed with its X, Escape or a click outside) can turn
+"Drag to move" off, pick the overlay's size (Small, Medium or Large;
+presets in `display_defaults.json`), and also offers "Always on top", a "30 FPS cap" and "Start with the
+computer" (installed builds only: the Windows registry Run key, or an
+autostart file on Linux); all three are saved.
+
 The game saves to `user://save.json` (on Windows,
 `%APPDATA%\Godot\app_userdata\My Caramelo\save.json`) after level-ups,
 evolutions and purchases, every minute, and on quitting. Writes are atomic

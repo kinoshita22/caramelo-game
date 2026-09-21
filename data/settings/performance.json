@@ -1,0 +1,11 @@
+{
+	"_comment": "Frame pacing for an overlay that runs all day (master plan Phase 11). The animations run at 12 frames per second at most, so idle and battery rates below that level cost nothing visible. 'idle' means no pointer over the window and no open window for idle_after_seconds.",
+	"schema_version": 1,
+	"interactive_fps": 60,
+	"capped_fps": 30,
+	"idle_fps": 20,
+	"battery_fps": 15,
+	"minimized_fps": 5,
+	"idle_after_seconds": 5.0,
+	"check_power_seconds": 30.0
+}
