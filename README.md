@@ -88,7 +88,9 @@ crash); if some other program owns that port, the game runs anyway. Use
 
 To stay cheap when left running all day, the game runs at 60 FPS while
 someone uses it, 20 FPS when idle (the animations never exceed 12), 15 on
-battery where the system reports it (Linux today), and 5 when minimized;
+battery where the system reports it (Linux today), and 5 when minimized. A
+hop or a dissolve is eased, so it asks for 60 FPS of its own while it lasts
+(30 on battery) and gives them straight back;
 `data/settings/performance.json` holds the numbers and nothing uses physics.
 In overlay mode the island can be dragged anywhere on the desktop; a short
 press still counts as a click, the overlay is kept on screen, and the spot is
@@ -116,6 +118,16 @@ stage bounds and the click-through outline); `[` / `]` cycle animation groups;
 `1`-`4` buy stat upgrades; `E` / `F` buy the next dumbbell tier or meal. Animation groups, frame rates and per-frame fixes live
 in `data/animations/animation_groups.json`. If the OS cannot make the window
 transparent, the game falls back to windowed mode.
+
+Nothing Caramelo does happens all at once. He hops from one anchor to the
+next instead of appearing there, leaning into the move and landing with a
+squash while his shadow tightens under him; one action dissolves into the
+next rather than cutting, while the frames inside an action cut cleanly as
+drawn; a frame whose body sits a few pixels off from the last
+one slides into place, while a real move (a jump, a push-up) still lands
+sharply; and he breathes through every held pose, on the beat of the
+drawings where they breathe too, so the slow sleep never looks frozen. The curves are in `scripts/systems/motion.gd` and every number
+behind them is in the `motion` block of `data/animations/animation_groups.json`.
 
 ## Windows installer
 
@@ -214,7 +226,7 @@ of about 198 MiB). The other packs are lossless for now.
 | `data/catalog/asset_catalog.json` | Every source image: ID, hash, size, visible bounds, anchor, runtime path (null if not staged). |
 | `data/forms/character_forms.json` | Forms 1–11: level ranges (from folder names), theme, staged state. |
 | `data/animations/animation_slots.json` | Canonical 33-slot table. The slot number is the identity. |
-| `data/animations/animation_groups.json` | Hand-authored animation groups, frame rates and per-frame fixes. |
+| `data/animations/animation_groups.json` | Hand-authored animation groups, frame rates, per-frame fixes and movement feel. |
 | `data/balance/behaviour.json` | Hand-authored tuning for the autonomous loop. |
 | `data/balance/progression.json` | Hand-authored XP curve and workout payouts. |
 | `data/balance/upgrades.json`, `data/equipment/dumbbells.json`, `data/food/meals.json` | Hand-authored bone costs and their effects. |

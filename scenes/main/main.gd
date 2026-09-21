@@ -537,6 +537,9 @@ func _can_drag() -> bool:
 func _character_rect() -> Rect2:
 	var size: Vector2 = ContentCatalog.data.max_character_canvas() * float(stage.character_scale)
 	var at: Vector2 = stage.character.position
+	# Follow him into the air, so a click still lands on him mid-hop.
+	if stage.animator != null:
+		at += stage.animator.travel_offset
 	return Rect2(at.x - size.x / 2.0, at.y - size.y, size.x, size.y)
 
 
@@ -570,6 +573,9 @@ func _cycle_form(step: int) -> void:
 
 
 func _process(_delta: float) -> void:
+	# An eased hop or dissolve needs real frames to read as one movement.
+	if _pacer != null:
+		_pacer.moving = stage.is_settling()
 	if _screenshot_path == "":
 		return
 	_screenshot_frames -= 1

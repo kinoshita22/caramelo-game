@@ -8,6 +8,8 @@ const FramePacing := preload("res://scripts/systems/frame_pacing.gd")
 var config := {}
 ## Set by the main scene while a window (shop, menu...) is open.
 var window_open := false
+## Set by the main scene while Caramelo is mid-hop or mid-dissolve.
+var moving := false
 ## The player's 30 FPS cap.
 var cap_30 := false
 var target := 60
@@ -40,6 +42,7 @@ func _process(delta: float) -> void:
 	target = FramePacing.target_fps({
 		"minimized": PlatformService.is_minimized(),
 		"interacting": interacting,
+		"moving": moving,
 		"on_battery": _on_battery,
 		"cap_30": cap_30,
 	}, config)

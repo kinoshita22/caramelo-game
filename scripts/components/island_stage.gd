@@ -7,6 +7,7 @@ extends Node2D
 
 const CharacterAnimator := preload("res://scripts/components/character_animator.gd")
 const BehaviourDriver := preload("res://scripts/components/behaviour_driver.gd")
+const Motion := preload("res://scripts/systems/motion.gd")
 const REQUIRED_ANCHORS := ["idle", "workout", "eating", "sleep", "wardrobe", "celebration"]
 const PIVOTS := ["bottom_center", "top_center", "center"]
 
@@ -32,6 +33,19 @@ var layer_sprites := {}
 ## Layer name -> its spec from island_layout.json.
 var _layer_specs := {}
 var _content: RefCounted
+## The shadow under the character, and the scale it rests at.
+var _shadow: Sprite2D
+var _shadow_scale := 1.0
+## The move under way: where it started, where it ends, how long it takes
+## and how far along it is. _travel_seconds is 0 when he is standing still.
+var _travel_from := Vector2.ZERO
+var _travel_to := Vector2.ZERO
+var _travel_seconds := 0.0
+var _travel_elapsed := 0.0
+var _travel_cfg: Dictionary = Motion.travel({})
+## False until he has been put down on his first anchor, which never gets
+## walked to.
+var _placed := false
 
 
 ## Validates the layout and animation groups, then creates one Sprite2D per
@@ -46,9 +60,10 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 	for child in get_children():
 		child.queue_free()
 	_content = content
+	_travel_cfg = Motion.travel(animation_doc.get("motion", {}))
 	placements = compute_placements(layout, content)
 	anchors = compute_anchors(layout)
-	character_boxes = compute_character_boxes(layout, content, anchors)
+	character_boxes = compute_character_boxes(layout, content, anchors, float(_travel_cfg["hop_max"]))
 	var rects: Array[Rect2] = []
 	for p in placements:
 		rects.append(p["rect"])
@@ -74,6 +89,9 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 			place(content.asset(shadow["asset"]), shadow, Vector2.ZERO))
 	shadow_sprite.z_index = int(shadow.get("z", 0)) - int(ch["z"])
 	character.add_child(shadow_sprite)
+	_shadow = shadow_sprite
+	_shadow_scale = shadow_sprite.scale.x
+	_placed = false
 	animator = CharacterAnimator.new()
 	animator.name = "Animator"
 	character_scale = float(ch["scale"])
@@ -135,10 +153,56 @@ static func click_action_at(placements: Array, point: Vector2) -> String:
 	return best
 
 
-## Places the character on a named anchor; unknown names are ignored.
+## Sends the character to a named anchor; unknown names are ignored. He
+## hops over rather than appearing there, except the first time, when there
+## is nowhere to hop from.
 func move_character_to(anchor_name: String) -> void:
-	if character != null and anchors.has(anchor_name):
-		character.position = anchors[anchor_name]
+	if character == null or not anchors.has(anchor_name):
+		return
+	var target: Vector2 = anchors[anchor_name]
+	var seconds := Motion.travel_seconds(character.position.distance_to(target), _travel_cfg)
+	if not _placed or seconds <= 0.0:
+		_placed = true
+		_end_travel(target)
+		return
+	_travel_from = character.position
+	_travel_to = target
+	_travel_seconds = seconds
+	_travel_elapsed = 0.0
+
+
+func _process(delta: float) -> void:
+	if _travel_seconds <= 0.0:
+		return
+	_travel_elapsed += delta
+	var t: float = clampf(_travel_elapsed / _travel_seconds, 0.0, 1.0)
+	if t >= 1.0:
+		_end_travel(_travel_to)
+		return
+	var distance := _travel_from.distance_to(_travel_to)
+	character.position = Motion.ground_point(_travel_from, _travel_to, t)
+	if animator != null:
+		animator.travel_offset = Vector2(0.0, Motion.hop_offset(distance, t, _travel_cfg))
+		animator.travel_squash = Motion.hop_squash(t, _travel_cfg)
+	if _shadow != null:
+		_shadow.scale = Vector2.ONE * _shadow_scale * Motion.shadow_scale(t, _travel_cfg)
+
+
+## Puts him down on `at` with nothing left over from a move.
+func _end_travel(at: Vector2) -> void:
+	_travel_seconds = 0.0
+	character.position = at
+	if animator != null:
+		animator.travel_offset = Vector2.ZERO
+		animator.travel_squash = Vector2.ONE
+	if _shadow != null:
+		_shadow.scale = Vector2.ONE * _shadow_scale
+
+
+## Whether anything on the stage is mid-movement, so the frame rate should
+## stay smooth while it finishes (see FramePacing).
+func is_settling() -> bool:
+	return _travel_seconds > 0.0 or (animator != null and animator.is_settling())
 
 
 func _sprite(node_name: String, tex: Texture2D, p: Dictionary) -> Sprite2D:
@@ -263,13 +327,15 @@ static func compute_anchors(layout: Dictionary) -> Dictionary:
 
 
 ## Space any form's largest frame could need at each anchor: the biggest
-## per-form canvas at character scale, standing on the anchor.
-static func compute_character_boxes(layout: Dictionary, content: RefCounted, anchor_points: Dictionary) -> Array[Rect2]:
+## per-form canvas at character scale, standing on the anchor, plus `lift`
+## of headroom for the hop he takes on his way there.
+static func compute_character_boxes(layout: Dictionary, content: RefCounted, anchor_points: Dictionary,
+		lift: float = 0.0) -> Array[Rect2]:
 	var size: Vector2 = content.max_character_canvas() * float(layout["character"]["scale"])
 	var boxes: Array[Rect2] = []
 	for n in anchor_points:
 		var at: Vector2 = anchor_points[n]
-		boxes.append(Rect2(at.x - size.x / 2.0, at.y - size.y, size.x, size.y))
+		boxes.append(Rect2(at.x - size.x / 2.0, at.y - size.y - lift, size.x, size.y + lift))
 	return boxes
 
 

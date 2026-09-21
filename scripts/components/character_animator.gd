@@ -4,12 +4,25 @@ extends Node2D
 ## Frames come from the catalog; each frame is drawn so its stable anchor
 ## (frame_geometry.json) sits on this node's origin, so the character stays
 ## planted while poses change. Groups, timing and per-frame fixes come from
-## data/animations/animation_groups.json. The node never moves itself:
+## data/animations/animation_groups.json. The node never travels by itself:
 ## whoever owns it places it on the group's anchor (see group_started).
+##
+## What it does move is the small stuff that keeps him from looking stiff,
+## all of it laid over the drawn frames and all of it tuned in that file's
+## "motion" block (see Motion):
+##   * a dissolve from the outgoing frame into the new one when the group
+##     changes, where the two poses have nothing to do with each other
+##     (never inside a group: that showed both drawings at once);
+##   * a slide that swallows a small frame-to-frame shift of his body, so
+##     poses ease into place instead of popping (bigger moves still snap:
+##     a jump should look like a jump);
+##   * breathing and sway, so a held pose never freezes dead.
 
 signal group_started(group_name: String, anchor_name: String)
 signal group_finished(group_name: String)
 signal frame_changed(slot: int)
+
+const Motion := preload("res://scripts/systems/motion.gd")
 
 const EXPECTED_SLOTS := 33
 
@@ -27,14 +40,29 @@ var follow_next := true
 var form := 0
 var group := ""
 var frame_index := 0
+## Displacement and squash the owner adds, in stage units: the hop of a move
+## between anchors (see IslandStage). Breathing is added on top.
+var travel_offset := Vector2.ZERO
+var travel_squash := Vector2.ONE
 
-var _frames: Dictionary = {}  # slot -> {texture, anchor, scale, attach, flags}
+var _frames: Dictionary = {}  # slot -> {texture, anchor, scale, visible, attach, flags}
 ## Cosmetic slot -> {"rule": slot spec from cosmetics.json, "item": item or {},
 ## "sprite": Sprite2D}.
 var _cosmetics: Dictionary = {}
 var _elapsed := 0.0
 var _holding := false  # one-shot group finished with no next group
 var _sprite: Sprite2D
+## The outgoing frame, fading out over the new one.
+var _ghost: Sprite2D
+var _fade_left := 0.0
+var _fade_time := 0.0
+var _motion: Dictionary = {}
+var _blend: Dictionary = Motion.blend({})
+var _secondary: Dictionary = Motion.secondary_for({}, "")
+var _breath_time := 0.0
+## How far the current frame is still displaced while a pop eases out.
+var _slide := Vector2.ZERO
+var _last_frame: Dictionary = {}
 
 
 func _init() -> void:
@@ -42,6 +70,12 @@ func _init() -> void:
 	_sprite.name = "Frame"
 	_sprite.centered = false
 	add_child(_sprite)
+	# Added second, so the outgoing frame dissolves on top of the new one.
+	_ghost = Sprite2D.new()
+	_ghost.name = "Outgoing"
+	_ghost.centered = false
+	_ghost.visible = false
+	add_child(_ghost)
 
 
 ## doc is animation_groups.json. Call before set_form/play.
@@ -50,6 +84,9 @@ func setup(content_data: RefCounted, doc: Dictionary, scale_factor: float) -> vo
 	groups = doc.get("groups", {})
 	overrides = doc.get("frame_overrides", [])
 	base_scale = scale_factor
+	_motion = doc.get("motion", {})
+	_blend = Motion.blend(_motion)
+	_secondary = Motion.secondary_for(_motion, group)
 
 
 ## Loads the 33 frames of a form and releases the previous form's textures.
@@ -60,12 +97,16 @@ func set_form(new_form: int) -> void:
 	for slot in _frames:
 		old_ids.append(frame_id(form, slot))
 	_frames.clear()
+	# A different body: its frames are not a continuation of this one's.
+	_last_frame = {}
+	_slide = Vector2.ZERO
 	form = new_form
 	for slot in range(1, EXPECTED_SLOTS + 1):
 		_frames[slot] = resolve_frame(content, overrides, form, slot)
 	content.release_textures(old_ids)
 	if group != "":
-		_show()
+		# A form swap is a whole new body: dissolve into it.
+		_show(float(_blend["crossfade"]))
 
 
 func play(group_name: String, restart: bool = false) -> void:
@@ -74,16 +115,27 @@ func play(group_name: String, restart: bool = false) -> void:
 		return
 	if group_name == group and not restart:
 		return
+	var same_group := group_name == group
 	group = group_name
 	frame_index = 0
 	_elapsed = 0.0
 	_holding = false
-	_show()
+	if not same_group:
+		# Start the breath with the pose, so a group drawn breathing (the
+		# sleep is an exhale and an inhale) lifts on the same beat instead
+		# of beating against it. Carry the lift he is at into the slide, so
+		# restarting the clock eases out rather than dropping him.
+		_slide += Motion.breath_offset(_secondary, _breath_time)
+		_breath_time = 0.0
+	_secondary = Motion.secondary_for(_motion, group)
+	# Restarting the group he is already in is not a change to dissolve.
+	_show(0.0 if same_group else float(_blend["crossfade"]))
 	group_started.emit(group, groups[group].get("anchor", ""))
 
 
 ## Advances time. Called from _process; tests call it directly.
 func tick(delta: float) -> void:
+	_advance_motion(delta)
 	if group == "" or _holding:
 		return
 	var g: Dictionary = groups[group]
@@ -101,8 +153,34 @@ func tick(delta: float) -> void:
 			frame_index = step["index"]
 			_holding = true
 			return
+		# No dissolve inside a group: the frames are the same pose moving,
+		# and laying one over the other showed both at once.
 		frame_index = step["index"]
 		_show()
+
+
+## The dissolve, the easing of a frame's pop and the breathing, none of
+## which depend on the frame timing.
+func _advance_motion(delta: float) -> void:
+	_breath_time += delta
+	if _fade_left > 0.0:
+		_fade_left = maxf(_fade_left - delta, 0.0)
+		_ghost.modulate.a = Motion.fade(_fade_left, _fade_time)
+		_ghost.visible = _fade_left > 0.0
+		if not _ghost.visible:
+			_ghost.texture = null
+	_slide = _slide.lerp(Vector2.ZERO, Motion.approach_factor(delta, float(_blend["jitter_ease"])))
+	if _slide.length() < 0.05:
+		_slide = Vector2.ZERO
+	_apply_motion()
+
+
+## Whether a pose change is still dissolving, so the frame rate should stay
+## smooth until it finishes. The per-frame slide is deliberately left out:
+## it is over in a frame or two and happens all day, so counting it would
+## hold the rate up for good.
+func is_settling() -> bool:
+	return _fade_left > 0.0
 
 
 func _process(delta: float) -> void:
@@ -124,17 +202,60 @@ func current_slot() -> int:
 	return int(groups[group]["slots"][frame_index])
 
 
-func _show() -> void:
+## Draws the current frame. blend_seconds > 0 leaves the outgoing frame
+## behind to dissolve.
+func _show(blend_seconds: float = 0.0) -> void:
 	var slot := current_slot()
 	var f: Dictionary = _frames.get(slot, {})
 	if f.is_empty():
 		return
+	if blend_seconds > 0.0 and _sprite.texture != null:
+		_ghost.texture = _sprite.texture
+		_ghost.offset = _sprite.offset
+		_ghost.scale = _sprite.scale
+		_ghost.modulate.a = 1.0
+		_ghost.visible = true
+		_fade_time = blend_seconds
+		_fade_left = blend_seconds
+	_slide = (_slide + body_shift(_last_frame, f, base_scale, float(_blend["jitter_px"]))).limit_length(
+			float(_blend["jitter_px"]))
+	_last_frame = f
 	_sprite.texture = f["texture"]
 	_sprite.offset = -f["anchor"]
 	_sprite.scale = Vector2.ONE * base_scale * f["scale"]
+	_apply_motion()
 	for cosmetic_slot in _cosmetics:
 		_place_cosmetic(cosmetic_slot, f)
 	frame_changed.emit(slot)
+
+
+## Moves the whole character (frame, dissolve and cosmetics together) by the
+## breathing, the easing pop and whatever the owner added for a move. The
+## shadow is a sibling, so it stays on the ground.
+func _apply_motion() -> void:
+	position = travel_offset + _slide + Motion.breath_offset(_secondary, _breath_time)
+	scale = travel_squash * Motion.breath_scale(_secondary, _breath_time)
+
+
+## How far to hold a new frame back so its body carries on from where the
+## previous one left it, in stage units. Small shifts are pops in the art
+## and ease away; anything above `limit` is real movement and is left to
+## land on its own. Pure.
+static func body_shift(from_frame: Dictionary, to_frame: Dictionary, character_scale: float,
+		limit: float) -> Vector2:
+	if from_frame.is_empty() or to_frame.is_empty():
+		return Vector2.ZERO
+	var shift := _body_point(to_frame, character_scale) - _body_point(from_frame, character_scale)
+	return Vector2.ZERO if shift.length() > limit else -shift
+
+
+## Where the drawn body sits relative to this node's origin: the middle of
+## its feet, in stage units.
+static func _body_point(f: Dictionary, character_scale: float) -> Vector2:
+	var vis: Rect2 = f.get("visible", Rect2())
+	if vis.size == Vector2.ZERO:
+		return Vector2.ZERO
+	return (Vector2(vis.get_center().x, vis.end.y) - f["anchor"]) * character_scale * float(f["scale"])
 
 
 ## Declares the cosmetic slots (cosmetics.json "slots"). Call once.
@@ -168,8 +289,11 @@ func point_offset(point_name: String) -> Vector2:
 	var f: Dictionary = _frames.get(current_slot(), {})
 	var point: Variant = f.get("attach", {}).get(point_name)
 	if f.is_empty() or typeof(point) != TYPE_ARRAY:
-		return Vector2(0.0, -300.0 * base_scale)
-	return (Vector2(point[0], point[1]) - f["anchor"]) * base_scale * float(f["scale"])
+		return position + Vector2(0.0, -300.0 * base_scale) * scale
+	# Through this node's own transform, so an effect follows the breathing
+	# and any move in progress.
+	var local: Vector2 = (Vector2(point[0], point[1]) - f["anchor"]) * base_scale * float(f["scale"])
+	return position + local * scale
 
 
 ## Where a cosmetic sprite goes on the current frame, or {} when hidden.
@@ -240,9 +364,12 @@ static func frame_id(f: int, slot: int) -> String:
 static func resolve_frame(content_data: RefCounted, frame_overrides: Array, f: int, slot: int) -> Dictionary:
 	var geo: Dictionary = content_data.frame_geometry(f, slot)
 	var anchor := Vector2.ZERO
+	var visible_rect := Rect2()
 	if not geo.is_empty():
 		var a: Dictionary = geo.get("stable_anchor", geo["anchor"])
 		anchor = Vector2(a["x"], a["y"])
+		var v: Dictionary = geo["visible"]
+		visible_rect = Rect2(v["x"], v["y"], v["width"], v["height"])
 	var scale := 1.0
 	for o in frame_overrides:
 		if int(o.get("slot", -1)) != slot:
@@ -255,7 +382,8 @@ static func resolve_frame(content_data: RefCounted, frame_overrides: Array, f: i
 			scale *= float(o["scale"])
 	return {
 		"texture": content_data.texture(frame_id(f, slot)), "anchor": anchor, "scale": scale,
-		"attach": content_data.attachment_points(f, slot), "flags": geo.get("review_flags", []),
+		"visible": visible_rect, "attach": content_data.attachment_points(f, slot),
+		"flags": geo.get("review_flags", []),
 	}
 
 
@@ -302,6 +430,11 @@ static func validate_groups(doc: Dictionary, anchor_names: Array) -> Array[Strin
 				errors.append("animation_groups: override for slot %d has a non-numeric lift" % int(o["slot"]))
 			if o.has("forms") and typeof(o["forms"]) != TYPE_ARRAY:
 				errors.append("animation_groups: override for slot %d forms must be an array" % int(o["slot"]))
+	var motion: Variant = doc.get("motion", {})
+	if typeof(motion) != TYPE_DICTIONARY:
+		errors.append("animation_groups: 'motion' must be an object")
+	else:
+		errors.append_array(Motion.validate(motion, gs.keys()))
 	return errors
 
 
