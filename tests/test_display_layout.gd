@@ -35,6 +35,21 @@ func test_overlay_size_scales_and_fits_screen() -> void:
 	check(absf(float(small.x) / small.y - b.x / b.y) < 0.01, "aspect ratio kept")
 
 
+func test_short_press_is_a_click_longer_travel_is_a_drag() -> void:
+	check(not DisplayLayout.is_drag(Vector2i(100, 100), Vector2i(104, 103)), "a wobble is still a click")
+	check(DisplayLayout.is_drag(Vector2i(100, 100), Vector2i(112, 100)), "a real move starts a drag")
+
+
+func test_dragging_follows_the_pointer_but_stays_on_screen() -> void:
+	var usable := Rect2i(0, 0, 1920, 1014)
+	var size := Vector2i(800, 500)
+	check_eq(DisplayLayout.dragged_position(Vector2i(500, 300), Vector2i(900, 600), Vector2i(700, 500), size, usable),
+			Vector2i(300, 200), "moves with the pointer")
+	check_eq(DisplayLayout.dragged_position(Vector2i(500, 300), Vector2i(900, 600), Vector2i(-2000, 5000), size, usable),
+			Vector2i(0, 514), "cannot leave the screen")
+	check_eq(DisplayLayout.clamp_to(Vector2i(5000, -40), size, usable), Vector2i(1120, 0), "saved spots are pulled back on screen")
+
+
 func test_corner_positions() -> void:
 	var usable := Rect2i(0, 30, 1920, 1000)
 	var size := Vector2i(800, 500)

@@ -50,6 +50,12 @@ var _collection_window: Control
 var _wardrobe_open := false
 var _away: Control
 var _pacer: Node
+# Press-and-drag on the island moves the overlay; a short press is a click.
+var _press_at := Vector2i.ZERO
+var _press_window_at := Vector2i.ZERO
+var _press_stage_point := Vector2.ZERO
+var _pressing := false
+var _dragging := false
 var _hud: Control
 var _layout: Dictionary = {}
 var _screenshot_path := ""
@@ -271,7 +277,7 @@ func _open_menu() -> void:
 
 
 func _toggle_option(option: String) -> void:
-	var value := not bool(SaveManager.settings.get(option, false))
+	var value := not bool(SaveManager.settings.get(option, option == "drag_to_move"))
 	match option:
 		"always_on_top":
 			PlatformService.set_always_on_top(value)
@@ -326,6 +332,10 @@ func _apply_mode() -> void:
 		var usable := DisplayServer.screen_get_usable_rect(screen)
 		var size := DisplayLayout.overlay_size(stage.bounds.size, float(o["scale"]), usable.size, int(o["margin_px"]))
 		var pos := PlatformServiceScript.corner_position(usable, size, o["corner"], int(o["margin_px"]))
+		# A place the player dragged it to wins over the corner, if it still fits.
+		var saved: Variant = SaveManager.settings.get("overlay_position")
+		if typeof(saved) == TYPE_ARRAY and saved.size() == 2:
+			pos = DisplayLayout.clamp_to(Vector2i(int(saved[0]), int(saved[1])), size, usable)
 		PlatformService.enter_overlay(Rect2i(pos, size), bool(o["always_on_top"]))
 		return
 	if settings["mode"] == "overlay":
@@ -362,16 +372,30 @@ func _place_needs() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var point := stage.to_local(get_global_mouse_position())
-		var action := IslandStage.click_action_at(stage.placements, point)
-		if action == "" and stage.character != null and _character_rect().has_point(point):
-			action = CHARACTER_ACTION
-		match action:
-			"": pass
-			CHARACTER_ACTION: _open_upgrades()
-			"furniture": _open_furniture()
-			_: _open_shop(action)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_pressing = true
+			_dragging = false
+			_press_at = DisplayServer.mouse_get_position()
+			_press_window_at = DisplayServer.window_get_position()
+			_press_stage_point = stage.to_local(get_global_mouse_position())
+		elif _pressing:
+			_pressing = false
+			if _dragging:
+				_dragging = false
+				SaveManager.settings["overlay_position"] = [DisplayServer.window_get_position().x,
+						DisplayServer.window_get_position().y]
+				SaveManager.save_game()
+			else:
+				_click_at(_press_stage_point)
+		return
+	if event is InputEventMouseMotion and _pressing and _can_drag():
+		var now := DisplayServer.mouse_get_position()
+		if _dragging or DisplayLayout.is_drag(_press_at, now):
+			_dragging = true
+			var screen := DisplayServer.window_get_current_screen()
+			DisplayServer.window_set_position(DisplayLayout.dragged_position(_press_window_at, _press_at, now,
+					DisplayServer.window_get_size(), DisplayServer.screen_get_usable_rect(screen)))
 		return
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
@@ -398,6 +422,24 @@ func _unhandled_input(event: InputEvent) -> void:
 			print("upgrade %s: %s" % [stat, GameState.economy.upgrade_stat(stat, GameState.progression)])
 		KEY_E, KEY_F:
 			_buy_next(event.keycode == KEY_E)
+
+
+## What a click on the island opens.
+func _click_at(point: Vector2) -> void:
+	var action := IslandStage.click_action_at(stage.placements, point)
+	if action == "" and stage.character != null and _character_rect().has_point(point):
+		action = CHARACTER_ACTION
+	match action:
+		"": pass
+		CHARACTER_ACTION: _open_upgrades()
+		"furniture": _open_furniture()
+		_: _open_shop(action)
+
+
+## Dragging moves the overlay (a normal window has its title bar for that),
+## unless the player turned it off.
+func _can_drag() -> bool:
+	return PlatformService.mode == "overlay" and bool(SaveManager.settings.get("drag_to_move", true))
 
 
 ## Where Caramelo stands now, as a clickable box.

@@ -12,9 +12,13 @@ signal quit_requested
 
 const UIKit := preload("res://scripts/components/ui_kit.gd")
 
-const PANEL_SIZE := Vector2(820, 720)
+const PANEL_SIZE := Vector2(820, 680)
+const CLOSE_SIZE := 76.0
+## Options that are on until the player turns them off.
+const DEFAULT_ON := ["drag_to_move"]
 ## Option key -> label.
 const OPTIONS := {
+	"drag_to_move": "Drag to move",
 	"always_on_top": "Always on top",
 	"fps_cap_30": "30 FPS cap",
 	"start_with_os": "Start with the computer",
@@ -39,10 +43,12 @@ func open(content_data: RefCounted, mode: String, settings: Dictionary, unavaila
 	_mode_button.text = "Switch to window" if mode == "overlay" else "Switch to overlay"
 	for option in OPTIONS:
 		var button: Button = _option_buttons[option]
-		button.text = option_label(option, bool(settings.get(option, false)), unavailable.get(option, ""))
+		var value := bool(settings.get(option, option in DEFAULT_ON))
+		button.text = option_label(option, value, unavailable.get(option, ""))
 		button.disabled = unavailable.has(option)
-	# Always-on-top only means something for the overlay.
+	# These only mean something for the overlay.
 	_option_buttons["always_on_top"].disabled = mode != "overlay"
+	_option_buttons["drag_to_move"].disabled = mode != "overlay"
 	visible = true
 
 
@@ -71,13 +77,16 @@ func _build() -> void:
 		column.add_child(button)
 		_option_buttons[option] = button
 
-	var resume := UIKit.button(content, "Back to Caramelo", wide)
-	resume.pressed.connect(close)
-	column.add_child(resume)
-
 	var quit := UIKit.button(content, "Quit game", wide)
 	quit.pressed.connect(func() -> void: quit_requested.emit())
 	column.add_child(quit)
+
+	# X in the panel's top-right corner closes the menu.
+	var close_button := UIKit.button(content, "X", Vector2(CLOSE_SIZE, CLOSE_SIZE))
+	close_button.set_anchors_preset(Control.PRESET_CENTER)
+	close_button.position = Vector2(PANEL_SIZE.x / 2.0 - CLOSE_SIZE - 22.0, -PANEL_SIZE.y / 2.0 + 22.0)
+	close_button.pressed.connect(close)
+	add_child(close_button)
 
 
 func _gui_input(event: InputEvent) -> void:
