@@ -117,6 +117,27 @@ stage bounds and the click-through outline); `[` / `]` cycle animation groups;
 in `data/animations/animation_groups.json`. If the OS cannot make the window
 transparent, the game falls back to windowed mode.
 
+## Windows installer
+
+```sh
+tools/build_windows_installer.sh
+```
+
+Builds `build/windows/MyCaramelo.exe` (the game as one file) and
+`build/windows/MyCaramelo-Setup-<version>.exe`. The version comes from
+`config/version` in `project.godot`. Needs Godot 4.4.1 with the Windows export
+templates and NSIS 3 (`makensis`; set `MAKENSIS`, and `NSISDIR` for a
+locally built copy, if it is not on PATH).
+
+The installer installs for the current user without an administrator
+prompt, into `%LOCALAPPDATA%\Programs\My Caramelo`, with a Start-menu
+shortcut, an optional desktop shortcut, a "start now" option and an entry in
+Windows' installed-apps list. Uninstalling removes the program, the shortcuts
+and the start-with-Windows entry, and keeps the player's save. The app icon
+(`assets/app_icon/`, made by `tools/make_app_icon.gd`) is a crop of
+Caramelo's Form 1 art standing in until the client's icon arrives; the .exe
+itself keeps Godot's icon until `rcedit` is set up for the export.
+
 ## Repository layout
 
 ```text

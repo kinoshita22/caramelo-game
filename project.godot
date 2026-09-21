@@ -6,6 +6,8 @@ config_version=5
 [application]
 
 config/name="My Caramelo"
+config/version="0.12.0"
+config/icon="res://assets/app_icon/app_icon.png"
 config/description="Idle growth game shown as a transparent desktop overlay."
 run/main_scene="res://scenes/boot/boot.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
