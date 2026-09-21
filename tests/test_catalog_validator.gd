@@ -26,7 +26,7 @@ func _slots() -> Dictionary:
 func _frame(slot: int) -> Dictionary:
 	return {"slot": slot, "image": {"width": 100, "height": 200},
 			"visible": {"x": 10, "y": 20, "width": 80, "height": 170},
-			"anchor": {"x": 50.0, "y": 190}, "stable_anchor": {"x": 52.0, "y": 190}, "review_flags": []}
+			"anchor": {"x": 50.0, "y": 190}, "stable_anchor": {"x": 52.0, "y": 190}, "attach": {"head_top": [50, 20]}, "review_flags": []}
 
 
 func _geometry(form_count: int = 11) -> Dictionary:

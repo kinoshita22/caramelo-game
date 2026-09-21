@@ -271,6 +271,7 @@ func _describe(source: String, pack: String, file: String, entry: Dictionary, ro
 	a["_level_min"] = form_info["level_min"]
 	a["_level_max"] = form_info["level_max"]
 	a["_filename_suffix"] = rest.trim_prefix(slot_str + "_")
+	a["_attach"] = AssetIO.attachment_points(img, Vector2(a["anchor"]["x"], a["anchor"]["y"]), bounds, threshold)
 	if not SLOTS[slot - 1][0] in ALIGN_SKIP_CATEGORIES:
 		a["_runs"] = AssetIO.silhouette_runs(img, Vector2(a["anchor"]["x"], a["anchor"]["y"]), ALIGN_FACTOR, threshold)
 	return a
@@ -364,6 +365,7 @@ func _build_geometry(char_assets: Array, threshold: int) -> Dictionary:
 				"anchor": a["anchor"],
 				"stable_anchor": {"x": a["anchor"]["x"] + a["_stable_dx"], "y": a["anchor"]["y"]},
 				"alignment": a["_align"],
+				"attach": a["_attach"],
 				"review_flags": _review_flags(a),
 			})
 		forms.append({
@@ -376,6 +378,7 @@ func _build_geometry(char_assets: Array, threshold: int) -> Dictionary:
 		"alpha_threshold": threshold,
 		"threshold_note": "Visible bounds are stable for alpha thresholds 8-64 across the sampled frames; alpha 1-7 is invisible noise and is ignored.",
 		"anchor_rule": "bottom_center_of_visible_bounds",
+		"attach_rule": "Estimated cosmetic attachment points (source px): head_top is the highest opaque pixel near the anchor's x; eyes, neck and chest sit 17%, 33% and 47% of the way from there to the ground. Corrections go in attachment_overrides.json.",
 		"stable_anchor_rule": "anchor shifted sideways so each frame's silhouette best overlaps its category's first frame (and that frame the idle_neutral frame). Use stable_anchor for animation; y is unchanged.",
 		"coordinates": "Source image pixels; origin top-left; y down. Place a frame so its anchor sits on the character's ground point: Sprite2D with centered=false and offset = -anchor.",
 		"canvas_rule": "Per form: the largest visible-bounds width and height across its 33 frames.",

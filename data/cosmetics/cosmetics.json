@@ -1,0 +1,11 @@
+{
+	"_comment": "Hand-authored cosmetics (master plan Phase 9). Each slot attaches to a per-frame point from frame_geometry.json ('attach'), corrected by attachment_overrides.json. An item is a data entry only: id, slot, label, asset, cost, unlock_level, plus 'pivot' (which point of the item art sits on the attachment point: bottom_center, center or top_center), 'scale' (relative to the character art) and optional 'offset' [x, y] in character pixels. 'per_form' may override scale and offset for a form. Items stay empty until hat, glasses and accessory art arrives (plan §13).",
+	"schema_version": 1,
+	"slots": {
+		"head": {"label": "Hats", "attach": "head_top", "allow_empty": true, "hide_on_flags": ["horizontal_sleep"]},
+		"face": {"label": "Glasses", "attach": "eyes", "allow_empty": true, "hide_on_flags": ["horizontal_sleep"]},
+		"neck": {"label": "Neck", "attach": "neck", "allow_empty": true, "hide_on_flags": ["horizontal_sleep"]},
+		"body": {"label": "Body", "attach": "chest", "allow_empty": true, "hide_on_flags": ["horizontal_sleep"]}
+	},
+	"items": []
+}

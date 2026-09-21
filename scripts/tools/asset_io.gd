@@ -261,3 +261,67 @@ static func _iou(a: Dictionary, b: Dictionary, s: int) -> float:
 					inter += hi - lo
 	var union: int = a["area"] + b["area"] - inter
 	return float(inter) / union if union > 0 else 0.0
+
+
+## Estimated attachment points for cosmetics on one character frame, in
+## source pixels: head_top, eyes, neck and chest. The head is found as the
+## highest opaque pixel in a band around the anchor's x; the lower points
+## sit at fixed shares of the height from there to the ground. Estimates:
+## hand corrections live in data/animations/attachment_overrides.json.
+static func attachment_points(img: Image, anchor: Vector2, visible: Rect2i, threshold: int) -> Dictionary:
+	const FACTOR := 4
+	const SHARES := {"eyes": 0.17, "neck": 0.33, "chest": 0.47}
+	var small := img.duplicate() as Image
+	if small.get_format() != Image.FORMAT_RGBA8:
+		small.convert(Image.FORMAT_RGBA8)
+	var w := maxi(1, img.get_width() / FACTOR)
+	var h := maxi(1, img.get_height() / FACTOR)
+	small.resize(w, h, Image.INTERPOLATE_BILINEAR)
+	var data := small.get_data()
+	var ax := anchor.x / FACTOR
+	var half_band := maxf(2.0, visible.size.x * 0.18 / FACTOR)
+	var x0 := clampi(int(ax - half_band), 0, w - 1)
+	var x1 := clampi(int(ax + half_band), 0, w - 1)
+	var top := -1
+	for y in range(maxi(0, visible.position.y / FACTOR), mini(h, int(anchor.y / FACTOR))):
+		if _row_has(data, w, y, x0, x1, threshold):
+			top = y
+			break
+	if top < 0:
+		return {}
+	var points := {"head_top": [(_band_centre(data, w, top, x0, x1, threshold)) * FACTOR, top * FACTOR]}
+	var height := anchor.y / FACTOR - top
+	for name in SHARES:
+		var y := clampi(int(top + height * SHARES[name]), 0, h - 1)
+		points[name] = [_run_centre(data, w, y, int(ax), threshold) * FACTOR, y * FACTOR]
+	return points
+
+
+## Mean x of opaque pixels between x0 and x1 on row y.
+static func _band_centre(data: PackedByteArray, w: int, y: int, x0: int, x1: int, t: int) -> float:
+	var total := 0.0
+	var count := 0
+	for x in range(x0, x1 + 1):
+		if data[(y * w + x) * 4 + 3] >= t:
+			total += x
+			count += 1
+	return total / count if count > 0 else float(x0 + x1) / 2.0
+
+
+## Centre of the opaque run on row y that contains x, or of the nearest one.
+static func _run_centre(data: PackedByteArray, w: int, y: int, x: int, t: int) -> float:
+	var best := float(x)
+	var best_distance := 1e9
+	var start := -1
+	for i in range(w + 1):
+		var on := i < w and data[(y * w + i) * 4 + 3] >= t
+		if on and start < 0:
+			start = i
+		elif not on and start >= 0:
+			var centre := (start + i - 1) / 2.0
+			var distance := 0.0 if x >= start and x < i else minf(absf(x - start), absf(x - (i - 1)))
+			if distance < best_distance:
+				best_distance = distance
+				best = centre
+			start = -1
+	return best

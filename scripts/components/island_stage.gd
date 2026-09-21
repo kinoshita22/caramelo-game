@@ -29,6 +29,8 @@ var character_scale := 1.0
 var behaviour: Node
 ## Layer name -> Sprite2D.
 var layer_sprites := {}
+## Layer name -> its spec from island_layout.json.
+var _layer_specs := {}
 var _content: RefCounted
 
 
@@ -55,6 +57,9 @@ func build(layout: Dictionary, content: RefCounted, animation_doc: Dictionary) -
 	hit_polygon = outline(rects, float(layout.get("passthrough", {}).get("padding", 0)))
 
 	layer_sprites.clear()
+	_layer_specs.clear()
+	for l in layout["layers"]:
+		_layer_specs[l["name"]] = l
 	for p in placements:
 		var sprite := _sprite(p["name"], content.texture(p["asset"]), p)
 		layer_sprites[p["name"]] = sprite
@@ -94,6 +99,29 @@ func start_behaviour(balance: Dictionary, progression: RefCounted = null, econom
 	add_child(driver)
 	behaviour = driver
 	return errors
+
+
+## Swaps a layer's art, keeping the layer's position and pivot rule; the
+## item may scale it further. Returns false for an unknown layer or asset.
+func set_layer_asset(layer_name: String, asset_id: String, extra_scale: float = 1.0) -> bool:
+	var spec: Dictionary = _layer_specs.get(layer_name, {})
+	var sprite: Sprite2D = layer_sprites.get(layer_name)
+	var asset: Dictionary = _content.asset(asset_id) if _content != null else {}
+	if spec.is_empty() or sprite == null or asset.is_empty() or asset.get("runtime_path") == null:
+		return false
+	var scaled := spec.duplicate()
+	scaled["scale"] = float(spec["scale"]) * extra_scale
+	var p := place(asset, scaled, _vec(spec["position"]))
+	sprite.texture = _content.texture(asset_id)
+	sprite.offset = -p["pivot"]
+	sprite.scale = Vector2.ONE * p["scale"]
+	for placement in placements:
+		if placement["name"] == layer_name:
+			placement["asset"] = asset_id
+			placement["pivot"] = p["pivot"]
+			placement["scale"] = p["scale"]
+			placement["rect"] = p["rect"]
+	return true
 
 
 ## The click action of the topmost layer under a stage-space point, or "".

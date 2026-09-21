@@ -6,6 +6,9 @@ extends Node
 
 const Progression := preload("res://scripts/systems/progression.gd")
 const Economy := preload("res://scripts/systems/economy.gd")
+const Collection := preload("res://scripts/systems/collection.gd")
+const FURNITURE_PATH := "res://data/furniture/furniture.json"
+const COSMETICS_PATH := "res://data/cosmetics/cosmetics.json"
 const BALANCE_PATH := "res://data/balance/progression.json"
 const UPGRADES_PATH := "res://data/balance/upgrades.json"
 const DUMBBELLS_PATH := "res://data/equipment/dumbbells.json"
@@ -16,6 +19,8 @@ signal save_requested(reason: String)
 
 var progression := Progression.new()
 var economy := Economy.new()
+var furniture := Collection.new()
+var cosmetics := Collection.new()
 var errors: Array[String] = []
 
 
@@ -35,6 +40,18 @@ func _enter_tree() -> void:
 		var asset_ids: Array = content.docs.get("catalog", {}).get("assets", []).map(
 				func(a: Dictionary) -> String: return a["id"])
 		errors.append_array(economy.configure(upgrades, dumbbells, meals, asset_ids))
+	var asset_list: Array = content.docs.get("catalog", {}).get("assets", []).map(
+			func(a: Dictionary) -> String: return a["id"])
+	var furniture_doc: Variant = content.read_json(FURNITURE_PATH)
+	if typeof(furniture_doc) != TYPE_DICTIONARY:
+		errors.append("furniture.json missing or invalid")
+	else:
+		errors.append_array(furniture.configure(furniture_doc, asset_list))
+	var cosmetics_doc: Variant = content.read_json(COSMETICS_PATH)
+	if typeof(cosmetics_doc) != TYPE_DICTIONARY:
+		errors.append("cosmetics.json missing or invalid")
+	else:
+		errors.append_array(cosmetics.configure(cosmetics_doc, asset_list))
 	for e in errors:
 		push_error("GameState: " + e)
 	progression.leveled_up.connect(func(_level: int) -> void: save_requested.emit("level_up"))
@@ -42,6 +59,8 @@ func _enter_tree() -> void:
 	economy.stat_upgraded.connect(func(_stat: String, _level: int) -> void: save_requested.emit("upgrade"))
 	economy.equipment_changed.connect(func(_id: String) -> void: save_requested.emit("purchase"))
 	economy.food_changed.connect(func(_id: String) -> void: save_requested.emit("purchase"))
+	furniture.changed.connect(func(_slot: String) -> void: save_requested.emit("furniture"))
+	cosmetics.changed.connect(func(_slot: String) -> void: save_requested.emit("cosmetics"))
 
 
 func is_valid() -> bool:

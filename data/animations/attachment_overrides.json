@@ -1,0 +1,5 @@
+{
+	"_comment": "Hand corrections for the estimated attachment points in frame_geometry.json. forms -> form number -> slot number -> point name -> [x, y] in source pixels. Add entries only where a real cosmetic sits wrong.",
+	"schema_version": 1,
+	"forms": {}
+}

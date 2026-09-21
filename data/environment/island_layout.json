@@ -6,8 +6,8 @@
 		{"name": "tree", "asset": "environment.large_shade_tree", "pivot": "bottom_center", "position": [-500, 10], "scale": 0.42, "z": 0},
 		{"name": "swing", "asset": "environment.wooden_rope_swing", "pivot": "top_center", "position": [-410, -230], "scale": 0.16, "z": 1},
 		{"name": "dumbbell_rack", "asset": "environment.dumbbell_rack", "pivot": "bottom_center", "position": [260, 0], "scale": 0.25, "z": 2, "click_action": "shop_equipment"},
-		{"name": "chair", "asset": "environment.yellow_plastic_chair", "pivot": "bottom_center", "position": [480, 30], "scale": 0.192, "z": 3},
-		{"name": "side_table", "asset": "environment.boteco_side_table", "pivot": "bottom_center", "position": [580, 50], "scale": 0.192, "z": 4},
+		{"name": "chair", "asset": "environment.yellow_plastic_chair", "pivot": "bottom_center", "position": [480, 30], "scale": 0.192, "z": 3, "click_action": "furniture"},
+		{"name": "side_table", "asset": "environment.boteco_side_table", "pivot": "bottom_center", "position": [580, 50], "scale": 0.192, "z": 4, "click_action": "furniture"},
 		{"name": "sleeping_mat", "asset": "environment.sleeping_mat", "pivot": "bottom_center", "position": [280, 70], "scale": 0.179, "z": 5},
 		{"name": "food_station", "asset": "environment.food_station", "pivot": "bottom_center", "position": [-330, 65], "scale": 0.2, "z": 6, "click_action": "shop_food"},
 		{"name": "foreground_decor", "asset": "environment.foreground_decor", "pivot": "bottom_center", "position": [-600, 110], "scale": 0.3, "z": 20}
