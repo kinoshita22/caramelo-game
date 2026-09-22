@@ -180,20 +180,20 @@ func test_the_animator_dissolves_between_groups_and_settles() -> void:
 	a.free()
 
 
-## A drawing held for two seconds is watched changing, so the sleep softens
-## from one into the next. Brisk groups have no time for it and cut.
+## A drawing held long enough to watch it change softens into the next one
+## (the hunger rumble, at 3 fps). Brisk groups have no time for it and cut.
 func test_slow_groups_dissolve_between_their_frames() -> void:
 	var a := _animator()
-	a.play("sleeping")
-	for step in 8:  # past the dissolve into sleeping itself
-		a.tick(0.05)
-	check(not a.is_settling(), "settled into the sleep")
+	a.play("hunger")
+	for step in 10:  # past the dissolve into the hunger itself
+		a.tick(0.02)
+	check(not a.is_settling(), "settled into the rumble")
 	var held: int = a.current_slot()
 	for step in 200:
-		a.tick(0.05)
+		a.tick(0.02)
 		if a.current_slot() != held:
 			break
-	check(a.current_slot() != held, "the sleep reached its other drawing")
+	check(a.current_slot() != held, "the rumble reached its other drawing")
 	check(a.is_settling(), "which the one before it is still fading into")
 
 	a.play("workout")
@@ -207,14 +207,16 @@ func test_slow_groups_dissolve_between_their_frames() -> void:
 	a.free()
 
 
-## Slots 24 and 25 are an exhale and an inhale, so the group's own frame
-## rate is the breathing rate and the lift has to share it.
-func test_the_sleeping_breath_is_slow_and_matches_the_drawings() -> void:
+## The sleep is drawn as one pose, so the breathing is the lift alone and
+## has to be calm by itself. Were a second drawing put back, the group
+## would breathe too, and the two rates would have to agree.
+func test_the_sleeping_breath_is_slow() -> void:
 	var sleeping: Dictionary = _doc["groups"]["sleeping"]
-	var drawn_cycle: float = sleeping["slots"].size() / float(sleeping["fps"])
-	check(drawn_cycle >= 3.0, "a sleeping breath takes %.1f s, not a pant" % drawn_cycle)
-	check_eq(float(Motion.secondary_for(_motion, "sleeping")["period"]), drawn_cycle,
-			"the lift breathes with the drawings")
+	var period: float = float(Motion.secondary_for(_motion, "sleeping")["period"])
+	check(period >= 3.0, "a sleeping breath takes %.1f s, not a pant" % period)
+	if sleeping["slots"].size() > 1:
+		check_eq(period, sleeping["slots"].size() / float(sleeping["fps"]),
+				"the lift breathes with the drawings")
 
 
 func test_the_breath_starts_with_the_pose() -> void:

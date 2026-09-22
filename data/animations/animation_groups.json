@@ -11,7 +11,7 @@
 		"eating": {"slots": [13, 14, 13, 15, 16], "fps": 5, "loop": true, "anchor": "eating"},
 		"eating_finish": {"slots": [16, 17, 17], "fps": 4, "loop": false, "next": "idle", "anchor": "eating"},
 		"sleep_enter": {"slots": [22, 23], "fps": 1.5, "loop": false, "next": "sleeping", "anchor": "sleep"},
-		"sleeping": {"_comment": "Two drawings, in and out, so the fps sets the breathing: 0.5 is one slow breath every four seconds. The secondary motion below uses the same four seconds, so the lift and the drawing breathe together.", "slots": [24, 25], "fps": 0.5, "loop": true, "anchor": "sleep"},
+		"sleeping": {"_comment": "Two drawings, in and out, so the fps sets the breathing: 0.5 is one slow breath every four seconds. The secondary motion below uses the same four seconds, so the lift and the drawing breathe together.", "slots": [24], "fps": 0.5, "loop": true, "anchor": "sleep"},
 		"wake": {"slots": [26, 27, 27], "fps": 1.5, "loop": false, "next": "idle", "anchor": "sleep"},
 		"celebration": {"slots": [28, 29, 28, 29, 28], "fps": 6, "loop": false, "next": "idle", "anchor": "celebration"},
 		"reward": {"slots": [30, 30, 31, 31, 31, 31, 31, 31, 31, 31], "fps": 8, "loop": false, "next": "idle", "anchor": "celebration"},
@@ -63,6 +63,22 @@
 		{"_comment": "Victory jump is drawn airborne; lift it off the ground by a share of its visible height.", "slot": 29, "lift": 0.12},
 		{"_comment": "Hunger rumble is drawn about 17% larger than its neighbours in Forms 6-11 (1024x1536 source).", "slot": 18, "forms": [6], "scale": 0.832},
 		{"slot": 18, "forms": [7], "scale": 0.825},
-		{"slot": 18, "forms": [8, 9, 10, 11], "scale": 0.84}
+		{"slot": 18, "forms": [8, 9, 10, 11], "scale": 0.84},
+
+		{"_comment": "Eating (13-17) and lying down (23-27) are drawn larger, against the same form's standing poses, the further up the forms you go: by Form 6 the meal is about 20% too big and the sleep about 35%. Each scale brings that frame back to the proportion Forms 1-4 keep, measured as the frame's visible box against that form's idle frames. Frames already within 5% (16, 22, 27) are left alone.",
+			"slot": 13, "forms": [6], "scale": 0.84},
+		{"slot": 13, "forms": [7, 8, 9, 10, 11], "scale": 0.88},
+		{"slot": 14, "forms": [6, 7, 8, 9, 10, 11], "scale": 0.93},
+		{"slot": 15, "forms": [6], "scale": 0.94},
+		{"slot": 15, "forms": [7, 8, 9, 10, 11], "scale": 0.91},
+		{"slot": 17, "forms": [8, 9, 10, 11], "scale": 0.93},
+
+		{"slot": 23, "forms": [6, 7], "scale": 0.89},
+		{"slot": 23, "forms": [8, 9, 10, 11], "scale": 0.93},
+		{"_comment": "24 and 25 are the same sleeping pose, so they take the same scale.",
+			"slot": 24, "forms": [5, 6, 7, 8, 9, 10, 11], "scale": 0.84},
+		{"slot": 25, "forms": [5, 6, 7, 8, 9, 10, 11], "scale": 0.84},
+		{"slot": 26, "forms": [5], "scale": 0.9},
+		{"slot": 26, "forms": [6, 7, 8, 9, 10, 11], "scale": 0.85}
 	]
 }
