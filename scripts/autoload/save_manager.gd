@@ -79,6 +79,16 @@ func attach_loop(loop: RefCounted) -> void:
 		SaveData.apply_needs({"needs": _needs}, _loop)
 
 
+## Throws the saved game away and writes the fresh one over it, so a reset
+## survives a crash or a kill. GameState.reset() puts the systems back
+## first; this clears what is kept here. The player's settings stay: they
+## are about the window on their desktop, not the game being started over.
+func reset_save() -> bool:
+	_needs = {}
+	offline_summary = {}
+	return save_game()
+
+
 func save_game() -> bool:
 	if not enabled:
 		return false

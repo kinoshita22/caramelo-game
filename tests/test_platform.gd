@@ -34,11 +34,17 @@ func test_frame_rate_follows_what_is_happening() -> void:
 
 
 func test_idle_rate_still_covers_every_animation() -> void:
-	var groups: Dictionary = ContentData.new().read_json("res://data/animations/animation_groups.json")["groups"]
+	var content := ContentData.new()
+	var groups: Dictionary = content.read_json("res://data/animations/animation_groups.json")["groups"]
 	var fastest := 0.0
 	for g in groups.values():
 		fastest = maxf(fastest, float(g["fps"]))
-	check(_fps({}) >= fastest, "idle %d fps keeps up with the fastest animation (%.0f fps)" % [_fps({}), fastest])
+	# A fully bought Speed stat plays the reps faster still.
+	var upgrades: Dictionary = content.read_json("res://data/balance/upgrades.json")
+	var speed: Dictionary = upgrades["stats"]["speed"]
+	fastest *= 1.0 + float(speed["effect_per_level"]) * float(upgrades["max_level"])
+	check(_fps({}) >= fastest, "idle %d fps keeps up with the fastest animation (%.1f fps at full Speed)"
+			% [_fps({}), fastest])
 
 
 func test_30_fps_cap_limits_every_state() -> void:

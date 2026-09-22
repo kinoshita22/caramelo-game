@@ -81,7 +81,8 @@ func test_one_shot_group_hands_over_to_next() -> void:
 	a.group_finished.connect(func(g: String) -> void: events.append("end " + g))
 	a.play("tail_wag")
 	check_eq(a.current_slot(), 6, "first tail_wag frame")
-	a.tick(6.0 / 3.5 + 0.01)  # six frames at 3.5 fps
+	var wag: Dictionary = _doc["groups"]["tail_wag"]
+	a.tick(wag["slots"].size() / float(wag["fps"]) + 0.01)  # every frame of the wag
 	check_eq(a.group, "idle", "tail_wag hands over to idle")
 	check_eq(events, ["start tail_wag@idle", "end tail_wag", "start idle@idle"], "signals")
 	a.free()

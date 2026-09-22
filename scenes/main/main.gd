@@ -228,6 +228,7 @@ func _build_ui() -> void:
 	_menu.size_cycle_requested.connect(_cycle_size)
 	_menu.language_cycle_requested.connect(_cycle_language)
 	_menu.option_toggled.connect(_toggle_option)
+	_menu.reset_requested.connect(_reset_game)
 	_menu.quit_requested.connect(func() -> void:
 		SaveManager.save_game()
 		get_tree().quit())
@@ -320,6 +321,24 @@ func _apply_cosmetics(_slot_name: String = "") -> void:
 func _apply_furniture(_slot_name: String = "") -> void:
 	for slot_name in GameState.furniture.slot_names():
 		_preview_furniture(slot_name, "")
+
+
+## Starts the game over: every system back to a first run, the island and
+## the HUD following, and the save rewritten at once so the reset survives
+## whatever happens next. The menu asked before this was called.
+func _reset_game() -> void:
+	GameState.reset()
+	if stage.behaviour != null:
+		stage.behaviour.restart()
+	elif stage.animator != null:
+		stage.animator.set_form(GameState.progression.form)
+	_apply_furniture()
+	_apply_cosmetics()
+	# Without this the bones falling to zero would read as a huge spend.
+	_last_bones = GameState.progression.bones
+	_hud.refresh()
+	SaveManager.reset_save()
+	_menu.close()
 
 
 func _open_menu() -> void:
@@ -537,6 +556,9 @@ func _can_drag() -> bool:
 func _character_rect() -> Rect2:
 	var size: Vector2 = ContentCatalog.data.max_character_canvas() * float(stage.character_scale)
 	var at: Vector2 = stage.character.position
+	# Follow him into the air, so a click still lands on him mid-hop.
+	if stage.animator != null:
+		at += stage.animator.travel_offset
 	return Rect2(at.x - size.x / 2.0, at.y - size.y, size.x, size.y)
 
 
@@ -570,6 +592,9 @@ func _cycle_form(step: int) -> void:
 
 
 func _process(_delta: float) -> void:
+	# An eased hop or dissolve needs real frames to read as one movement.
+	if _pacer != null:
+		_pacer.moving = stage.is_settling()
 	if _screenshot_path == "":
 		return
 	_screenshot_frames -= 1
