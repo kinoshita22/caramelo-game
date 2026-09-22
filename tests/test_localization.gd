@@ -53,6 +53,7 @@ func test_every_name_shown_from_data_has_portuguese() -> void:
 		phrases.append(stat.capitalize())
 		phrases.append(UpgradesModal.EFFECT_TEXT[stat])
 	phrases.append_array(MenuModal.OPTIONS.values())
+	phrases.append_array(MenuModal.PHRASES)
 	for e in _read("res://data/effects/effects.json")["effects"].values():
 		if e.has("text") and not String(e["text"]).begins_with("+") and not String(e["text"]).begins_with("-"):
 			phrases.append(e["text"])

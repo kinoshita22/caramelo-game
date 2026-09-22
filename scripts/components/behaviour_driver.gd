@@ -14,10 +14,13 @@ var progression: RefCounted
 ## Economy system; when set, its upgrades scale the loop and the payouts.
 var economy: RefCounted
 
+var _balance := {}
+
 
 ## Returns validation errors for data/balance/behaviour.json.
 func setup(character_animator: Node2D, balance: Dictionary) -> Array[String]:
 	animator = character_animator
+	_balance = balance
 	# The loop decides what comes after each state, not the animation data.
 	animator.follow_next = false
 	var errors := loop.configure(balance, animator.groups.keys())
@@ -32,6 +35,16 @@ func setup(character_animator: Node2D, balance: Dictionary) -> Array[String]:
 		apply_modifiers()
 	_play_current()
 	return errors
+
+
+## Back to the start of a day: idle, rested and fed, with no history. Used
+## by a reset; the systems it reads are put back by whoever asks.
+func restart() -> void:
+	loop.configure(_balance, animator.groups.keys())
+	apply_modifiers()
+	if progression != null:
+		animator.set_form(progression.form)
+	_play_current()
 
 
 func _process(delta: float) -> void:

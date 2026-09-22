@@ -16,6 +16,8 @@ const MEALS_PATH := "res://data/food/meals.json"
 
 ## Emitted after a level-up or evolution, where Phase 10 will save.
 signal save_requested(reason: String)
+## Emitted after reset(), once every system is back to its first-run state.
+signal was_reset
 
 var progression := Progression.new()
 var economy := Economy.new()
@@ -25,6 +27,28 @@ var errors: Array[String] = []
 
 
 func _enter_tree() -> void:
+	_configure()
+	progression.leveled_up.connect(func(_level: int) -> void: save_requested.emit("level_up"))
+	progression.form_changed.connect(func(_from: int, _to: int) -> void: save_requested.emit("evolution"))
+	economy.stat_upgraded.connect(func(_stat: String, _level: int) -> void: save_requested.emit("upgrade"))
+	economy.equipment_changed.connect(func(_id: String) -> void: save_requested.emit("purchase"))
+	economy.food_changed.connect(func(_id: String) -> void: save_requested.emit("purchase"))
+	furniture.changed.connect(func(_slot: String) -> void: save_requested.emit("furniture"))
+	cosmetics.changed.connect(func(_slot: String) -> void: save_requested.emit("cosmetics"))
+
+
+## Puts every system back to how it starts on a first run: level 1, no
+## bones, no upgrades, nothing bought, the free items owned and equipped
+## again. The systems are reconfigured in place, so everything watching
+## them stays connected. The save file is the caller's business (see
+## SaveManager.reset_save).
+func reset() -> void:
+	_configure()
+	was_reset.emit()
+
+
+## Builds every system from the data files. Run again by reset().
+func _configure() -> void:
 	var content: RefCounted = ContentCatalog.data
 	var balance: Variant = content.read_json(BALANCE_PATH)
 	if typeof(balance) != TYPE_DICTIONARY:
@@ -54,13 +78,6 @@ func _enter_tree() -> void:
 		errors.append_array(cosmetics.configure(cosmetics_doc, asset_list))
 	for e in errors:
 		push_error("GameState: " + e)
-	progression.leveled_up.connect(func(_level: int) -> void: save_requested.emit("level_up"))
-	progression.form_changed.connect(func(_from: int, _to: int) -> void: save_requested.emit("evolution"))
-	economy.stat_upgraded.connect(func(_stat: String, _level: int) -> void: save_requested.emit("upgrade"))
-	economy.equipment_changed.connect(func(_id: String) -> void: save_requested.emit("purchase"))
-	economy.food_changed.connect(func(_id: String) -> void: save_requested.emit("purchase"))
-	furniture.changed.connect(func(_slot: String) -> void: save_requested.emit("furniture"))
-	cosmetics.changed.connect(func(_slot: String) -> void: save_requested.emit("cosmetics"))
 
 
 func is_valid() -> bool:
