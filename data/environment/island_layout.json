@@ -9,7 +9,7 @@
 		{"name": "chair", "asset": "environment.yellow_plastic_chair", "pivot": "bottom_center", "position": [480, 30], "scale": 0.192, "z": 3, "click_action": "furniture"},
 		{"name": "side_table", "asset": "environment.boteco_side_table", "pivot": "bottom_center", "position": [580, 50], "scale": 0.192, "z": 4, "click_action": "furniture"},
 		{"name": "sleeping_mat", "asset": "environment.sleeping_mat", "pivot": "bottom_center", "position": [280, 70], "scale": 0.179, "z": 5},
-		{"name": "food_station", "asset": "environment.food_station", "pivot": "bottom_center", "position": [-330, 65], "scale": 0.2, "z": 6, "click_action": "shop_food"},
+		{"name": "food_station", "asset": "environment.food_station", "pivot": "bottom_center", "position": [-410, 65], "scale": 0.2, "z": 6, "click_action": "shop_food"},
 		{"name": "foreground_decor", "asset": "environment.foreground_decor", "pivot": "bottom_center", "position": [-600, 110], "scale": 0.3, "z": 20}
 	],
 	"character": {
