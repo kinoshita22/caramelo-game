@@ -31,8 +31,10 @@
 			"shadow_shrink": 0.18
 		},
 		"blend": {
-			"_comment": "crossfade covers a group change, where the two poses are unrelated. Frames inside a group are never dissolved into each other: they are drawings of the same pose moving, and laying one over the other showed both at once. The breathing carries a slow group instead. jitter_px is the biggest frame-to-frame body shift that slides into place instead of jumping, over jitter_ease seconds.",
+			"_comment": "crossfade covers a group change; groups at or below slow_fps also dissolve between their own frames, so the slow sleep softens from one drawing into the next instead of switching. The dissolve never takes more than half a frame's own time. jitter_px is the biggest frame-to-frame body shift that slides into place instead of jumping, over jitter_ease seconds.",
 			"crossfade": 0.16,
+			"slow_fps": 3.0,
+			"frame_crossfade": 0.14,
 			"jitter_px": 18.0,
 			"jitter_ease": 0.08
 		},

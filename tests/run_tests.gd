@@ -19,7 +19,7 @@ func _init() -> void:
 	files.sort()
 	for file in files:
 		var script: GDScript = load(TEST_DIR.path_join(file))
-		if script == null:
+		if script == null or not script.can_instantiate():
 			printerr("FAIL  %s: could not load" % file)
 			failed += 1
 			continue
@@ -27,6 +27,12 @@ func _init() -> void:
 				func(m: Dictionary) -> String: return m["name"]).filter(
 				func(n: String) -> bool: return n.begins_with("test_") and (filter == "" or filter in n))
 		names.sort()
+		# A file that stopped on a parse error still loads, with none of its
+		# methods, so it would otherwise be skipped without a word.
+		if names.is_empty() and filter == "":
+			printerr("FAIL  %s: no tests in the file; it probably stopped on a parse error" % file)
+			failed += 1
+			continue
 		for name in names:
 			var t: Object = script.new()
 			t.call(name)

@@ -11,8 +11,8 @@ extends Node2D
 ## all of it laid over the drawn frames and all of it tuned in that file's
 ## "motion" block (see Motion):
 ##   * a dissolve from the outgoing frame into the new one when the group
-##     changes, where the two poses have nothing to do with each other
-##     (never inside a group: that showed both drawings at once);
+##     changes, and between the frames of groups slow enough to see them
+##     change (the sleep holds each drawing for two seconds);
 ##   * a slide that swallows a small frame-to-frame shift of his body, so
 ##     poses ease into place instead of popping (bigger moves still snap:
 ##     a jump should look like a jump);
@@ -140,6 +140,12 @@ func tick(delta: float) -> void:
 		return
 	var g: Dictionary = groups[group]
 	var frame_time := 1.0 / (float(g["fps"]) * maxf(speed_scale, 0.01))
+	# A group slow enough to see the frames change (the sleep holds each
+	# drawing for two seconds) dissolves between them, over no more than
+	# half of the frame's own time. Brisk groups cut.
+	var frame_blend := 0.0
+	if float(g["fps"]) <= float(_blend["slow_fps"]):
+		frame_blend = minf(float(_blend["frame_crossfade"]), frame_time * 0.5)
 	_elapsed += delta
 	while _elapsed >= frame_time and group != "":
 		_elapsed -= frame_time
@@ -153,10 +159,8 @@ func tick(delta: float) -> void:
 			frame_index = step["index"]
 			_holding = true
 			return
-		# No dissolve inside a group: the frames are the same pose moving,
-		# and laying one over the other showed both at once.
 		frame_index = step["index"]
-		_show()
+		_show(frame_blend)
 
 
 ## The dissolve, the easing of a frame's pop and the breathing, none of

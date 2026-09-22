@@ -122,8 +122,8 @@ transparent, the game falls back to windowed mode.
 Nothing Caramelo does happens all at once. He hops from one anchor to the
 next instead of appearing there, leaning into the move and landing with a
 squash while his shadow tightens under him; one action dissolves into the
-next rather than cutting, while the frames inside an action cut cleanly as
-drawn; a frame whose body sits a few pixels off from the last
+next rather than cutting, as do the frames of an action slow enough to watch
+them change; a frame whose body sits a few pixels off from the last
 one slides into place, while a real move (a jump, a push-up) still lands
 sharply; and he breathes through every held pose, on the beat of the
 drawings where they breathe too, so the slow sleep never looks frozen. The curves are in `scripts/systems/motion.gd` and every number

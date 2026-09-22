@@ -18,7 +18,13 @@ const TRAVEL := {
 	"squash": 0.07,
 	"shadow_shrink": 0.18,
 }
-const BLEND := {"crossfade": 0.16, "jitter_px": 18.0, "jitter_ease": 0.08}
+const BLEND := {
+	"crossfade": 0.16,
+	"slow_fps": 3.0,
+	"frame_crossfade": 0.14,
+	"jitter_px": 18.0,
+	"jitter_ease": 0.08,
+}
 const SECONDARY := {"bob": 2.0, "period": 3.0, "sway": 0.0, "breathe": 0.004}
 
 
@@ -134,7 +140,7 @@ static func validate(motion: Dictionary, group_names: Array = []) -> Array[Strin
 	if float(t["squash"]) > 0.5 or float(t["shadow_shrink"]) > 1.0:
 		errors.append("motion: travel.squash and travel.shadow_shrink must stay subtle")
 	var b := blend(motion)
-	for key in ["crossfade", "jitter_px", "jitter_ease"]:
+	for key in ["crossfade", "slow_fps", "frame_crossfade", "jitter_px", "jitter_ease"]:
 		if float(b[key]) < 0.0:
 			errors.append("motion: blend.%s must not be negative" % key)
 	var secondary: Dictionary = motion.get("secondary", {})

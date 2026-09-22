@@ -180,19 +180,30 @@ func test_the_animator_dissolves_between_groups_and_settles() -> void:
 	a.free()
 
 
-## The frames of one group are the same pose moving, so dissolving between
-## them showed both drawings at once, most of all through the 1 fps sleep.
-func test_frames_inside_a_group_never_leave_a_ghost() -> void:
+## A drawing held for two seconds is watched changing, so the sleep softens
+## from one into the next. Brisk groups have no time for it and cut.
+func test_slow_groups_dissolve_between_their_frames() -> void:
 	var a := _animator()
 	a.play("sleeping")
-	# Past the dissolve into sleeping, and on through several frame changes.
-	for step in 8:
+	for step in 8:  # past the dissolve into sleeping itself
 		a.tick(0.05)
+	check(not a.is_settling(), "settled into the sleep")
+	var held: int = a.current_slot()
+	for step in 200:
+		a.tick(0.05)
+		if a.current_slot() != held:
+			break
+	check(a.current_slot() != held, "the sleep reached its other drawing")
+	check(a.is_settling(), "which the one before it is still fading into")
+
+	a.play("workout")
+	for step in 20:  # past the dissolve into the workout
+		a.tick(0.02)
 	var ghosted := false
 	for step in 100:
-		a.tick(0.05)
+		a.tick(0.02)
 		ghosted = ghosted or a.is_settling()
-	check(not ghosted, "five seconds of sleep with no frame laid over another")
+	check(not ghosted, "two seconds of brisk reps, each drawing cutting to the next")
 	a.free()
 
 
