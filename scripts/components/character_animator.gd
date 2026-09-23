@@ -20,6 +20,9 @@ extends Node2D
 
 signal group_started(group_name: String, anchor_name: String)
 signal group_finished(group_name: String)
+## A looping group came back round to its first frame: one workout rep, one
+## breath of the sleep. One-shot groups report group_finished instead.
+signal loop_completed(group_name: String)
 signal frame_changed(slot: int)
 
 const Motion := preload("res://scripts/systems/motion.gd")
@@ -160,6 +163,8 @@ func tick(delta: float) -> void:
 			_holding = true
 			return
 		frame_index = step["index"]
+		if frame_index == 0:
+			loop_completed.emit(group)
 		_show(frame_blend)
 
 

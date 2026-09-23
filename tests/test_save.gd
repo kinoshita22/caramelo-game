@@ -172,14 +172,32 @@ func test_both_files_corrupt_starts_fresh_without_deleting() -> void:
 	_clear_test_dir()
 
 
-func _offline(seconds: float, config_overrides: Dictionary = {}) -> Dictionary:
+func _offline(seconds: float, config_overrides: Dictionary = {}, lift_seconds: float = -1.0) -> Dictionary:
 	var config := _read("res://data/balance/offline.json")
 	config.merge(config_overrides, true)
+	var behaviour := _read("res://data/balance/behaviour.json")
+	var lift := lift_seconds
+	if lift < 0.0:
+		lift = OfflineProgress.seconds_per_lift(behaviour, _read("res://data/animations/animation_groups.json"))
 	var s := _systems()
-	var summary := OfflineProgress.simulate(seconds, config, _read("res://data/balance/behaviour.json"),
-			s["progression"], s["economy"], {"energy": 80.0, "satiety": 70.0})
+	var summary := OfflineProgress.simulate(seconds, config, behaviour,
+			s["progression"], s["economy"], {"energy": 80.0, "satiety": 70.0}, lift)
 	summary["progression"] = s["progression"]
 	return summary
+
+
+## Time away pays for the lifts he got through, as watching him would.
+func test_time_away_pays_for_the_lifts_not_just_the_sessions() -> void:
+	var lift := OfflineProgress.seconds_per_lift(_read("res://data/balance/behaviour.json"),
+			_read("res://data/animations/animation_groups.json"))
+	check(lift > 0.0 and lift < 5.0, "a lift takes %.2f s, read from the workout animation" % lift)
+	check_eq(OfflineProgress.seconds_per_lift({}, {}), 0.0, "no data, no lifts")
+	var with_lifts := _offline(3600.0)
+	var sessions_only := _offline(3600.0, {}, 0.0)
+	check_eq(with_lifts["workouts"], sessions_only["workouts"], "the same hour either way")
+	check(with_lifts["xp_gained"] > sessions_only["xp_gained"] * 2.0,
+			"the lifts are most of it: %d XP against %d" % [with_lifts["xp_gained"], sessions_only["xp_gained"]])
+	check(with_lifts["levels_gained"] >= sessions_only["levels_gained"], "and they count towards levels")
 
 
 func test_an_hour_away_pays_like_an_hour_watched() -> void:

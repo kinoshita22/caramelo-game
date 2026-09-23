@@ -35,13 +35,18 @@ shown as the sleep and hunger bars; they steer the cycle, need no attention
 from the player, and never cause failure. Rates, thresholds and durations live in `data/balance/behaviour.json`.
 Passing `--animation` switches the loop off so a single group can be inspected.
 
-Finished workouts pay XP and bones. Levels run 1-100 and the look changes
-every ten levels, through an evolution the player cannot interrupt. Levels
-never drop, leftover XP carries into the next level, and at level 100 the
-curve ends while bones keep coming. The curve and payouts live in
-`data/balance/progression.json`; reaching 100 currently takes roughly 25
-hours of running, which is a placeholder until the client decides (plan §14)
-and is retuned with `rewards.workout_xp` alone.
+Every lift of the dumbbells pays XP, with the number floating over his head
+and the bar walking up to it rather than jumping; finishing the session pays
+bones and a last helping of XP. A fraction of an XP is never shown and never
+lost: it is carried until it makes a whole one, so the number that appears is
+the number he was given. Levels run 1-100 and the look changes every ten
+levels, through an evolution the player cannot interrupt. Levels never drop,
+leftover XP carries into the next level, and at level 100 the curve ends
+while bones keep coming. The curve and payouts live in
+`data/balance/progression.json`; reaching 100 takes roughly 68 hours of
+running with nothing upgraded (measured against the behaviour loop, not
+guessed), which is a placeholder until the client decides (plan §14) and is
+retuned with `rewards.rep_xp` alone.
 
 Bones buy four upgrades (strength, endurance, speed, recovery), six dumbbell
 tiers and five meals, all in `data/balance/upgrades.json`,

@@ -1,5 +1,5 @@
 {
-	"_comment": "Hand-authored effects (master plan Phase 12), built from art already in the pack. Each plays when its trigger happens: a behaviour state starting ('state:<name>') or bones changing ('bones_gained', 'bones_spent'). 'at' is where it starts: 'character_head' (above Caramelo), 'character' (his feet) or 'bone_counter' (the HUD). Sizes and distances are design pixels; 'text' may use {level}, {amount} and {form}. The golden, stone and cosmic form overlays wait for art (plan §13).",
+	"_comment": "Hand-authored effects (master plan Phase 12), built from art already in the pack. Each plays when its trigger happens: a behaviour state starting ('state:<name>'), bones changing ('bones_gained', 'bones_spent') or a dumbbell lift paying ('xp_gained'). 'at' is where it starts: 'character_head' (above Caramelo), 'character' (his feet) or 'bone_counter' (the HUD). Sizes and distances are design pixels; 'text' may use {level}, {amount} and {form}. The golden, stone and cosmic form overlays wait for art (plan §13).",
 	"schema_version": 1,
 	"effects": {
 		"level_up": {"trigger": "state:celebration", "asset": "ui.currency_xp_star", "at": "character_head",
@@ -8,6 +8,8 @@
 			"size": 190, "rise": 60, "duration": 2.2, "text": "Evolved!", "flash": true},
 		"reward": {"trigger": "state:reward", "asset": "ui.currency_bone_reward_burst", "at": "character_head",
 			"size": 170, "rise": 50, "duration": 1.5},
+		"xp_gained": {"_comment": "One lift of the dumbbells.", "trigger": "xp_gained", "asset": "ui.currency_xp_star", "at": "character_head",
+			"size": 38, "rise": 44, "duration": 0.6, "text": "+{amount} XP"},
 		"bones_gained": {"trigger": "bones_gained", "asset": "ui.currency_bone_single", "at": "character_head",
 			"size": 44, "rise": 70, "duration": 1.2, "text": "+{amount}"},
 		"bones_spent": {"trigger": "bones_spent", "asset": "ui.currency_bone_single", "at": "bone_counter",

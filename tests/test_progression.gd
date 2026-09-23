@@ -30,8 +30,10 @@ func test_validation_catches_bad_balance() -> void:
 	var bad := _balance.duplicate(true)
 	bad["xp_curve"]["base"] = 0
 	bad["rewards"]["workout_xp"] = -5
+	bad["rewards"]["rep_xp"] = 0
 	check_error(Progression.validate_balance(bad, _forms), "xp_curve.base must be a positive number")
 	check_error(Progression.validate_balance(bad, _forms), "rewards.workout_xp must be a positive number")
+	check_error(Progression.validate_balance(bad, _forms), "rewards.rep_xp must be a positive number")
 	var short_forms := _forms.duplicate(true)
 	short_forms.pop_back()
 	check_error(Progression.validate_balance(_balance, short_forms), "xp_curve.max_level is 100")
@@ -117,6 +119,33 @@ func test_workouts_pay_xp_and_bones_with_a_bonus() -> void:
 	check(p.xp > 0.0 or p.level > 1, "workouts also pay XP")
 
 
+func test_every_lift_pays_what_it_shows() -> void:
+	var p := _progression()
+	var first: Dictionary = p.complete_rep()
+	check_eq(first["xp_awarded"], float(_balance["rewards"]["rep_xp"]), "one lift, one payment")
+	check_eq(p.xp, first["xp_awarded"], "and it is his")
+	# A multiplier usually makes the reward a fraction of an XP. Fractions
+	# are never shown, and never lost either.
+	var q := _progression()
+	var payments: Array = []
+	for lift in 100:
+		var paid: float = q.complete_rep(1.35)["xp_awarded"]
+		if paid > 0.0:
+			payments.append(paid)
+	for paid in payments:
+		check_eq(paid, floorf(paid), "%s is a whole number of XP" % paid)
+	var earned: float = q.total_xp_for_level(q.level) + q.xp
+	check(absf(earned - 100.0 * 1.35 * float(_balance["rewards"]["rep_xp"])) < 1.0,
+			"a hundred lifts at x1.35 paid %s, near the %s they were worth" % [earned, 135.0])
+
+
+func test_lifts_stop_paying_at_the_top() -> void:
+	var p := _progression()
+	p.restore(100, 0.0, 0)
+	check_eq(p.complete_rep()["xp_awarded"], 0.0, "level 100 is the end of the curve")
+	check_eq(p.xp, 0.0, "and nothing piles up")
+
+
 func test_bones_only_ever_increase() -> void:
 	var p := _progression()
 	p.add_bones(50)
@@ -142,9 +171,25 @@ func test_whole_run_from_level_1_to_100_is_consistent() -> void:
 	p.leveled_up.connect(func(l: int) -> void: levels_seen.append(l))
 	var workouts := 0
 	while not p.at_max_level() and workouts < 100000:
+		# A session the way it is played: a lift every half second for the
+		# length of a workout, then the payout for finishing.
+		for lift in _lifts_per_session():
+			p.complete_rep()
 		p.complete_workout()
 		workouts += 1
 	check_eq(p.level, 100, "reached level 100 in %d workouts" % workouts)
 	check_eq(levels_seen.size(), 99, "every level announced once")
 	check_eq(p.form, 11, "ends in the final form")
 	check(workouts > 1000 and workouts < 10000, "workouts needed stays in a sane range: %d" % workouts)
+
+
+## How many lifts fit in one session, from the workout's length and the
+## frame rate its animation runs at.
+func _lifts_per_session() -> int:
+	var behaviour: Variant = _content.read_json("res://data/balance/behaviour.json")
+	var animations: Variant = _content.read_json("res://data/animations/animation_groups.json")
+	if typeof(behaviour) != TYPE_DICTIONARY or typeof(animations) != TYPE_DICTIONARY:
+		return 1
+	var workout: Dictionary = animations["groups"]["workout"]
+	var lift: float = workout["slots"].size() / float(workout["fps"])
+	return int(float(behaviour["durations"]["workout_session"]) / lift)

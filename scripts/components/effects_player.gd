@@ -115,7 +115,7 @@ static func validate(doc: Dictionary, known_assets: Array = []) -> Array[String]
 			errors.append("effects: '%s' must be an object" % name)
 			continue
 		var trig: String = str(e.get("trigger", ""))
-		if not (trig.begins_with("state:") or trig in ["bones_gained", "bones_spent"]):
+		if not (trig.begins_with("state:") or trig in ["bones_gained", "bones_spent", "xp_gained"]):
 			errors.append("effects: '%s' has unknown trigger '%s'" % [name, trig])
 		if not e.get("at", "character_head") in ["character_head", "character", "bone_counter"]:
 			errors.append("effects: '%s' has unknown 'at' '%s'" % [name, e.get("at")])
