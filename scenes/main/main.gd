@@ -250,6 +250,8 @@ func _connect_effects() -> void:
 			_effects.trigger("bones_spent", {"amount": -delta})
 			AudioManager.play_event("bones_spent"))
 	if stage.behaviour != null:
+		stage.behaviour.rep_paid.connect(func(xp: int) -> void:
+			_effects.trigger("xp_gained", {"amount": xp}))
 		stage.behaviour.loop.state_changed.connect(func(_from: String, to: String) -> void:
 			_effects.trigger("state:" + to, {"level": p.level, "form": p.form})
 			AudioManager.play_event("state:" + to))
@@ -336,7 +338,7 @@ func _reset_game() -> void:
 	_apply_cosmetics()
 	# Without this the bones falling to zero would read as a huge spend.
 	_last_bones = GameState.progression.bones
-	_hud.refresh()
+	_hud.refresh(true)
 	SaveManager.reset_save()
 	_menu.close()
 

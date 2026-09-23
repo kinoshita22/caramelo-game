@@ -21,6 +21,8 @@ var workouts_completed := 0
 var _curve := {}
 var _rewards := {}
 var _forms: Array = []
+## Fractions of an XP earned by lifts, waiting to make a whole one.
+var _rep_credit := 0.0
 
 
 ## balance is data/balance/progression.json; forms is the "forms" array of
@@ -36,6 +38,7 @@ func configure(balance: Dictionary, forms: Array) -> Array[String]:
 	xp = 0.0
 	bones = 0
 	workouts_completed = 0
+	_rep_credit = 0.0
 	form = form_for_level(level)
 	return errors
 
@@ -121,6 +124,19 @@ func add_bones(amount: int) -> void:
 	bones_changed.emit(bones)
 
 
+## Pays for one lift of the dumbbells. Multipliers usually make the reward
+## a fraction of an XP, and a fraction is not worth showing, so it is
+## carried until it makes a whole one: the number that appears over his head
+## is always the number he was given.
+func complete_rep(xp_multiplier: float = 1.0) -> Dictionary:
+	_rep_credit += float(_rewards.get("rep_xp", 0.0)) * maxf(xp_multiplier, 0.0)
+	var whole := floorf(_rep_credit)
+	if whole < 1.0 or at_max_level():
+		return add_xp(0.0)
+	_rep_credit -= whole
+	return add_xp(whole)
+
+
 ## Pays out one finished workout session. Every Nth session pays a bonus,
 ## which is the cue for the bone-reward animation.
 func complete_workout(xp_multiplier: float = 1.0) -> Dictionary:
@@ -147,6 +163,7 @@ func restore(saved_level: int, saved_xp: float, saved_bones: int, saved_workouts
 		xp = 0.0
 	bones = maxi(saved_bones, 0)
 	workouts_completed = maxi(saved_workouts, 0)
+	_rep_credit = 0.0
 	var previous := form
 	form = form_for_level(level)
 	if form != previous:
@@ -169,6 +186,8 @@ static func validate_balance(balance: Dictionary, forms: Array) -> Array[String]
 	if typeof(rewards) != TYPE_DICTIONARY:
 		errors.append("progression: 'rewards' must be an object")
 	else:
+		if not _positive(rewards.get("rep_xp")):
+			errors.append("progression: rewards.rep_xp must be a positive number")
 		if not _positive(rewards.get("workout_xp")):
 			errors.append("progression: rewards.workout_xp must be a positive number")
 		if not _positive(rewards.get("workout_bones")):

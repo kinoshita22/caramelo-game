@@ -14,6 +14,7 @@ const SaveFile := preload("res://scripts/systems/save_file.gd")
 const OfflineProgress := preload("res://scripts/systems/offline_progress.gd")
 const CONFIG_PATH := "res://data/balance/offline.json"
 const BEHAVIOUR_PATH := "res://data/balance/behaviour.json"
+const ANIMATIONS_PATH := "res://data/animations/animation_groups.json"
 const DEFAULT_PATH := "user://save.json"
 
 signal saved(path: String)
@@ -61,8 +62,11 @@ func begin(argv: PackedStringArray = OS.get_cmdline_user_args()) -> String:
 		var behaviour: Variant = ContentCatalog.data.read_json(BEHAVIOUR_PATH)
 		if typeof(behaviour) == TYPE_DICTIONARY:
 			var away: float = Time.get_unix_time_from_system() - float(doc["saved_at_unix"])
+			var animations: Variant = ContentCatalog.data.read_json(ANIMATIONS_PATH)
+			var lift: float = OfflineProgress.seconds_per_lift(behaviour,
+					animations if typeof(animations) == TYPE_DICTIONARY else {})
 			offline_summary = OfflineProgress.simulate(away, _config, behaviour,
-					GameState.progression, GameState.economy, _needs)
+					GameState.progression, GameState.economy, _needs, lift)
 			_needs = {"energy": offline_summary["energy"], "satiety": offline_summary["satiety"]}
 
 	_start_timers()

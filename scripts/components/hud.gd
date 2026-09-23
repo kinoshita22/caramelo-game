@@ -20,6 +20,8 @@ const UIKit := preload("res://scripts/components/ui_kit.gd")
 const STRIP_HEIGHT := 120.0
 const BOTTOM_MARGIN := 28.0
 const BAR_SIZE := Vector2(460, 27)
+## Seconds the XP bar takes to travel its whole length.
+const FILL_SECONDS := 1.2
 const BADGE := 96.0
 const ICON_BUTTON := 88.0
 ## Icon buttons are wider than they are tall.
@@ -47,6 +49,10 @@ var _need_column: VBoxContainer
 var _hunger_bar: TextureProgressBar
 var _sleep_bar: TextureProgressBar
 var _xp_bar: TextureProgressBar
+## Where the XP bar is drawn, and where it is heading. They differ while it
+## catches up with a lift, or runs on over a level-up.
+var _xp_shown := 0.0
+var _xp_target := 0.0
 var _bones_label: Label
 
 
@@ -62,7 +68,7 @@ func setup(content_data: RefCounted, progression_system: RefCounted) -> void:
 	progression.xp_changed.connect(func(_xp: float, _needed: float) -> void: refresh())
 	progression.bones_changed.connect(func(_total: int) -> void: refresh())
 	progression.leveled_up.connect(func(_level: int) -> void: refresh())
-	refresh()
+	refresh(true)
 
 
 func _build() -> void:
@@ -203,7 +209,11 @@ func place_needs(top_center: Vector2) -> void:
 	_need_column.position = top_center - Vector2(size.x / 2.0, 0.0)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	# XP arrives a lift at a time; the bar walks up to it instead of
+	# jumping, and runs on to the end and round again on a level-up.
+	_xp_shown = advance_fill(_xp_shown, _xp_target, delta, FILL_SECONDS)
+	_xp_bar.value = _xp_shown
 	# Satiety and energy change every frame, so the need bars follow them live.
 	if needs == null:
 		_hunger_bar.visible = false
@@ -220,8 +230,26 @@ func bone_counter_centre() -> Vector2:
 	return _bones_label.get_global_rect().get_center()
 
 
-func refresh() -> void:
+## `snap` puts the bar straight where it belongs, for a save being loaded
+## or a game being started over; otherwise it walks there.
+func refresh(snap: bool = false) -> void:
 	_level_label.text = str(progression.level)
 	var needed: float = progression.xp_to_next(progression.level)
-	_xp_bar.value = 1.0 if needed <= 0.0 else clampf(progression.xp / needed, 0.0, 1.0)
+	_xp_target = 1.0 if needed <= 0.0 else clampf(progression.xp / needed, 0.0, 1.0)
+	if snap:
+		_xp_shown = _xp_target
+		_xp_bar.value = _xp_shown
 	_bones_label.text = str(progression.bones)
+
+
+## Where the bar is drawn after `delta`, easing towards `target` over about
+## `seconds` for a whole bar. A target below what is shown means a level-up:
+## the fill finishes the bar first and comes back round at nothing, rather
+## than sliding backwards. Pure.
+static func advance_fill(shown: float, target: float, delta: float, seconds: float) -> float:
+	var step := delta / maxf(seconds, 0.001)
+	if target < shown - 0.001:
+		var filled := shown + step
+		# The bar is full: start the new level from empty.
+		return 0.0 if filled >= 1.0 else filled
+	return minf(shown + step, target)

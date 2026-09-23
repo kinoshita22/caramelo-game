@@ -1,12 +1,14 @@
 {
-	"_comment": "Hand-authored XP, level and bone tuning (master plan Phase 6). XP needed to leave level L is round(base * L^exponent), so early levels pass quickly and level 99 takes about 1500 XP. With workout_xp 18 and the Phase 5 session length, reaching level 100 takes roughly 25 hours of running. That total is the client's decision (plan §14); change workout_xp to retune it without touching the curve's shape. Phase 7 upgrades will shorten it.",
+	"_comment": "Hand-authored XP, level and bone tuning (master plan Phase 6). XP needed to leave level L is round(base * L^exponent), so early levels pass quickly and level 99 takes about 7400 XP. XP is paid as it is earned: rep_xp for every dumbbell lift, plus workout_xp for finishing the session. A level costs five times what it used to, while a session pays about three and a half times as much now that every lift counts, so the climb to level 100 is about 68 hours without upgrades, against about 45 before. That total is the client's decision (plan §14); change rep_xp to retune it without touching the curve's shape. Phase 7 upgrades shorten it.",
 	"schema_version": 1,
 	"xp_curve": {
-		"base": 3.0,
+		"base": 15.0,
 		"exponent": 1.35,
 		"max_level": 100
 	},
 	"rewards": {
+		"_comment_rep": "One lift of the dumbbells, which at the workout group's frame rate is one every half second.",
+		"rep_xp": 1.0,
 		"workout_xp": 18.0,
 		"workout_bones": 3,
 		"_comment_bonus": "Every Nth completed workout pays a bonus and plays the bone-reward animation.",
