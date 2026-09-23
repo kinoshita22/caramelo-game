@@ -62,6 +62,21 @@ func test_every_state_maps_to_a_real_animation_group() -> void:
 		check(loop.group_for(state) in _groups, "%s -> %s" % [state, loop.group_for(state)])
 
 
+## A one-shot group holds its last drawing until the state ends (the loop
+## decides what follows, not the animation), so a state that outlasts its
+## animation leaves that drawing frozen on screen. For a movement -- him
+## lowering himself onto the mat -- that reads as a stall, so the two are
+## kept close together.
+func test_a_transition_does_not_freeze_on_its_last_drawing() -> void:
+	var animations: Dictionary = _content.read_json("res://data/animations/animation_groups.json")
+	for state in ["sleep_enter"]:
+		var group: Dictionary = animations["groups"][_balance["states"][state]]
+		var frame: float = 1.0 / float(group["fps"])
+		var held: float = float(_balance["durations"][state]) - group["slots"].size() * frame
+		check(held <= frame, "%s holds its last drawing %.2f s past the animation, over a frame's %.2f s"
+				% [state, maxf(held, 0.0), frame])
+
+
 func test_starts_working_out_and_recovers() -> void:
 	var loop := _loop()
 	check_eq(loop.state, "idle", "starts idle")

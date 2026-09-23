@@ -28,7 +28,7 @@
 		"recovery": 6.0,
 		"hunger_cue": 3.0,
 		"eating_max": 75.0,
-		"sleep_enter": 2.5,
+		"sleep_enter": 1.4,
 		"sleeping_max": 900.0,
 		"wake": 3.0,
 		"celebration": 3.0,
